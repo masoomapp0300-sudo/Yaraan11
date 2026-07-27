@@ -1,0 +1,10 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <!-- گھر کی بیرونی دیواریں اور چھت -->
+    <path d="M 128 60 L 46 130 H 70 V 196 H 186 V 130 H 210 Z" fill="none" stroke="#64748B" stroke-width="12" stroke-linejoin="round"/>
+    
+    <!-- اندر موجود خوبصورت گول کھڑکی -->
+    <circle cx="128" cy="105" r="12" fill="none" stroke="#64748B" stroke-width="10"/>
+    
+    <!-- گولائی والا ماڈرن دروازہ -->
+    <path d="M 104 196 V 160 A 24 24 0 0 1 152 160 V 196" fill="none" stroke="#64748B" stroke-width="10" stroke-linecap="round"/>
+</svg>

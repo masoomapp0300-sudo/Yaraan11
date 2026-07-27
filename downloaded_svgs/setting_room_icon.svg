@@ -1,0 +1,32 @@
+<svg width="500" height="500" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- ڈیفینیشنز برائے گولڈن کلر اور لائن پیٹرن -->
+  <defs>
+    <!-- وہی پروفیشنل گولڈن گریڈیئنٹ -->
+    <linearGradient id="goldGradientHex" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#FCF6BA;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#B38728;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#FBF5B7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#AA771C;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- اندرونی لائنوں کا پیٹرن -->
+    <pattern id="innerLinesHex" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="2" style="stroke:#8A6D3B; stroke-width:0.5" />
+    </pattern>
+  </defs>
+
+  <!-- مین ہیکساگون اور سینٹر سرکل (گولڈن بیس) -->
+  <g fill="none" stroke="url(#goldGradientHex)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <!-- باہر والا ہیکساگون -->
+    <path d="M 50,15 L 80,32.5 L 80,67.5 L 50,85 L 20,67.5 L 20,32.5 Z" />
+    <!-- درمیان والا چھوٹا دائرہ -->
+    <circle cx="50" cy="50" r="8" />
+  </g>
+
+  <!-- ڈیزائن کے اوپر باریک لائنیں (ٹیکسچر کے لیے) -->
+  <g fill="none" stroke="url(#innerLinesHex)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" style="opacity: 0.6;">
+    <path d="M 50,15 L 80,32.5 L 80,67.5 L 50,85 L 20,67.5 L 20,32.5 Z" />
+    <circle cx="50" cy="50" r="8" />
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F87171" /><stop offset="100%" stop-color="#991B1B" /></linearGradient>
+        <linearGradient id="spinGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#EF4444" /><stop offset="50%" stop-color="#FCA5A5" /><stop offset="100%" stop-color="#7F1D1D" /></linearGradient>
+        <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0" /><stop offset="50%" stop-color="#ffffff" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffffff" stop-opacity="0" /></linearGradient>
+        <clipPath id="homeClip"><path d="M 128 60 L 46 130 H 70 V 196 H 186 V 130 H 210 Z" /></clipPath>
+    </defs>
+    
+    <!-- گھومتا ہوا دائرہ -->
+    <circle cx="128" cy="128" r="115" fill="none" stroke="url(#spinGrad)" stroke-width="8" stroke-dasharray="200 60 100 40" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 128 128" to="360 128 128" dur="4s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- ہوم آئیکن کا بیک گراؤنڈ (ریڈ) -->
+    <path d="M 128 60 L 46 130 H 70 V 196 H 186 V 130 H 210 Z" fill="url(#redGrad)" />
+    
+    <!-- اندر موجود خوبصورت گول کھڑکی (White) -->
+    <circle cx="128" cy="105" r="12" fill="none" stroke="#ffffff" stroke-width="10" opacity="0.9"/>
+    
+    <!-- گولائی والا ماڈرن دروازہ (White) -->
+    <path d="M 104 196 V 160 A 24 24 0 0 1 152 160 V 196" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- اندر چلتی ہوئی چمک (جو دروازے اور کھڑکی کے اوپر سے گزرے گی) -->
+    <g clip-path="url(#homeClip)">
+        <rect y="0" width="40" height="300" fill="url(#shine)" transform="skewX(-30)">
+            <animate attributeName="x" values="-150; 300; 300" keyTimes="0; 0.7; 1" dur="2.5s" repeatCount="indefinite" />
+        </rect>
+    </g>
+</svg>

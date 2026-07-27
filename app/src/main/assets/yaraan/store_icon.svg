@@ -1,0 +1,42 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- کوئی بیک گراؤنڈ لیئر نہیں ہے، یہ شفاف ہے -->
+  <defs>
+    <linearGradient id="shopWall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C084FC" />
+      <stop offset="100%" style="stop-color:#A85CF9" />
+    </linearGradient>
+    <linearGradient id="roofColor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD93D" />
+      <stop offset="100%" style="stop-color:#FFB200" />
+    </linearGradient>
+  </defs>
+
+  <!-- Bottom Platform -->
+  <rect x="25" y="165" width="150" height="12" rx="6" fill="#FFB200" />
+
+  <!-- Walls -->
+  <rect x="45" y="80" width="110" height="85" rx="2" fill="url(#shopWall)" />
+
+  <!-- Door & Window -->
+  <rect x="55" y="110" width="40" height="55" fill="#FFB200" rx="2" />
+  <rect x="60" y="115" width="30" height="50" fill="#2D2D2D" rx="1" />
+  <rect x="105" y="110" width="40" height="40" fill="#FFB200" rx="2" />
+  <rect x="110" y="115" width="30" height="30" fill="#2D2D2D" rx="1" />
+
+  <!-- Roof -->
+  <rect x="35" y="70" width="130" height="20" rx="5" fill="url(#roofColor)" />
+
+  <!-- Awning (Strips) -->
+  <path d="M45 90 H155 L150 110 C150 115, 140 115, 140 110 C140 115, 130 115, 130 110 C130 115, 120 115, 120 110 C120 115, 110 115, 110 110 C110 115, 100 115, 100 110 C100 115, 90 115, 90 110 C90 115, 80 115, 80 110 C80 115, 70 115, 70 110 C70 115, 60 115, 60 110 C60 115, 50 115, 50 110 Z" fill="#FF6B00" />
+  <rect x="60" y="90" width="10" height="18" fill="white" />
+  <rect x="80" y="90" width="10" height="18" fill="white" />
+  <rect x="100" y="90" width="10" height="18" fill="white" />
+  <rect x="120" y="90" width="10" height="18" fill="white" />
+  <rect x="140" y="90" width="10" height="18" fill="white" />
+
+  <!-- SHOP Sign -->
+  <rect x="75" y="60" width="4" height="10" fill="#D1A1FF" />
+  <rect x="121" y="60" width="4" height="10" fill="#D1A1FF" />
+  <rect x="65" y="25" width="70" height="35" rx="8" fill="#A85CF9" stroke="#D1A1FF" stroke-width="3" />
+  <text x="77" y="50" fill="white" font-family="Arial Black, sans-serif" font-size="16" font-weight="900">SHOP</text>
+</svg>

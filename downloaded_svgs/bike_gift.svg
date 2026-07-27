@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Motion Blur Filters for Speed Effect -->
+    <filter id="blurTires" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4 4" />
+    </filter>
+    <filter id="blurRoad" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15 0" />
+    </filter>
+
+    <!-- Drop Shadow for 3D Depth -->
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="10" dy="25" stdDeviation="15" flood-color="#000000" flood-opacity="0.7"/>
+    </filter>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- BMW S1000RR Realistic Gradients -->
+    <linearGradient id="bmwBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0044cc"/>
+      <stop offset="100%" stop-color="#001133"/>
+    </linearGradient>
+
+    <linearGradient id="glossWhite" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#b0b5c0"/>
+    </linearGradient>
+
+    <linearGradient id="bmwRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0022"/>
+      <stop offset="100%" stop-color="#aa0011"/>
+    </linearGradient>
+
+    <linearGradient id="goldForks" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fdf0b0"/>
+      <stop offset="50%" stop-color="#cca24f"/>
+      <stop offset="100%" stop-color="#8a651b"/>
+    </linearGradient>
+
+    <linearGradient id="leatherBlack" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </linearGradient>
+
+    <linearGradient id="helmetYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4ff00"/>
+      <stop offset="100%" stop-color="#668800"/>
+    </linearGradient>
+
+    <linearGradient id="metalSilver" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+
+    <!-- Blue Alloy Wheel Definition -->
+    <g id="frontWheel">
+      <circle cx="0" cy="0" r="45" fill="none" stroke="url(#metalSilver)" stroke-width="12" stroke-dasharray="4 6"/>
+      <circle cx="0" cy="0" r="30" fill="#222222"/>
+      <path d="M -8,-8 L -48,-25 L -48,25 L -8,8 Z" fill="#0044cc" />
+      <path d="M -8,-8 L -48,-25 L -48,25 L -8,8 Z" fill="#0044cc" transform="rotate(72)" />
+      <path d="M -8,-8 L -48,-25 L -48,25 L -8,8 Z" fill="#0044cc" transform="rotate(144)" />
+      <path d="M -8,-8 L -48,-25 L -48,25 L -8,8 Z" fill="#0044cc" transform="rotate(216)" />
+      <path d="M -8,-8 L -48,-25 L -48,25 L -8,8 Z" fill="#0044cc" transform="rotate(288)" />
+      <circle cx="0" cy="0" r="58" fill="none" stroke="#0044cc" stroke-width="6" />
+      <circle cx="0" cy="0" r="62" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+    </g>
+  </defs>
+
+  <style>
+    /* 1. Entry Animation */
+    .bike-entrance { animation: enterScene 2.5s cubic-bezier(0.15, 0.85, 0.35, 1) forwards; }
+    @keyframes enterScene { 0% { transform: translateX(120%); } 50% { transform: translateX(-5%); } 100% { transform: translateX(0%); } }
+
+    /* 2. Wheel Spinning */
+    .spin-wheel { animation: spinFast 0.15s linear infinite; }
+    .wheel-front { transform-origin: 250px 420px; }
+    .wheel-rear { transform-origin: 750px 420px; }
+    @keyframes spinFast { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+    /* 3. Suspension Bouncing */
+    .chassis-bounce { animation: suspension 1.5s ease-in-out infinite alternate, vibrate 0.05s linear infinite alternate; transform-origin: 500px 350px; }
+    @keyframes suspension { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(5px) rotate(-0.5deg); } }
+    @keyframes vibrate { from { transform: translateY(0px); } to { transform: translateY(1.5px); } }
+
+    /* 4. Moving Road and Speed Lines */
+    .speed-lines { stroke: #ffffff; stroke-linecap: round; animation: moveRoad 0.4s linear infinite; }
+    .road-blur { animation: moveRoad 0.2s linear infinite; stroke: #333333; }
+    @keyframes moveRoad { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 400; } }
+
+    /* 5. Wind Effect over Rider */
+    .wind { stroke: rgba(255, 255, 255, 0.4); stroke-width: 3; stroke-linecap: round; animation: windBlow 0.6s linear infinite; }
+    .w1 { animation-delay: 0.1s; }
+    .w2 { animation-delay: 0.3s; stroke-width: 5; }
+    .w3 { animation-delay: 0.5s; stroke-width: 2; }
+    @keyframes windBlow { 0% { transform: translateX(-200px); opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateX(1200px); opacity: 0; } }
+  </style>
+
+  <!-- TRANSPARENT ROAD ENVIRONMENT -->
+  <g>
+    <ellipse cx="500" cy="500" rx="550" ry="25" fill="#000000" opacity="0.3" filter="url(#blurRoad)"/>
+    <line x1="-200" y1="495" x2="1200" y2="495" stroke-width="12" stroke-dasharray="150 250" class="speed-lines road-blur" opacity="0.8"/>
+    <line x1="-200" y1="510" x2="1200" y2="510" stroke-width="6" stroke-dasharray="100 300" class="speed-lines" opacity="0.5"/>
+  </g>
+
+  <!-- MAIN BIKE CONTAINER -->
+  <g class="bike-entrance">
+
+    <!-- Bike Drop Shadow -->
+    <path d="M 150 490 L 850 490 L 800 510 L 200 510 Z" fill="#000000" opacity="0.5" filter="url(#glow)"/>
+
+    <!-- WHEELS -->
+    <circle cx="250" cy="420" r="85" fill="none" stroke="#111111" stroke-width="26" filter="url(#blurTires)"/>
+    <circle cx="250" cy="420" r="85" fill="none" stroke="#2a2a2a" stroke-width="22"/>
+    <g class="spin-wheel wheel-front">
+      <use href="#frontWheel" x="250" y="420" />
+    </g>
+
+    <circle cx="750" cy="420" r="90" fill="none" stroke="#0a0a0a" stroke-width="32" filter="url(#blurTires)"/>
+    <circle cx="750" cy="420" r="90" fill="none" stroke="#222222" stroke-width="28"/>
+    <g class="spin-wheel wheel-rear">
+      <use href="#frontWheel" x="750" y="420" />
+    </g>
+
+    <!-- BIKE CHASSIS AND RIDER -->
+    <g class="chassis-bounce" filter="url(#shadow)">
+      
+      <!-- Swingarm -->
+      <path d="M 750 420 L 580 380 L 560 330" fill="none" stroke="url(#metalSilver)" stroke-width="25" stroke-linejoin="round"/>
+      <circle cx="580" cy="380" r="15" fill="#111111"/>
+      <path d="M 750 420 L 580 380" fill="none" stroke="#444444" stroke-width="8" stroke-dasharray="4 2"/>
+
+      <!-- Forks -->
+      <path d="M 250 420 L 320 230" fill="none" stroke="url(#goldForks)" stroke-width="20" stroke-linecap="round"/>
+      <path d="M 250 420 L 280 340" fill="none" stroke="url(#metalSilver)" stroke-width="12" stroke-linecap="round"/>
+      
+      <!-- Brake Caliper -->
+      <rect x="200" y="380" width="35" height="50" rx="5" fill="#cca24f" transform="rotate(-20, 200, 380)"/>
+
+      <!-- Engine Core -->
+      <path d="M 450 300 L 580 300 L 600 400 L 480 420 Z" fill="#151515"/>
+      <circle cx="500" cy="360" r="35" fill="#222222" stroke="#444444" stroke-width="2"/>
+      <path d="M 480 340 L 520 340 M 480 360 L 520 360 M 480 380 L 520 380" stroke="#555555" stroke-width="3"/>
+
+      <!-- Rear Tail -->
+      <path d="M 600 280 L 720 240 L 850 200 L 820 170 L 650 220 Z" fill="url(#glossWhite)"/>
+      <path d="M 650 240 L 820 185 L 800 175 L 630 225 Z" fill="url(#bmwBlue)"/>
+      <circle cx="830" cy="185" r="6" fill="#ff0000" filter="url(#glow)"/>
+      <path d="M 800 210 L 840 260 L 860 250" fill="none" stroke="#111111" stroke-width="6"/>
+
+      <!-- Lower Fairing -->
+      <path d="M 330 400 L 480 460 L 620 440 L 580 350 L 400 320 Z" fill="url(#glossWhite)"/>
+      <path d="M 450 350 L 520 360 L 550 420 L 480 430 Z" fill="#050505" opacity="0.9"/>
+      
+      <!-- Upper Fairing -->
+      <path d="M 400 320 L 500 240 L 400 180 L 220 250 L 280 330 Z" fill="url(#bmwBlue)"/>
+      <path d="M 220 250 Q 150 280 140 300 Q 180 340 260 360 L 330 400 Z" fill="url(#bmwBlue)"/>
+      <path d="M 320 395 L 480 450 L 610 430" fill="none" stroke="url(#bmwRed)" stroke-width="8" stroke-linecap="round"/>
+
+      <!-- Headlight -->
+      <polygon points="160,285 210,265 200,295 165,305" fill="#ffffff" filter="url(#glow)"/>
+      
+      <!-- Mudguard and Windshield -->
+      <path d="M 160 380 Q 220 340 280 350 Q 300 380 290 400 Q 220 360 160 380 Z" fill="url(#glossWhite)"/>
+      <path d="M 320 170 Q 260 120 220 160 L 220 250 L 400 180 Z" fill="rgba(0,0,0,0.7)"/>
+
+      <!-- Tank -->
+      <path d="M 400 180 Q 500 140 550 180 Q 580 220 500 240 Z" fill="url(#glossWhite)"/>
+      <path d="M 400 180 Q 480 150 520 190 Q 480 220 420 210 Z" fill="url(#bmwBlue)"/>
+
+      <!-- Seat -->
+      <path d="M 520 230 Q 560 210 620 230 Q 640 260 550 260 Z" fill="#111111"/>
+
+      <!-- BMW Logo -->
+      <circle cx="430" cy="280" r="12" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+      <path d="M 430 268 A 12 12 0 0 1 442 280 L 430 280 Z" fill="#0044cc"/>
+      <path d="M 430 292 A 12 12 0 0 1 418 280 L 430 280 Z" fill="#0044cc"/>
+
+      <!-- RIDER -->
+      <path d="M 550 250 Q 500 300 480 340 L 530 360 Q 580 300 600 250 Z" fill="url(#leatherBlack)"/>
+      <path d="M 550 260 Q 520 300 500 330 L 520 340 Q 560 290 570 260 Z" fill="#e0e0e0"/>
+      <path d="M 480 340 L 450 420 L 500 440 L 530 360 Z" fill="url(#leatherBlack)"/>
+      <path d="M 450 420 L 420 440 L 440 460 L 500 440 Z" fill="#111111"/>
+      <ellipse cx="460" cy="360" rx="15" ry="25" fill="#ffffff" transform="rotate(-30, 460, 360)"/>
+      <circle cx="500" cy="420" r="8" fill="url(#metalSilver)"/>
+
+      <path d="M 550 250 Q 550 120 450 100 Q 380 100 350 160 L 450 250 Z" fill="url(#leatherBlack)"/>
+      <polygon points="420,150 440,150 430,170" fill="#ff0000"/>
+
+      <path d="M 430 110 Q 350 120 320 180 L 300 170 Q 350 90 450 90 Z" fill="url(#leatherBlack)"/>
+      <path d="M 420 115 Q 360 130 330 175 L 315 165 Q 360 110 435 100 Z" fill="#e0e0e0"/>
+      
+      <circle cx="310" cy="180" r="18" fill="#1a1a1a"/>
+      <path d="M 310 180 L 260 200 L 280 220 L 320 190 Z" fill="#111111"/>
+      <circle cx="310" cy="180" r="6" fill="#ff0000"/>
+
+      <!-- Helmet -->
+      <g transform="translate(360, 80) rotate(-15)">
+        <ellipse cx="0" cy="0" rx="40" ry="35" fill="url(#helmetYellow)"/>
+        <path d="M 25 -20 L 60 -10 L 40 10 Z" fill="url(#helmetYellow)"/>
+        <path d="M 30 -15 L 60 -10 L 40 5 Z" fill="#111111"/>
+        <path d="M -10 -35 Q 10 -40 30 -25 L 10 -15 Z" fill="#111111"/>
+        <path d="M -30 20 Q 0 35 25 20 L 0 10 Z" fill="#111111"/>
+        <path d="M -40 -5 Q -20 -25 10 -15 Q 15 5 -10 15 Q -35 15 -40 -5 Z" fill="#222222"/>
+        <path d="M -35 -2 Q -20 -15 0 -8" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- FOREGROUND WIND LINES -->
+  <line x1="-100" y1="150" x2="100" y2="150" class="wind w1" />
+  <line x1="-200" y1="280" x2="50" y2="280" class="wind w2" />
+  <line x1="-50" y1="400" x2="150" y2="400" class="wind w3" />
+
+</svg>

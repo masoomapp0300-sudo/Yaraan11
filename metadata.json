@@ -1,0 +1,6 @@
+{
+  "name": "Yaraan",
+  "description": "Yaraan - Modern social audio-chat and gaming platform with voice rooms, rankings, intimacy couples, and rich profile customization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

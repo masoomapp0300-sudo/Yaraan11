@@ -1,0 +1,35 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- پریمیم گولڈن گریڈیئنٹ -->
+    <linearGradient id="goldSpeakerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" />
+      <stop offset="25%" style="stop-color:#FCF6BA" />
+      <stop offset="50%" style="stop-color:#B38728" />
+      <stop offset="75%" style="stop-color:#FBF5B7" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+
+    <!-- باریک لائنوں کا ٹیکسچر -->
+    <pattern id="speakerTex" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="2" style="stroke:#8A6D3B; stroke-width:0.6" />
+    </pattern>
+  </defs>
+
+  <!-- 1. مین گولڈن باڈی (ٹھوس گولڈ) -->
+  <g fill="url(#goldSpeakerGrad)">
+    <!-- سپیکر کا پیچھے والا حصہ اور کون (Cone) -->
+    <path d="M 15,40 L 30,40 L 55,20 V 80 L 30,60 L 15,60 Z" />
+    <!-- آواز کی لہریں (Sound Waves) -->
+    <path d="M 68,35 Q 78,50 68,65" fill="none" stroke="url(#goldSpeakerGrad)" stroke-width="6" stroke-linecap="round" />
+    <path d="M 78,25 Q 93,50 78,75" fill="none" stroke="url(#goldSpeakerGrad)" stroke-width="6" stroke-linecap="round" />
+  </g>
+
+  <!-- 2. ٹیکسچر لیئر (باریک لائنیں) -->
+  <g fill="url(#speakerTex)" style="opacity: 0.5;">
+    <path d="M 15,40 L 30,40 L 55,20 V 80 L 30,60 L 15,60 Z" />
+  </g>
+  <g fill="none" stroke="url(#speakerTex)" stroke-width="4" stroke-linecap="round" style="opacity: 0.4;">
+    <path d="M 68,35 Q 78,50 68,65" />
+    <path d="M 78,25 Q 93,50 78,75" />
+  </g>
+</svg>

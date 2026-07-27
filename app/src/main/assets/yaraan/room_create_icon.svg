@@ -1,0 +1,73 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- گرین کلر کا شاندار گریڈینٹ -->
+        <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4ADE80" /> <!-- Light/Neon Green -->
+            <stop offset="50%" stop-color="#16A34A" /> <!-- Vibrant Green -->
+            <stop offset="100%" stop-color="#14532D" /> <!-- Deep Green -->
+        </linearGradient>
+
+        <!-- چلتی ہوئی پٹی (Moving Shine) کے لیے گریڈینٹ -->
+        <linearGradient id="sweepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.8" /> <!-- درمیان سے چمک دار -->
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        </linearGradient>
+
+        <!-- پلس کے نشان کے لیے کلر -->
+        <linearGradient id="plusGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="100%" stop-color="#DCFCE7" /> <!-- Light Green Tint -->
+        </linearGradient>
+
+        <!-- گلو (Glow) فلٹر -->
+        <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <!-- چمک کو صرف گھر کے اندر محدود رکھنے کے لیے -->
+        <clipPath id="houseClip">
+            <path d="M 128 45 L 40 125 H 65 V 200 H 191 V 125 H 216 Z" />
+        </clipPath>
+    </defs>
+
+    <!-- ہوم آئیکن کا اصل خاکہ (House Base) -->
+    <path d="M 128 45 L 40 125 H 65 V 200 H 191 V 125 H 216 Z" 
+          fill="url(#greenGrad)" 
+          stroke="#BBF7D0" 
+          stroke-width="4" 
+          stroke-linejoin="round" 
+          filter="url(#neonGlow)" />
+
+    <!-- چلتی ہوئی چمکتی پٹی (Animated Light Strip) -->
+    <g clip-path="url(#houseClip)">
+        <rect y="0" width="40" height="300" fill="url(#sweepGrad)" transform="skewX(-30)">
+            <animate attributeName="x" 
+                     values="-150; 350; 350" 
+                     keyTimes="0; 0.7; 1" 
+                     dur="3s" 
+                     repeatCount="indefinite" />
+        </rect>
+    </g>
+
+    <!-- بالکل سینٹر میں پلس (+) کا نشان -->
+    <g filter="url(#neonGlow)">
+        <path d="M 128 115 V 165 M 103 140 H 153" 
+              stroke="url(#plusGrad)" 
+              stroke-width="14" 
+              stroke-linecap="round" />
+    </g>
+
+    <!-- اضافی چمکتے تارے (Sparkles) -->
+    <path d="M 60 40 Q 60 55 75 55 Q 60 55 60 70 Q 60 55 45 55 Q 60 55 60 40 Z" 
+          fill="#ffffff" 
+          opacity="0.9" 
+          filter="url(#neonGlow)" />
+          
+    <path d="M 200 70 Q 200 80 210 80 Q 200 80 200 90 Q 200 80 190 80 Q 200 80 200 70 Z" 
+          fill="#BBF7D0" 
+          opacity="0.8" 
+          filter="url(#neonGlow)" />
+
+</svg>

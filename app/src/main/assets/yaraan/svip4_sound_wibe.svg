@@ -1,0 +1,116 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* پرپل تھیم کلرز */
+    :root {
+      --main-purple: #bf19ff;
+      --deep-glow: rgba(191, 25, 255, 0.5);
+      --light-purple: #e0a3ff;
+    }
+
+    /* مین بارڈر - موٹا اور چمکدار */
+    .border-ring {
+      fill: none;
+      stroke: var(--main-purple);
+      stroke-width: 8;
+      filter: drop-shadow(0 0 12px var(--main-purple));
+    }
+
+    /* باہر کا جادوئی ہالہ (Aura) */
+    .aura-glow {
+      fill: none;
+      stroke: var(--main-purple);
+      stroke-width: 50;
+      filter: blur(25px);
+      opacity: 0.4;
+      transform-origin: center;
+      animation: pulseAura 2s infinite ease-in-out;
+    }
+
+    /* گھومتی ہوئی شاہانہ شعاعیں */
+    .rotating-rays {
+      transform-origin: center;
+      animation: slowRotate 20s linear infinite;
+    }
+
+    .ray-line {
+      stroke: var(--light-purple);
+      stroke-width: 1.2;
+      opacity: 0.3;
+      animation: rayPulse 2s infinite ease-in-out;
+    }
+
+    /* چھوٹے چمکتے ہوئے نیون اسپارکلز */
+    .sparkle-dot {
+      fill: white;
+      filter: drop-shadow(0 0 5px var(--main-purple));
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    /* اینیمیشنز کی تفصیل */
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.1); opacity: 0.6; }
+    }
+
+    @keyframes rayPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+
+  <defs>
+    <!-- ماسک تاکہ یوزر کی ڈی پی بالکل صاف رہے -->
+    <mask id="svip4-mask">
+      <rect width="100%" height="100%" fill="white" />
+      <circle cx="200" cy="200" r="102" fill="black" />
+    </mask>
+  </defs>
+
+  <!-- اینیمیٹڈ بیک گراؤنڈ لیئر (ماسک کے ساتھ) -->
+  <g mask="url(#svip4-mask)">
+    <circle class="aura-glow" cx="200" cy="200" r="120" />
+    
+    <g class="rotating-rays">
+      <!-- 24 خوبصورت شعاعیں -->
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(0 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(20 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(40 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(60 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(80 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(100 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(120 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(140 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(160 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(180 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(200 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(220 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(240 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(260 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(280 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(300 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(320 200 200)" />
+      <line class="ray-line" x1="200" y1="30" x2="200" y2="100" transform="rotate(340 200 200)" />
+    </g>
+  </g>
+
+  <!-- مین وی آئی پی دائرہ -->
+  <circle class="border-ring" cx="200" cy="200" r="105" />
+
+  <!-- چھوٹے خوبصورت اسپارکلز (صرف باہر) -->
+  <circle class="sparkle-dot" cx="280" cy="70" r="1.5" />
+  <circle class="sparkle-dot" cx="330" cy="150" r="1" style="animation-delay: 0.5s;" />
+  <circle class="sparkle-dot" cx="300" cy="300" r="2" style="animation-delay: 1.2s;" />
+  <circle class="sparkle-dot" cx="100" cy="320" r="1.5" style="animation-delay: 0.8s;" />
+  <circle class="sparkle-dot" cx="60" cy="180" r="1" style="animation-delay: 1.8s;" />
+  <circle class="sparkle-dot" cx="120" cy="80" r="2" style="animation-delay: 0.3s;" />
+</svg>

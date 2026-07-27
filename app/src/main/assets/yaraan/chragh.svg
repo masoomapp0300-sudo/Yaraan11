@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Soft shadow under the lamp base (inside the glass) -->
+    <radialGradient id="floor-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Metallic Gold Horizontal Gradient -->
+    <linearGradient id="gold-h" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3d2100" />
+      <stop offset="15%" stop-color="#8a5300" />
+      <stop offset="30%" stop-color="#e6b422" />
+      <stop offset="45%" stop-color="#fff4bd" />
+      <stop offset="55%" stop-color="#e6b422" />
+      <stop offset="75%" stop-color="#fcdb70" />
+      <stop offset="90%" stop-color="#8a5300" />
+      <stop offset="100%" stop-color="#3d2100" />
+    </linearGradient>
+
+    <!-- Metallic Gold Diagonal Gradient -->
+    <linearGradient id="gold-diag" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2d1900" />
+      <stop offset="25%" stop-color="#704400" />
+      <stop offset="50%" stop-color="#f2c130" />
+      <stop offset="70%" stop-color="#fff6cc" />
+      <stop offset="85%" stop-color="#e6ac15" />
+      <stop offset="100%" stop-color="#543300" />
+    </linearGradient>
+
+    <!-- Metallic Red Diagonal Gradient -->
+    <linearGradient id="red-diag" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3d0000" />
+      <stop offset="25%" stop-color="#800000" />
+      <stop offset="50%" stop-color="#d61c1c" />
+      <stop offset="70%" stop-color="#ff7373" />
+      <stop offset="85%" stop-color="#cc0000" />
+      <stop offset="100%" stop-color="#5c0000" />
+    </linearGradient>
+
+    <!-- Metallic Red Horizontal Gradient -->
+    <linearGradient id="red-h" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a0000" />
+      <stop offset="20%" stop-color="#990000" />
+      <stop offset="50%" stop-color="#ff4d4d" />
+      <stop offset="80%" stop-color="#b30000" />
+      <stop offset="100%" stop-color="#330000" />
+    </linearGradient>
+
+    <!-- Specular Highlight for lamp gloss -->
+    <radialGradient id="specular-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Semi-Transparent Pink Glass Base Gradient -->
+    <radialGradient id="pink-glass-base" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fff2f6" stop-opacity="0.35" />
+      <stop offset="50%" stop-color="#ffb6c1" stop-opacity="0.18" />
+      <stop offset="85%" stop-color="#ff52a3" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#da4f8c" stop-opacity="0.28" />
+    </radialGradient>
+
+    <!-- 3D Shiny Glare for Glass Surface -->
+    <radialGradient id="glass-surface-glare" cx="35%" cy="25%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glass Rim (Polished Edge) Gradient -->
+    <linearGradient id="glass-rim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="25%" stop-color="#ff69b4" stop-opacity="0.4" />
+      <stop offset="75%" stop-color="#ffd700" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- ================= GLASS BACK GROUND ================= -->
+  <!-- Main Transparent Pink Glass Orb Body -->
+  <circle cx="250" cy="250" r="180" fill="url(#pink-glass-base)" />
+
+  <!-- Inner Soft Shadow inside glass for depth -->
+  <circle cx="250" cy="250" r="178" stroke="#ffb6c1" stroke-width="1.5" fill="none" opacity="0.3" />
+
+
+  <!-- ================= RED & GOLD MAGIC LAMP ================= -->
+  <!-- Centered perfectly within the glass circle (shifted down by 60px) -->
+  <g id="red-gold-lamp" transform="translate(0, 60)">
+    <!-- Base Shadow -->
+    <ellipse cx="250" cy="292" rx="80" ry="12" fill="url(#floor-shadow)" />
+    
+    <!-- Pedestal / Base -->
+    <path d="M 195,280 C 195,274 305,274 305,280 L 300,288 C 300,291 200,291 200,288 Z" fill="url(#gold-h)" />
+    <ellipse cx="250" cy="278" rx="42" ry="6" fill="url(#gold-diag)" />
+    <path d="M 228,276 C 228,255 272,255 272,276 Z" fill="url(#gold-h)" />
+    <ellipse cx="250" cy="256" rx="30" ry="5" fill="url(#gold-diag)" />
+
+    <!-- Main Bulbous Body (Ruby Red) -->
+    <path d="M 190,195 
+             C 170,222 200,256 250,256 
+             C 300,256 330,222 310,195 
+             C 295,172 205,172 190,195 Z" 
+          fill="url(#red-diag)" />
+
+    <!-- Inner Highlight -->
+    <path d="M 195,195 C 195,216 205,246 250,246 C 295,246 305,216 305,195 Z" fill="url(#red-h)" opacity="0.4" />
+
+    <!-- Embossed Gold Carvings -->
+    <path d="M 220,215 C 232,205 242,205 250,215 C 258,225 268,225 280,215" stroke="#420000" stroke-width="2.5" fill="none" opacity="0.7" />
+    <path d="M 220,214 C 232,204 242,204 250,214 C 258,224 268,224 280,214" stroke="#ffd700" stroke-width="1.5" fill="none" />
+
+    <path d="M 205,228 C 225,245 275,245 295,228" stroke="#420000" stroke-width="2" fill="none" opacity="0.6" />
+    <path d="M 205,227 C 225,244 275,244 295,227" stroke="#ffd700" stroke-width="1.2" fill="none" />
+
+    <!-- Spout (Gold) -->
+    <path d="M 190,190 C 140,190 80,157 70,150 C 68,151 68,155 72,158 C 92,180 145,220 190,215 Z" fill="url(#gold-diag)" />
+    <path d="M 190,200 C 150,200 90,170 70,150 C 80,157 140,190 190,190 Z" fill="url(#gold-h)" />
+    <ellipse cx="71" cy="151" rx="2.5" ry="4" transform="rotate(-25 71 151)" fill="#1c0f00" />
+
+    <!-- Lid and Finial -->
+    <ellipse cx="250" cy="173" rx="24" ry="5" fill="url(#gold-h)" />
+    <path d="M 228,171 C 228,148 272,148 272,171 Z" fill="url(#red-diag)" />
+    <path d="M 240,170 C 243,155 247,155 250,170" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.75" />
+    <path d="M 250,170 C 253,155 257,155 260,170" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.75" />
+    <ellipse cx="250" cy="148" rx="14" ry="3.5" fill="url(#gold-h)" />
+    <path d="M 242,148 L 245,123 L 255,123 L 258,148 Z" fill="url(#gold-diag)" />
+    <circle cx="250" cy="118" r="9" fill="url(#gold-h)" />
+    <path d="M 246,113 L 250,88 L 254,113 Z" fill="url(#gold-diag)" />
+    <circle cx="250" cy="86" r="3" fill="url(#gold-h)" />
+
+    <!-- Ornate Handle -->
+    <path d="M 300,210 C 355,210 405,190 400,140 C 395,95 330,90 320,130 C 318,138 325,140 328,135 C 335,105 383,110 385,140 C 387,175 345,192 300,192 Z" fill="url(#gold-diag)" />
+    <path d="M 302,205 C 345,205 390,185 385,145 C 382,112 342,110 332,135 C 330,139 334,141 336,137 C 344,118 375,120 377,145 C 379,173 345,187 302,187 Z" fill="url(#gold-h)" opacity="0.9" />
+    <path d="M 320,130 C 312,120 302,128 307,138 C 312,143 320,138 320,130 Z" fill="url(#gold-diag)" />
+
+    <!-- Specular Glow on Body and Spout -->
+    <ellipse cx="230" cy="190" rx="35" ry="15" fill="url(#specular-glow)" transform="rotate(-15 230 190)" />
+    <ellipse cx="140" cy="180" rx="25" ry="7" fill="url(#specular-glow)" transform="rotate(-15 140 180)" />
+
+    <!-- Magical Sparkles -->
+    <g transform="translate(68, 142) scale(0.65)">
+      <path d="M 0,-25 Q 0,0 -25,0 Q 0,0 0,25 Q 0,0 25,0 Q 0,0 0,-25" fill="#ffd700" />
+      <circle cx="0" cy="0" r="4" fill="#ffffff" />
+    </g>
+    <g transform="translate(250, 78) scale(0.4)">
+      <path d="M 0,-25 Q 0,0 -25,0 Q 0,0 0,25 Q 0,0 25,0 Q 0,0 0,-25" fill="#ffd700" />
+      <circle cx="0" cy="0" r="4" fill="#ffffff" />
+    </g>
+  </g>
+
+
+  <!-- ================= GLASS FRONT FOREGROUND (Overlays) ================= -->
+  <!-- 3D Spherical Highlight (Gives the glass a curved look) -->
+  <ellipse cx="210" cy="140" rx="130" ry="60" fill="url(#glass-surface-glare)" transform="rotate(-28 210 140)" />
+
+  <!-- Bright Edge Highlights (Sleek light reflections on glass curves) -->
+  <path d="M 100,160 A 175,175 0 0,1 320,95" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.65" />
+  <path d="M 90,195 A 175,175 0 0,1 180,105" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+
+  <!-- Soft Bottom Ground Glow bounce (Soft pink hue reflection on the bottom right) -->
+  <path d="M 210,418 A 175,175 0 0,0 415,260" fill="none" stroke="#ffb6c1" stroke-width="2.5" stroke-linecap="round" opacity="0.4" />
+
+  <!-- 3D Glass Outer Rim Border (Gives distinct edge thickness) -->
+  <circle cx="250" cy="250" r="180" stroke="url(#glass-rim-grad)" stroke-width="4.5" fill="none" />
+</svg>

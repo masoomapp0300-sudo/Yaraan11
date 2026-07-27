@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 800 600" width="100%" height="100%">
+    <defs>
+        <!-- Soft Shine for Highlights (No background glow) -->
+        <filter id="premium-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- Sharp Neon Glow for ECG Line -->
+        <filter id="sharp-neon" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- Deep Cinematic Shadow (Below Hearts Only) -->
+        <filter id="epic-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="15" stdDeviation="12" flood-color="#000000" flood-opacity="0.3"/>
+        </filter>
+
+        <!-- Multi-Color Rainbow Gradient for ECG Line -->
+        <linearGradient id="rainbow-energy" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00f2fe"/>
+            <stop offset="25%" stop-color="#4facfe"/>
+            <stop offset="50%" stop-color="#f093fb"/>
+            <stop offset="75%" stop-color="#f5576c"/>
+            <stop offset="100%" stop-color="#ff0844"/>
+        </linearGradient>
+
+        <!-- Premium Gold Diamond Gradient -->
+        <linearGradient id="gold-diamond" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="20%" stop-color="#fff2a8"/>
+            <stop offset="50%" stop-color="#ffd700"/>
+            <stop offset="80%" stop-color="#d4af37"/>
+            <stop offset="100%" stop-color="#8b6508"/>
+        </linearGradient>
+
+        <!-- Premium Cosmic Nebula Gradient -->
+        <linearGradient id="cosmic-nebula" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="25%" stop-color="#e0b3ff"/>
+            <stop offset="55%" stop-color="#8a2be2"/>
+            <stop offset="85%" stop-color="#4b0082"/>
+            <stop offset="100%" stop-color="#191970"/>
+        </linearGradient>
+
+        <!-- Celestial Wings Gradients -->
+        <linearGradient id="wing-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="70%" stop-color="#fef0cd"/>
+            <stop offset="100%" stop-color="#e6b800"/>
+        </linearGradient>
+        <linearGradient id="wing-cosmic" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="70%" stop-color="#e6e6ff"/>
+            <stop offset="100%" stop-color="#8080ff"/>
+        </linearGradient>
+
+        <!-- 3D Heart Path Template -->
+        <path id="heart-base" d="M 0,-15 C -45,-55 -95,-10 -65,45 L 0,120 L 65,45 C 95,-10 45,-55 0,-15 Z"/>
+
+        <!-- Smaller Ethereal Wings Base -->
+        <g id="ethereal-wings-gold">
+            <g class="wing-main">
+                <path d="M -10,20 C -70,30 -140,65 -125,110 C -95,140 -25,95 0,60 Z" fill="url(#wing-gold)" filter="url(#epic-shadow)"/>
+                <path d="M -5,5 C -90,-10 -170,20 -150,65 C -120,105 -35,55 0,35 Z" fill="url(#wing-gold)"/>
+                <path d="M 0,-25 C -120,-60 -200,-5 -175,40 C -145,85 -30,15 5,-5 Z" fill="url(#wing-gold)"/>
+            </g>
+            <g class="wing-sub">
+                <path d="M 0,45 C -50,65 -100,105 -90,130 C -75,155 -15,120 10,90 Z" fill="#ffffff" opacity="0.8"/>
+            </g>
+        </g>
+        
+        <g id="ethereal-wings-cosmic">
+            <g class="wing-main">
+                <path d="M -10,20 C -70,30 -140,65 -125,110 C -95,140 -25,95 0,60 Z" fill="url(#wing-cosmic)" filter="url(#epic-shadow)"/>
+                <path d="M -5,5 C -90,-10 -170,20 -150,65 C -120,105 -35,55 0,35 Z" fill="url(#wing-cosmic)"/>
+                <path d="M 0,-25 C -120,-60 -200,-5 -175,40 C -145,85 -30,15 5,-5 Z" fill="url(#wing-cosmic)"/>
+            </g>
+            <g class="wing-sub">
+                <path d="M 0,45 C -50,65 -100,105 -90,130 C -75,155 -15,120 10,90 Z" fill="#ffffff" opacity="0.8"/>
+            </g>
+        </g>
+    </defs>
+
+    <style>
+        /* === ALTERNATING HEARTBEAT ANIMATION (UP and DOWN) === */
+        .heart-left {
+            transform-origin: 340px 240px;
+            animation: bounceBeat 2.6s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .heart-right {
+            transform-origin: 460px 240px;
+            animation: bounceBeat 2.6s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+            animation-delay: 1.3s;
+        }
+
+        @keyframes bounceBeat {
+            0%, 50%, 100% { transform: scale(1) translateY(0px); }
+            10% { transform: scale(1.08) translateY(-15px); } 
+            20% { transform: scale(0.95) translateY(5px); }   
+            30% { transform: scale(1.03) translateY(-5px); }  
+            40% { transform: scale(1) translateY(0px); }      
+        }
+
+        /* Ethereal Wing Flapping */
+        .wing-main { transform-origin: 0px 40px; animation: flapMain 2.5s infinite ease-in-out; }
+        .wing-sub { transform-origin: 0px 60px; animation: flapSub 2.5s infinite ease-in-out; }
+        .flip-wing .wing-main { transform-origin: 0px 40px; animation: flapMainFlip 2.5s infinite ease-in-out; }
+        .flip-wing .wing-sub { transform-origin: 0px 60px; animation: flapSubFlip 2.5s infinite ease-in-out; }
+
+        @keyframes flapMain { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg) scaleY(0.85); } }
+        @keyframes flapMainFlip { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-25deg) scaleY(0.85); } }
+        @keyframes flapSub { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(35deg) scaleY(0.75); } }
+        @keyframes flapSubFlip { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(-35deg) scaleY(0.75); } }
+
+        /* MULTI-COLOR ECG LINE ANIMATION */
+        .colorful-ecg-line {
+            stroke-dasharray: 2800;
+            stroke-dashoffset: 2800;
+            animation: flowColorfulEnergy 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes flowColorfulEnergy {
+            0% { stroke-dashoffset: 2800; opacity: 1; }
+            60% { stroke-dashoffset: 0; opacity: 1; }
+            80% { stroke-dashoffset: 0; opacity: 1; }
+            95% { stroke-dashoffset: 0; opacity: 0; }
+            100% { stroke-dashoffset: 2800; opacity: 0; }
+        }
+    </style>
+
+    <!-- === LEFT HEART (GOLD HEART WITH PURPLE BORDER) === -->
+    <g class="heart-left">
+        <g transform="translate(340, 240) rotate(-22)">
+            <use href="#ethereal-wings-gold" transform="translate(-10, 15) scale(0.65)" />
+            <use href="#heart-base" fill="url(#gold-diamond)" filter="url(#epic-shadow)"/>
+            <use href="#heart-base" fill="none" stroke="#a200ff" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M 0,-15 L -48,25 L 48,25 Z" fill="rgba(255,255,255,0.7)" /> 
+            <path d="M -48,25 L -65,45 L 0,120 L 0,45 Z" fill="rgba(255,255,255,0.2)" /> 
+            <path d="M 48,25 L 65,45 L 0,120 L 0,45 Z" fill="rgba(139,101,8,0.5)" /> 
+            <path d="M -48,25 L 48,25 L 0,45 Z" fill="rgba(255,215,0,0.4)" />
+            <path d="M -65,45 L 0,120 L 65,45 M -48,25 L 0,45 L 48,25 M 0,-15 L 0,45" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+            <path d="M 0,-5 L -25,25 L 0,55 L 25,25 Z" fill="#ffffff" opacity="0.8" filter="url(#premium-glow)"/> 
+        </g>
+    </g>
+
+    <!-- === RIGHT HEART (PURPLE HEART WITH YELLOW BORDER) === -->
+    <g class="heart-right">
+        <g transform="translate(460, 240) rotate(22)">
+            <g class="flip-wing">
+                <g transform="scale(-1, 1)"><use href="#ethereal-wings-cosmic" transform="translate(-10, 15) scale(0.65)" /></g>
+            </g>
+            <use href="#heart-base" fill="url(#cosmic-nebula)" filter="url(#epic-shadow)"/>
+            <use href="#heart-base" fill="none" stroke="#ffd700" stroke-width="4.5" stroke-linejoin="round" />
+            <path d="M 0,-15 L -48,25 L 48,25 Z" fill="rgba(224,179,255,0.6)" /> 
+            <path d="M -48,25 L -65,45 L 0,120 L 0,45 Z" fill="rgba(255,255,255,0.2)" /> 
+            <path d="M 48,25 L 65,45 L 0,120 L 0,45 Z" fill="rgba(25,25,112,0.6)" /> 
+            <path d="M -48,25 L 48,25 L 0,45 Z" fill="rgba(138,43,226,0.4)" />
+            <path d="M -65,45 L 0,120 L 65,45 M -48,25 L 0,45 L 48,25 M 0,-15 L 0,45" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+            <path d="M 0,-5 L -25,25 L 0,55 L 25,25 Z" fill="#ffffff" opacity="0.8" filter="url(#premium-glow)"/> 
+        </g>
+    </g>
+
+    <!-- ================= MULTI-COLOR ECG HEARTBEAT LINE ================= -->
+    <g transform="translate(0, -10)">
+        <path class="colorful-ecg-line"
+              d="M 100 480 C 200 480, 250 400, 300 480 C 330 530, 380 540, 400 480 C 420 400, 350 400, 350 460 C 350 510, 400 550, 400 550 C 400 550, 450 510, 450 460 C 450 400, 380 400, 400 480 C 420 540, 470 530, 500 480 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="url(#rainbow-energy)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" 
+              filter="url(#sharp-neon)" opacity="0.6"/>
+        <path class="colorful-ecg-line"
+              d="M 100 480 C 200 480, 250 400, 300 480 C 330 530, 380 540, 400 480 C 420 400, 350 400, 350 460 C 350 510, 400 550, 400 550 C 400 550, 450 510, 450 460 C 450 400, 380 400, 400 480 C 420 540, 470 530, 500 480 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="url(#rainbow-energy)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" 
+              filter="url(#sharp-neon)" />
+        <path class="colorful-ecg-line"
+              d="M 100 480 C 200 480, 250 400, 300 480 C 330 530, 380 540, 400 480 C 420 400, 350 400, 350 460 C 350 510, 400 550, 400 550 C 400 550, 450 510, 450 460 C 450 400, 380 400, 400 480 C 420 540, 470 530, 500 480 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+</svg>

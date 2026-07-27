@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+    <defs>
+        <!-- Intense Neon Glow Filter for White Background -->
+        <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur2" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur3" />
+            <feMerge>
+                <feMergeNode in="blur3" />
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- Drop Shadow for 3D Elements -->
+        <filter id="drop-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+        </filter>
+
+        <filter id="inner-shadow">
+            <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.8"/>
+        </filter>
+
+        <!-- 3D Gradients for Jewels -->
+        <linearGradient id="pink-gem" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff80bf"/>
+            <stop offset="50%" stop-color="#ff1a8c"/>
+            <stop offset="100%" stop-color="#99004d"/>
+        </linearGradient>
+
+        <linearGradient id="purple-gem" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d280ff"/>
+            <stop offset="50%" stop-color="#8c1aff"/>
+            <stop offset="100%" stop-color="#400080"/>
+        </linearGradient>
+
+        <!-- Gradients for Gold Settings & Wings -->
+        <linearGradient id="gold-bright" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffeeaa"/>
+            <stop offset="40%" stop-color="#ffcc00"/>
+            <stop offset="100%" stop-color="#b37700"/>
+        </linearGradient>
+
+        <linearGradient id="wing-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="60%" stop-color="#ffe6cc"/>
+            <stop offset="100%" stop-color="#ff9933"/>
+        </linearGradient>
+
+        <!-- Reusable Cute 3D Wing -->
+        <g id="cute-wing">
+            <path d="M -15,15 C -45,35 -85,65 -75,85 C -60,105 -25,75 -5,50 Z" fill="url(#wing-grad)" filter="url(#inner-shadow)"/>
+            <path d="M -10,0 C -60,-5 -105,25 -95,50 C -80,75 -30,45 0,25 Z" fill="url(#wing-grad)" filter="url(#inner-shadow)"/>
+            <path d="M 0,-15 C -75,-30 -125,-5 -110,25 C -95,50 -25,10 5,-5 Z" fill="url(#wing-grad)" filter="url(#inner-shadow)"/>
+        </g>
+
+        <!-- Reusable 3D Crown -->
+        <g id="cute-crown">
+            <path d="M -22,-30 L -12,-60 L 0,-40 L 12,-60 L 22,-30 Z" fill="url(#gold-bright)" filter="url(#drop-shadow)"/>
+            <circle cx="-12" cy="-62" r="3.5" fill="#ffffff" />
+            <circle cx="12" cy="-62" r="3.5" fill="#ffffff" />
+            <circle cx="0" cy="-42" r="2.5" fill="#ffffff" />
+            <path d="M -18,-30 Q 0,-20 18,-30 L 15,-35 L -15,-35 Z" fill="#e69900"/>
+        </g>
+
+        <!-- Reusable Heart Base (Gold) -->
+        <g id="heart-base">
+            <path d="M 0,-25 C -55,-60 -105,-5 -70,55 L 0,135 L 70,55 C 105,-5 55,-60 0,-25 Z" fill="url(#gold-bright)" filter="url(#drop-shadow)"/>
+            <circle cx="-45" cy="5" r="2.5" fill="#ffeeaa"/>
+            <circle cx="45" cy="5" r="2.5" fill="#ffeeaa"/>
+            <circle cx="-35" cy="65" r="2" fill="#ffeeaa"/>
+            <circle cx="35" cy="65" r="2" fill="#ffeeaa"/>
+        </g>
+    </defs>
+
+    <style>
+        /* =========================================
+           REALISTIC "LUB-DUB" HEARTBEAT ANIMATION 
+           ========================================= */
+        .beating-heart {
+            transform-origin: 400px 240px;
+            animation: realHeartbeat 1.2s infinite ease-in-out;
+        }
+
+        @keyframes realHeartbeat {
+            0% { transform: scale(1); }
+            10% { transform: scale(0.95); } /* Lub */
+            18% { transform: scale(1.04); }
+            25% { transform: scale(1); }
+            40% { transform: scale(0.88); } /* Dub */
+            52% { transform: scale(1.12); }
+            65% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        /* =========================================
+           PERFECT SINGLE-LINE BLOOD FLOW EKG
+           ========================================= */
+        .line-animate {
+            stroke-dasharray: 2400;
+            stroke-dashoffset: 2400;
+            animation: flowLikeBlood 4.5s linear infinite;
+        }
+
+        @keyframes flowLikeBlood {
+            0% { stroke-dashoffset: 2400; opacity: 1; }
+            65% { stroke-dashoffset: 0; opacity: 1; }  
+            80% { stroke-dashoffset: 0; opacity: 1; }  
+            95% { stroke-dashoffset: 0; opacity: 0; }  
+            100% { stroke-dashoffset: 2400; opacity: 0; } 
+        }
+
+        /* Tiny floating background elements */
+        .float-tiny { animation: floatUp 4s linear infinite; }
+        .float-tiny-fast { animation: floatUp 2.5s linear infinite; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(15px) scale(0.5); opacity: 0; }
+            30% { opacity: 0.8; }
+            70% { opacity: 0.8; }
+            100% { transform: translateY(-60px) scale(1); opacity: 0; }
+        }
+    </style>
+
+    <!-- TINY FLOATING HEARTS -->
+    <g>
+        <path d="M 280,180 C 275,175 265,180 270,190 L 280,200 L 290,190 C 295,180 285,175 280,180 Z" fill="#ff66b3" class="float-tiny-fast"/>
+        <path d="M 520,150 C 515,145 505,150 510,160 L 520,170 L 530,160 C 535,150 525,145 520,150 Z" fill="#b366ff" class="float-tiny"/>
+        <path d="M 400,100 C 397,97 392,100 395,105 L 400,110 L 405,105 C 408,100 403,97 400,100 Z" fill="#ff1a8c" class="float-tiny-fast"/>
+        <circle cx="340" cy="140" r="1.5" fill="#ff33cc" class="float-tiny"/>
+        <circle cx="480" cy="220" r="2" fill="#9933ff" class="float-tiny-fast"/>
+    </g>
+
+    <!-- MAIN 3D WINGED HEARTS -->
+    <g class="beating-heart">
+        
+        <!-- === LEFT HEART (PINK) === -->
+        <g transform="translate(325, 260) rotate(-18)">
+            <use href="#cute-wing" transform="translate(-5, 10)" />
+            <use href="#heart-base" />
+            <path d="M 0,-15 C -45,-45 -85,0 -58,45 L 0,118 L 58,45 C 85,0 45,-45 0,-15 Z" fill="url(#pink-gem)" />
+            <path d="M 0,-15 L -40,15 L 40,15 Z" fill="rgba(255,255,255,0.45)" /> 
+            <path d="M -40,15 L -58,45 L 0,118 L 0,35 Z" fill="rgba(255,255,255,0.15)" /> 
+            <path d="M 40,15 L 58,45 L 0,118 L 0,35 Z" fill="rgba(0,0,0,0.25)" /> 
+            <path d="M -40,15 L 40,15 L 0,35 Z" fill="rgba(255,255,255,0.25)" /> 
+            <path d="M -45,25 Q -20,-10 0,-8 Q 20,-10 45,25" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <use href="#cute-crown" transform="translate(-15, -20) rotate(-15)" />
+        </g>
+
+        <!-- === RIGHT HEART (PURPLE) === -->
+        <g transform="translate(475, 260) rotate(18)">
+            <g transform="scale(-1, 1)"><use href="#cute-wing" transform="translate(-5, 10)" /></g>
+            <use href="#heart-base" />
+            <path d="M 0,-15 C -45,-45 -85,0 -58,45 L 0,118 L 58,45 C 85,0 45,-45 0,-15 Z" fill="url(#purple-gem)" />
+            <path d="M 0,-15 L -40,15 L 40,15 Z" fill="rgba(255,255,255,0.45)" /> 
+            <path d="M -40,15 L -58,45 L 0,118 L 0,35 Z" fill="rgba(255,255,255,0.15)" /> 
+            <path d="M 40,15 L 58,45 L 0,118 L 0,35 Z" fill="rgba(0,0,0,0.3)" /> 
+            <path d="M -40,15 L 40,15 L 0,35 Z" fill="rgba(255,255,255,0.25)" /> 
+            <path d="M -45,25 Q -20,-10 0,-8 Q 20,-10 45,25" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <use href="#cute-crown" transform="translate(15, -20) rotate(15)" />
+        </g>
+
+    </g>
+
+    <!-- ================= PERFECT SINGLE-LINE EKG WITH HEART ================= -->
+    <g transform="translate(0, 10)">
+        <!-- Animated Deep Pink Glow Line -->
+        <path class="line-animate"
+              d="M 120 480 L 220 480 L 235 430 L 255 540 L 275 480 L 340 480 
+                 C 340 420, 380 410, 400 440 C 420 410, 460 420, 460 480 
+                 C 460 520, 420 540, 400 550 C 380 540, 340 520, 340 480 
+                 C 340 420, 380 410, 400 440 C 420 410, 460 420, 460 480 
+                 L 525 480 L 540 430 L 560 540 L 580 480 L 680 480" 
+              fill="none" stroke="#ff0080" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" 
+              filter="url(#neon-glow)" />
+              
+        <!-- Animated White Core Line -->
+        <path class="line-animate"
+              d="M 120 480 L 220 480 L 235 430 L 255 540 L 275 480 L 340 480 
+                 C 340 420, 380 410, 400 440 C 420 410, 460 420, 460 480 
+                 C 460 520, 420 540, 400 550 C 380 540, 340 520, 340 480 
+                 C 340 420, 380 410, 400 440 C 420 410, 460 420, 460 480 
+                 L 525 480 L 540 430 L 560 540 L 580 480 L 680 480" 
+              fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+</svg>

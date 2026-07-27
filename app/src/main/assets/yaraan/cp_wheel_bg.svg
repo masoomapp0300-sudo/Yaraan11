@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="100%" height="100%" style="background: transparent;">
+  <defs>
+    <!-- ================= 1. SKY & WATER GRADIENTS ================= -->
+    <linearGradient id="sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#11052b" />
+      <stop offset="40%" stop-color="#3d1459" />
+      <stop offset="70%" stop-color="#9e346a" />
+      <stop offset="100%" stop-color="#d46b45" />
+    </linearGradient>
+
+    <linearGradient id="water-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a0d5c" />
+      <stop offset="50%" stop-color="#4a1c8f" />
+      <stop offset="100%" stop-color="#1f0940" />
+    </linearGradient>
+
+    <!-- ================= 2. NEON GLOW FILTERS ================= -->
+    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur1" />
+      <feGaussianBlur stdDeviation="10" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="firework-glow">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <linearGradient id="arena-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff59d" />
+      <stop offset="100%" stop-color="#f57f17" />
+    </linearGradient>
+
+    <!-- ================= 3. REALISTIC FIREWORKS TEMPLATE ================= -->
+    <g id="firework-burst">
+      <g fill="currentColor" stroke="none">
+        <circle cx="0" cy="-60" r="3.5" /> <circle cx="0" cy="60" r="3.5" />
+        <circle cx="-60" cy="0" r="3.5" /> <circle cx="60" cy="0" r="3.5" />
+        <circle cx="-42" cy="-42" r="3.5" /> <circle cx="42" cy="42" r="3.5" />
+        <circle cx="42" cy="-42" r="3.5" /> <circle cx="-42" cy="42" r="3.5" />
+        <circle cx="-25" cy="-35" r="2.5" /> <circle cx="25" cy="35" r="2.5" />
+        <circle cx="35" cy="-25" r="2.5" /> <circle cx="-35" cy="25" r="2.5" />
+        <circle cx="0" cy="-30" r="2" /> <circle cx="0" cy="30" r="2" />
+        <circle cx="-30" cy="0" r="2" /> <circle cx="30" cy="0" r="2" />
+        <circle cx="-15" cy="-15" r="1.5" /> <circle cx="15" cy="15" r="1.5" />
+        <circle cx="15" cy="-15" r="1.5" /> <circle cx="-15" cy="15" r="1.5" />
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 6" opacity="0.6">
+        <line x1="0" y1="-10" x2="0" y2="-45" /> <line x1="0" y1="10" x2="0" y2="45" />
+        <line x1="-10" y1="0" x2="-45" y2="0" /> <line x1="10" y1="0" x2="45" y2="0" />
+        <line x1="-7" y1="-7" x2="-35" y2="-35" /> <line x1="7" y1="7" x2="35" y2="35" />
+        <line x1="7" y1="-7" x2="35" y2="-35" /> <line x1="-7" y1="7" x2="-35" y2="35" />
+      </g>
+    </g>
+
+    <!-- ================= 4. CSS ANIMATIONS ================= -->
+    <style>
+      .spin-slow {
+        transform-origin: 150px 650px;
+        animation: spin 30s linear infinite;
+      }
+      @keyframes spin { 100% { transform: rotate(360deg); } }
+
+      .water-ripple {
+        animation: ripple 4s ease-in-out infinite alternate;
+      }
+      @keyframes ripple { 
+        0% { transform: translateX(-10px); opacity: 0.5; } 
+        100% { transform: translateX(10px); opacity: 0.9; } 
+      }
+
+      .rocket {
+        animation: rocketAnim 3.5s infinite ease-in;
+      }
+      @keyframes rocketAnim {
+        0% { transform: translateY(250px) scaleY(1.5); opacity: 1; }
+        35% { transform: translateY(0px) scaleY(0.5); opacity: 1; }
+        36%, 100% { transform: translateY(0px); opacity: 0; }
+      }
+
+      .burst {
+        transform-origin: 0 0;
+        animation: burstAnim 3.5s infinite ease-out;
+      }
+      @keyframes burstAnim {
+        0%, 35% { transform: scale(0); opacity: 0; }
+        36% { transform: scale(0.2); opacity: 1; }
+        60% { transform: scale(1.3); opacity: 1; }
+        85% { transform: scale(1.6); opacity: 0; }
+        100% { transform: scale(1.6); opacity: 0; }
+      }
+
+      .fw-1 .rocket, .fw-1 .burst { animation-delay: 0s; }
+      .fw-2 .rocket, .fw-2 .burst { animation-delay: 1.5s; }
+      .fw-3 .rocket, .fw-3 .burst { animation-delay: 2.8s; }
+      .fw-4 .rocket, .fw-4 .burst { animation-delay: 0.8s; }
+    </style>
+  </defs>
+
+  <!-- ================= BACKGROUND SKY ================= -->
+  <rect width="800" height="1000" fill="url(#sky-grad)" />
+
+  <!-- ================= MOUNTAINS ================= -->
+  <path d="M 0 650 Q 100 580 250 620 T 500 570 T 800 620 L 800 700 L 0 700 Z" fill="#2d1045" opacity="0.8" />
+  <path d="M -50 680 Q 150 600 350 650 T 650 590 T 850 660 L 850 750 L -50 750 Z" fill="#200736" />
+
+  <!-- ================= 🎆 REALISTIC ANIMATED FIREWORKS 🎆 ================= -->
+  <g class="fw-1" transform="translate(200, 200)" color="#ff55ff" filter="url(#firework-glow)">
+    <path class="rocket" d="M -1.5 0 L 1.5 0 L 0 25 Z" fill="currentColor" opacity="0.8" />
+    <use href="#firework-burst" class="burst" />
+  </g>
+
+  <g class="fw-2" transform="translate(650, 180)" color="#00ffcc" filter="url(#firework-glow)">
+    <path class="rocket" d="M -1.5 0 L 1.5 0 L 0 30 Z" fill="currentColor" opacity="0.8" />
+    <use href="#firework-burst" class="burst" />
+  </g>
+
+  <g class="fw-3" transform="translate(680, 400)" color="#ffcc00" filter="url(#firework-glow)">
+    <g transform="scale(0.7)">
+      <path class="rocket" d="M -1.5 0 L 1.5 0 L 0 25 Z" fill="currentColor" opacity="0.8" />
+      <use href="#firework-burst" class="burst" />
+    </g>
+  </g>
+
+  <g class="fw-4" transform="translate(350, 250)" color="#aaddff" filter="url(#firework-glow)">
+    <g transform="scale(0.8)">
+      <path class="rocket" d="M -1.5 0 L 1.5 0 L 0 25 Z" fill="currentColor" opacity="0.8" />
+      <use href="#firework-burst" class="burst" />
+    </g>
+  </g>
+
+  <!-- ================= CITYSCAPE BACKGROUND BUILDINGS ================= -->
+  <g fill="#16042b">
+    <rect x="50" y="650" width="60" height="150" />
+    <rect x="250" y="620" width="40" height="180" />
+    <rect x="550" y="600" width="50" height="200" />
+    <rect x="720" y="580" width="60" height="220" />
+  </g>
+  <g fill="#ffeb3b" opacity="0.6">
+    <rect x="55" y="660" width="5" height="5" /> <rect x="70" y="660" width="5" height="5" />
+    <rect x="725" y="590" width="8" height="8" /> <rect x="740" y="610" width="8" height="8" />
+  </g>
+
+  <!-- ================= FERRIS WHEEL (مین گھومنے والا جھولا) ================= -->
+  <g transform="translate(0, 0)">
+    <path d="M 150 650 L 80 800 L 220 800 Z" fill="none" stroke="#2d1045" stroke-width="12" />
+    <circle cx="150" cy="650" r="15" fill="#ffcc00" filter="url(#neon-glow)" />
+    <g class="spin-slow">
+      <circle cx="150" cy="650" r="120" fill="none" stroke="#ff007f" stroke-width="6" filter="url(#neon-glow)" />
+      <circle cx="150" cy="650" r="100" fill="none" stroke="#ffcc00" stroke-width="2" />
+      <g stroke="#ffcc00" stroke-width="2">
+        <line x1="150" y1="530" x2="150" y2="770" /> <line x1="30" y1="650" x2="270" y2="650" />
+        <line x1="65" y1="565" x2="235" y2="735" /> <line x1="65" y1="735" x2="235" y2="565" />
+        <line x1="100" y1="540" x2="200" y2="760" /> <line x1="200" y1="540" x2="100" y2="760" />
+      </g>
+      <g fill="#ffea00" filter="url(#neon-glow)">
+        <circle cx="150" cy="530" r="6" /> <circle cx="150" cy="770" r="6" />
+        <circle cx="30" cy="650" r="6" /> <circle cx="270" cy="650" r="6" />
+        <circle cx="65" cy="565" r="6" /> <circle cx="235" cy="735" r="6" />
+        <circle cx="65" cy="735" r="6" /> <circle cx="235" cy="565" r="6" />
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= LEFT HOTEL TOWER ================= -->
+  <g transform="translate(140, 680)">
+    <rect x="0" y="0" width="80" height="150" fill="#2d1b4e" />
+    <path d="M -10 0 L 90 0 L 70 -30 L 10 -30 Z" fill="#ff007f" filter="url(#neon-glow)" />
+    <rect x="0" y="0" width="80" height="150" fill="none" stroke="#ffcc00" stroke-width="2" />
+    <g fill="#ffeb3b" opacity="0.8">
+      <rect x="10" y="20" width="10" height="20" /> <rect x="35" y="20" width="10" height="20" /> <rect x="60" y="20" width="10" height="20" />
+      <rect x="10" y="60" width="10" height="20" /> <rect x="35" y="60" width="10" height="20" /> <rect x="60" y="60" width="10" height="20" />
+      <rect x="10" y="100" width="10" height="20" /> <rect x="35" y="100" width="10" height="20" /> <rect x="60" y="100" width="10" height="20" />
+    </g>
+  </g>
+
+  <!-- ================= RIGHT GLOBE BUILDING ================= -->
+  <g transform="translate(650, 720)">
+    <path d="M -60 70 L 60 70 L 80 120 L -80 120 Z" fill="#1a0b33" stroke="#ff00ff" stroke-width="3" />
+    <circle cx="0" cy="0" r="60" fill="#0b3866" />
+    <g fill="none" stroke="#00ffff" stroke-width="2" filter="url(#neon-glow)">
+      <ellipse cx="0" cy="0" rx="60" ry="20" /> <ellipse cx="0" cy="0" rx="60" ry="40" />
+      <ellipse cx="0" cy="0" rx="20" ry="60" /> <ellipse cx="0" cy="0" rx="40" ry="60" />
+      <circle cx="0" cy="0" r="60" stroke-width="4" />
+    </g>
+    <text x="0" y="10" font-family="Arial" font-size="24" font-style="italic" font-weight="bold" fill="#ffcc00" text-anchor="middle" filter="url(#neon-glow)">Paris</text>
+  </g>
+
+  <!-- ================= CENTER ARENA (مین اسٹیڈیم - Yaraan لکھا ہوا) ================= -->
+  <g transform="translate(400, 780)">
+    <path d="M -200 60 Q 0 100 200 60 L 150 0 L -150 0 Z" fill="#2d1b4e" stroke="#00ffff" stroke-width="2" />
+    <path d="M -150 0 Q 0 30 150 0 L 120 -30 L -120 -30 Z" fill="#4a2b7a" />
+    <path d="M -120 -30 Q 0 10 120 -30 L 100 -120 Q 0 -100 -100 -120 Z" fill="url(#arena-glow)" />
+    <path d="M -110 -50 Q 0 -10 110 -50" fill="none" stroke="#ffffff" stroke-width="4" filter="url(#neon-glow)" />
+    <path d="M -105 -80 Q 0 -50 105 -80" fill="none" stroke="#ffffff" stroke-width="4" filter="url(#neon-glow)" />
+    <path d="M -100 -120 Q 0 -140 100 -120 L 0 -160 Z" fill="#ff7b00" />
+    
+    <!-- Yaraan Text - Center Aligned -->
+    <text x="0" y="-125" font-family="Arial Black" font-size="16" fill="#ffffff" text-anchor="middle">Yaraan</text>
+    
+    <path d="M 120 -100 L 130 -120 L 140 -105 L 150 -120 L 160 -100 Z" fill="none" stroke="#ffcc00" stroke-width="3" filter="url(#neon-glow)" />
+  </g>
+
+  <!-- ================= FOREGROUND WATER & REFLECTIONS ================= -->
+  <rect x="0" y="830" width="800" height="170" fill="url(#water-grad)" />
+  <g stroke="#8a1f6a" stroke-width="2" stroke-linecap="round" class="water-ripple">
+    <line x1="100" y1="860" x2="200" y2="860" /> <line x1="300" y1="870" x2="500" y2="870" stroke="#00ffff" opacity="0.6" />
+    <line x1="600" y1="850" x2="750" y2="850" /> <line x1="50" y1="900" x2="150" y2="900" stroke="#ffcc00" opacity="0.5" />
+    <line x1="250" y1="920" x2="400" y2="920" /> <line x1="550" y1="940" x2="700" y2="940" stroke="#ff00ff" opacity="0.6" />
+    <line x1="150" y1="960" x2="350" y2="960" /> <line x1="450" y1="970" x2="600" y2="970" />
+  </g>
+
+  <path d="M 0 810 L 200 840 L 400 850 L 600 840 L 800 810 L 800 830 L 600 860 L 400 870 L 200 860 L 0 830 Z" fill="#2d1b4e" stroke="#00ffff" stroke-width="2" filter="url(#neon-glow)" />
+
+  <g fill="#00ff00" stroke="#003300" stroke-width="1">
+    <path d="M 180 840 Q 185 820 170 825 Q 185 825 180 840" /> <path d="M 180 840 Q 175 820 190 825 Q 175 825 180 840" />
+    <path d="M 620 840 Q 625 820 610 825 Q 625 825 620 840" /> <path d="M 620 840 Q 615 820 630 825 Q 615 825 620 840" />
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+  <style>
+    /* مین سلور/ٹیل بارڈر */
+    .base-ring-sv1 {
+      fill: none;
+      stroke: #7ce2e4;
+      stroke-width: 7;
+      filter: drop-shadow(0 0 6px #00d1c1);
+    }
+
+    /* اینیمیٹڈ ٹیل گلو - سائز چھوٹا رکھا ہے تاکہ کناروں سے نہ ٹکرائے */
+    .glow-sv1 {
+      fill: none;
+      stroke: #00d1c1;
+      stroke-width: 30;
+      filter: blur(15px);
+      transform-origin: center;
+      animation: pulseCircle 3s infinite ease-in-out;
+    }
+
+    /* سلور گھومتی لہریں */
+    .waves-sv1 {
+      fill: none;
+      stroke: #C0C0C0;
+      stroke-width: 10;
+      stroke-dasharray: 60 300;
+      opacity: 0.5;
+      transform-origin: center;
+      animation: rotateCircle 5s linear infinite;
+    }
+
+    @keyframes rotateCircle {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseCircle {
+      0%, 100% { opacity: 0.3; transform: scale(0.85); }
+      50% { opacity: 0.6; transform: scale(1.05); }
+    }
+
+    .star { animation: blink 2s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+  </style>
+
+  <defs>
+    <!-- ماسک جو ڈی پی کو گول رکھتا ہے -->
+    <mask id="circle-mask-sv1">
+      <rect x="-100" y="-100" width="600" height="600" fill="white" />
+      <circle cx="200" cy="200" r="102" fill="black" />
+    </mask>
+  </defs>
+
+  <!-- اینیمیشن لیئرز -->
+  <g mask="url(#circle-mask-sv1)">
+    <circle class="glow-sv1" cx="200" cy="200" r="110" />
+    <circle class="waves-sv1" cx="200" cy="200" r="110" />
+  </g>
+
+  <!-- فکسڈ بارڈر -->
+  <circle class="base-ring-sv1" cx="200" cy="200" r="105" />
+
+  <!-- چھوٹے گول ذرات -->
+  <circle class="star" cx="280" cy="100" r="1.5" fill="#fff" />
+  <circle class="star" cx="120" cy="300" r="1.2" fill="#7ce2e4" style="animation-delay: 1s;" />
+</svg>

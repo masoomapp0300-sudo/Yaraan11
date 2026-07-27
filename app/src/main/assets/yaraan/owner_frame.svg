@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Extremely Bright Pure Gold Gradient -->
+    <linearGradient id="gold-bright" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE600"/>
+      <stop offset="25%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FFB300"/>
+      <stop offset="75%" stop-color="#FFFBEA"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+
+    <!-- Deep Royal Red / Ruby Gradient (Symbol of the Owner) -->
+    <linearGradient id="ruby-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF0033"/>
+      <stop offset="50%" stop-color="#990000"/>
+      <stop offset="100%" stop-color="#4D0000"/>
+    </linearGradient>
+
+    <!-- Solid Rich Gold for 3D Base & Depth -->
+    <linearGradient id="gold-solid" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B8860B"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#DAA520"/>
+      <stop offset="80%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#8B6508"/>
+    </linearGradient>
+
+    <!-- Platinum / Diamond Gradient for the Crown Base -->
+    <linearGradient id="platinum" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#A9A9A9"/>
+      <stop offset="100%" stop-color="#E0E0E0"/>
+    </linearGradient>
+
+    <!-- Glowing Filters -->
+    <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- 3D Drop Shadow for extreme realism -->
+    <filter id="drop-shadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.9"/>
+    </filter>
+  </defs>
+
+  <!-- ================= ROTATING HALO BACKGROUND ================= -->
+  <!-- Owner's majestic slow-rotating golden aura -->
+  <circle cx="100" cy="100" r="86" fill="none" stroke="url(#gold-bright)" stroke-width="6" stroke-dasharray="15 25" opacity="0.8" filter="url(#glow-gold)">
+    <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="url(#ruby-red)" stroke-width="2" stroke-dasharray="30 10" opacity="0.6">
+    <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="15s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- ================= THICK MAIN INNER RINGS ================= -->
+  <!-- Perfectly transparent center for DP -->
+  <circle cx="100" cy="100" r="74" fill="none" stroke="url(#gold-solid)" stroke-width="8" filter="url(#drop-shadow)"/>
+  <circle cx="100" cy="100" r="70" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" filter="url(#glow-gold)"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#4D0000" stroke-width="1"/>
+
+  <!-- ================= ROYAL WINGS / LEAVES (FIXED: Perfectly Synchronized Animation) ================= -->
+  
+  <!-- LEFT WING -->
+  <g filter="url(#drop-shadow)">
+    <!-- Moves left and back exactly with the right wing -->
+    <animateTransform attributeName="transform" type="translate" values="0 0; -3.5 0; 0 0" dur="3s" repeatCount="indefinite" ease="in-out"/>
+    
+    <path d="M 20 130 C -5 85 10 35 45 15 C 20 50 25 90 35 120 Z" fill="url(#gold-solid)"/>
+    <path d="M 12 115 C -2 70 15 25 40 10 C 18 45 22 80 28 110 Z" fill="url(#gold-bright)"/>
+    <path d="M 18 100 C 5 65 20 35 35 20" fill="none" stroke="url(#ruby-red)" stroke-width="2" opacity="0.8" filter="url(#glow-red)"/>
+  </g>
+
+  <!-- RIGHT WING -->
+  <g filter="url(#drop-shadow)">
+    <!-- Moves right and back exactly with the left wing -->
+    <animateTransform attributeName="transform" type="translate" values="0 0; 3.5 0; 0 0" dur="3s" repeatCount="indefinite" ease="in-out"/>
+    
+    <path d="M 180 130 C 205 85 190 35 155 15 C 180 50 175 90 165 120 Z" fill="url(#gold-solid)"/>
+    <path d="M 188 115 C 202 70 185 25 160 10 C 182 45 178 80 172 110 Z" fill="url(#gold-bright)"/>
+    <path d="M 182 100 C 195 65 180 35 165 20" fill="none" stroke="url(#ruby-red)" stroke-width="2" opacity="0.8" filter="url(#glow-red)"/>
+  </g>
+
+  <!-- ================= FLOATING OWNER CROWN ================= -->
+  <g filter="url(#drop-shadow)">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -3; 0 0" dur="4s" repeatCount="indefinite"/>
+    
+    <!-- Crown Red Velvet Dome -->
+    <path d="M 75 25 C 75 -5 125 -5 125 25 Z" fill="url(#ruby-red)"/>
+    
+    <!-- Crown Solid Gold Base -->
+    <path d="M 70 25 L 130 25 L 125 32 L 75 32 Z" fill="url(#gold-solid)"/>
+    
+    <!-- Platinum Spikes / Arches -->
+    <path d="M 70 25 L 65 10 L 85 20 L 100 5 L 115 20 L 135 10 L 130 25 Z" fill="url(#platinum)" stroke="url(#gold-solid)" stroke-width="1"/>
+    
+    <!-- Crown Jewels -->
+    <circle cx="100" cy="8" r="3" fill="#FFFFFF" filter="url(#glow-gold)"/>
+    <circle cx="65" cy="12" r="2" fill="url(#ruby-red)"/>
+    <circle cx="135" cy="12" r="2" fill="url(#ruby-red)"/>
+    <circle cx="100" cy="28.5" r="2" fill="url(#ruby-red)"/>
+    <circle cx="85" cy="28.5" r="1.5" fill="#FFF"/>
+    <circle cx="115" cy="28.5" r="1.5" fill="#FFF"/>
+  </g>
+
+  <!-- ================= HEAVY BOTTOM "OWNER" PLAQUE ================= -->
+  <!-- 100% Static / Fixed as requested -->
+  <g filter="url(#drop-shadow)">
+    <!-- Outer Massive Gold Plate (Shield Style) -->
+    <path d="M 12 146 L 188 146 L 170 190 L 30 190 Z" fill="url(#gold-solid)"/>
+    
+    <!-- Inner Deep Red Velvet Plate (Creates ultra-premium contrast) -->
+    <path d="M 18 150 L 182 150 L 166 185 L 34 185 Z" fill="url(#ruby-red)"/>
+    
+    <!-- Inner Bright Glowing Golden Border -->
+    <path d="M 22 153 L 178 153 L 163 181 L 37 181 Z" fill="none" stroke="url(#gold-bright)" stroke-width="1.5" filter="url(#glow-gold)"/>
+
+    <!-- Corner Diamond Studs -->
+    <circle cx="34" cy="166" r="3" fill="#FFFFFF" filter="url(#glow-gold)"/>
+    <circle cx="166" cy="166" r="3" fill="#FFFFFF" filter="url(#glow-gold)"/>
+
+    <!-- OWNER Bold Text -->
+    <text x="100" y="169" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="22" fill="url(#gold-bright)" text-anchor="middle" dominant-baseline="middle" letter-spacing="6">
+      OWNER
+      <!-- Ultra-Shiny Text Color Animation -->
+      <animate attributeName="fill" values="#FFE600; #FFFFFF; #FFB300; #FFE600" dur="3s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- ================= ROYAL MAGIC SPARKS (Gold & Ruby) ================= -->
+  <g>
+    <!-- Gold Spark 1 -->
+    <circle cx="25" cy="140" r="2.5" fill="#FFFFFF" filter="url(#glow-gold)">
+       <animate attributeName="cy" values="140; 40" dur="2.5s" repeatCount="indefinite"/>
+       <animate attributeName="cx" values="25; 10; 30; 15" dur="2.5s" repeatCount="indefinite"/>
+       <animate attributeName="opacity" values="0; 1; 0" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Ruby Red Spark 1 -->
+    <circle cx="175" cy="140" r="3" fill="#FF0033" filter="url(#glow-red)">
+       <animate attributeName="cy" values="140; 40" dur="2.2s" repeatCount="indefinite" begin="0.5s"/>
+       <animate attributeName="cx" values="175; 190; 165; 185" dur="2.2s" repeatCount="indefinite" begin="0.5s"/>
+       <animate attributeName="opacity" values="0; 1; 0" dur="2.2s" repeatCount="indefinite" begin="0.5s"/>
+    </circle>
+
+    <!-- Gold Spark 2 -->
+    <circle cx="45" cy="130" r="2" fill="#FFE600" filter="url(#glow-gold)">
+       <animate attributeName="cy" values="130; 50" dur="2s" repeatCount="indefinite" begin="1s"/>
+       <animate attributeName="opacity" values="0; 1; 0" dur="2s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+
+    <!-- Ruby Red Spark 2 -->
+    <circle cx="155" cy="130" r="2" fill="#FF0033" filter="url(#glow-red)">
+       <animate attributeName="cy" values="130; 50" dur="1.8s" repeatCount="indefinite" begin="1.2s"/>
+       <animate attributeName="opacity" values="0; 1; 0" dur="1.8s" repeatCount="indefinite" begin="1.2s"/>
+    </circle>
+  </g>
+</svg>

@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -600 1400 2400" width="100%" height="100%" style="overflow: visible; background-color: transparent;">
+  <defs>
+    <!-- BLUE ROCKET AURA -->
+    <radialGradient id="rocketAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00AAFF" stop-opacity="0.8" />
+      <stop offset="40%" stop-color="#0033FF" stop-opacity="0.5" />
+      <stop offset="70%" stop-color="#000066" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- BLUE BODY GRADIENTS -->
+    <linearGradient id="blueBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#001A4D" />
+      <stop offset="15%" stop-color="#0066FF" />
+      <stop offset="50%" stop-color="#88BBFF" />
+      <stop offset="85%" stop-color="#0066FF" />
+      <stop offset="100%" stop-color="#001133" />
+    </linearGradient>
+
+    <linearGradient id="blueDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#001133" />
+      <stop offset="50%" stop-color="#003399" />
+      <stop offset="100%" stop-color="#001133" />
+    </linearGradient>
+
+    <!-- BLUE GEM -->
+    <radialGradient id="blueGem" cx="40%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="20%" stop-color="#99CCFF" />
+      <stop offset="50%" stop-color="#0066FF" />
+      <stop offset="80%" stop-color="#003399" />
+      <stop offset="100%" stop-color="#001133" />
+    </radialGradient>
+    
+    <!-- GOLD GRADIENTS -->
+    <linearGradient id="gold3D" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#805500" />
+      <stop offset="20%" stop-color="#FFCC00" />
+      <stop offset="50%" stop-color="#FFFF88" />
+      <stop offset="80%" stop-color="#FFaa00" />
+      <stop offset="100%" stop-color="#664400" />
+    </linearGradient>
+
+    <linearGradient id="goldVertical" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFF88" />
+      <stop offset="50%" stop-color="#FFCC00" />
+      <stop offset="100%" stop-color="#995500" />
+    </linearGradient>
+
+    <!-- BLUE FLAME GRADIENT -->
+    <linearGradient id="flameBlue" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="30%" stop-color="#99CCFF" />
+      <stop offset="70%" stop-color="#0055FF" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- FILTERS -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="heavyShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="15" stdDeviation="12" flood-color="#000000" flood-opacity="0.8" />
+    </filter>
+
+    <!-- REUSABLE SPARK/STAR -->
+    <g id="star">
+      <circle cx="0" cy="0" r="4" fill="#FFF" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.2; 1; 0.2" dur="1s" repeatCount="indefinite" />
+        <animateTransform attributeName="transform" type="scale" values="1; 1.5; 1" dur="1s" repeatCount="indefinite" />
+      </circle>
+      <path d="M 0,-12 L 2,-2 L 12,0 L 2,2 L 0,12 L -2,2 L -12,0 L -2,-2 Z" fill="#99CCFF" opacity="0.9" />
+    </g>
+
+    <!-- REUSABLE FIRE (Blue) -->
+    <g id="blueFire">
+      <path d="M 0,0 Q 40,80 60,180 Q 0,280 -60,180 Q -40,80 0,0 Z" fill="url(#flameBlue)" filter="url(#glow)">
+        <animateTransform attributeName="transform" type="scale" values="1,1; 1.05,1.2; 0.95,0.9; 1,1" dur="0.1s" repeatCount="indefinite" />
+      </path>
+      <path d="M 0,20 Q 25,70 35,140 Q 0,200 -35,140 Q -25,70 0,20 Z" fill="#99CCFF">
+        <animateTransform attributeName="transform" type="scale" values="1,1; 0.9,1.3; 1.1,0.8; 1,1" dur="0.08s" repeatCount="indefinite" />
+      </path>
+      <path d="M 0,50 Q 15,90 20,120 Q 0,160 -20,120 Q -15,90 0,50 Z" fill="#FFFFFF">
+        <animateTransform attributeName="transform" type="scale" values="1,1; 1.2,0.9; 0.8,1.1; 1,1" dur="0.06s" repeatCount="indefinite" />
+      </path>
+    </g>
+
+    <!-- WHITE WINGS (Added back for Level 2 detail) -->
+    <g id="whiteWing">
+      <path d="M 0,0 C 40,-30 100,-20 120,30 C 90,0 50,10 0,40 Z" fill="#FFFFFF" filter="url(#glow)" />
+      <path d="M 0,20 C 50,0 110,20 130,80 C 100,40 50,40 0,60 Z" fill="#E6F2FF" />
+      <path d="M 0,40 C 60,30 120,60 130,120 C 100,80 50,70 0,80 Z" fill="#99CCFF" />
+    </g>
+
+    <!-- SIDE BOOSTER (Level 2 Style) -->
+    <g id="sideBooster">
+      <ellipse cx="0" cy="0" rx="55" ry="110" fill="url(#blueBody)" filter="url(#heavyShadow)" />
+      <path d="M -50,-40 L 50,-40 L 55,-10 L -55,-10 Z" fill="url(#gold3D)" />
+      <path d="M -40,-70 L 40,-70 L 0,-130 Z" fill="url(#gold3D)" />
+      <circle cx="0" cy="20" r="25" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+      <circle cx="0" cy="20" r="18" fill="url(#blueGem)" />
+      <path d="M -35,100 L 35,100 L 45,130 L -45,130 Z" fill="url(#gold3D)" />
+    </g>
+
+    <!-- TIMER RING -->
+    <g id="goldenRingGroup">
+      <g filter="url(#glow)">
+        <circle cx="0" cy="0" r="130" fill="none" stroke="#00AAFF" stroke-width="8" opacity="0.6" />
+        <circle cx="0" cy="0" r="150" fill="none" stroke="#99CCFF" stroke-width="4" opacity="0.9" />
+      </g>
+      <circle cx="0" cy="0" r="140" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="10 20" opacity="0.8">
+        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="4s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    <path id="textPathYaraam" d="M 380,802 Q 500,832 620,802" />
+  </defs>
+
+  <!-- MOVEMENT -->
+  <g id="masterMovement">
+    <animateTransform attributeName="transform" type="translate" values="0,2000; 0,250; 0,-380; 0,-380; 0,-4000" keyTimes="0; 0.08; 0.842; 0.947; 1" dur="9.5s" fill="freeze" calcMode="spline" keySplines="0.1 0.8 0.2 1; 0.3 0.3 0.7 0.7; 0 0 1 1; 0.5 0 1 1" />
+    
+    <g id="rocketShake">
+      <animateTransform attributeName="transform" type="translate" values="0,0; -2,1; 2,-1; -1,-2; 1,1; 0,0" dur="0.15s" repeatCount="indefinite" end="8s" />
+      <animateTransform attributeName="transform" type="translate" values="0,0; -25,15; 30,-15; -15,-25; 25,20; -30,0; 0,0" begin="8s" dur="0.035s" repeatCount="indefinite" end="9s" />
+      
+      <g transform="translate(500, 700) scale(1.3) translate(-500, -700)">
+        
+        <circle cx="500" cy="650" r="450" fill="url(#rocketAura)" />
+
+        <!-- ORBS -->
+        <g id="floatingWhiteOrbs">
+          <circle cx="350" cy="900" r="10" fill="#FFFFFF" filter="url(#glow)"><animateTransform attributeName="transform" type="translate" values="0,0; 0,-800" dur="2s" repeatCount="indefinite" begin="0s" /><animate attributeName="opacity" values="0; 1; 0" dur="2s" repeatCount="indefinite" begin="0s" /></circle>
+          <circle cx="650" cy="950" r="12" fill="#FFFFFF" filter="url(#glow)"><animateTransform attributeName="transform" type="translate" values="0,0; 0,-900" dur="2.5s" repeatCount="indefinite" begin="0.3s" /><animate attributeName="opacity" values="0; 0.9; 0" dur="2.5s" repeatCount="indefinite" begin="0.3s" /></circle>
+        </g>
+
+        <!-- SPARKS -->
+        <g id="sparksGroup">
+          <animate attributeName="opacity" to="0" begin="9s" fill="freeze" />
+          <use href="#star" x="250" y="500" transform="scale(0.8)" />
+          <use href="#star" x="750" y="550" transform="scale(1.2)" />
+        </g>
+        
+        <!-- FLAMES (3 for Level 2) -->
+        <g transform="translate(180, 840) scale(1.1)"><use href="#blueFire" /></g>
+        <g transform="translate(820, 840) scale(1.1)"><use href="#blueFire" /></g>
+        <g transform="translate(500, 940) scale(1.7)"><use href="#blueFire" /></g>
+
+        <!-- BOTTOM FINS -->
+        <g transform="translate(500, 870)" filter="url(#heavyShadow)">
+          <path d="M -100,-90 Q -160,50 -130,120 Q -90,100 -55,0 Z" fill="url(#goldVertical)" />
+          <path d="M 100,-90 Q 160,50 130,120 Q 90,100 55,0 Z" fill="url(#goldVertical)" />
+          <path d="M -25,-20 Q 0,110 0,160 Q 0,110 25,-20 Z" fill="#FFE680" />
+        </g>
+
+        <!-- ENGINE BASE -->
+        <g transform="translate(500, 840)">
+          <path d="M -90,0 L 90,0 L 110,60 L -110,60 Z" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+          <polygon points="-75,60 75,60 0,120" fill="url(#gold3D)" />
+        </g>
+
+        <!-- ENERGY LINES (Wider for L2) -->
+        <g id="missileEnergyLines">
+          <ellipse cx="180" cy="530" rx="3" ry="40" fill="#99CCFF" filter="url(#glow)"><animate attributeName="ry" values="20; 90; 20" dur="0.9s" repeatCount="indefinite" begin="0.5s" /><animate attributeName="opacity" values="0; 0.8; 0" dur="0.9s" repeatCount="indefinite" begin="0.5s" /><animate attributeName="cy" values="550; 430; 550" dur="0.9s" repeatCount="indefinite" begin="0.5s" /></ellipse>
+          <ellipse cx="820" cy="530" rx="3" ry="40" fill="#99CCFF" filter="url(#glow)"><animate attributeName="ry" values="20; 90; 20" dur="1.1s" repeatCount="indefinite" begin="0.2s" /><animate attributeName="opacity" values="0; 0.8; 0" dur="1.1s" repeatCount="indefinite" begin="0.2s" /><animate attributeName="cy" values="550; 430; 550" dur="1.1s" repeatCount="indefinite" begin="0.2s" /></ellipse>
+        </g>
+
+        <!-- STRUTS FOR 2 MISSILES -->
+        <path d="M 350,620 L 180,670 L 180,770 L 370,820 Z" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+        <path d="M 650,620 L 820,670 L 820,770 L 630,820 Z" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+        
+        <!-- 2 SIDE MISSILES (Positioned wider than L1) -->
+        <use href="#sideBooster" x="180" y="730" />
+        <use href="#sideBooster" x="820" y="730" />
+
+        <!-- MAIN BODY -->
+        <path d="M 360,460 C 280,600 310,800 380,840 L 620,840 C 690,800 720,600 640,460 Q 500,410 360,460 Z" fill="url(#blueBody)" filter="url(#heavyShadow)" />
+        <path d="M 355,530 Q 500,570 645,530 L 650,560 Q 500,600 350,560 Z" fill="url(#gold3D)" />
+        
+        <!-- YARAAN BAND -->
+        <path d="M 365,790 Q 500,820 635,790 L 630,830 Q 500,860 370,830 Z" fill="url(#gold3D)" />
+        <text font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="22" fill="#001133" letter-spacing="4">
+          <textPath href="#textPathYaraam" startOffset="50%" text-anchor="middle">YARAAN</textPath>
+        </text>
+
+        <!-- NOSE CONE -->
+        <path d="M 360,460 L 640,460 Q 500,240 500,240 Q 500,240 360,460 Z" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+        <path d="M 380,440 L 620,440 Q 500,270 500,270 Q 500,270 380,440 Z" fill="#E6F2FF" />
+
+        <!-- CENTER GEM & WINGS (Level 2 detail: has white wings) -->
+        <g transform="translate(500, 610)">
+          <g transform="translate(-70, 0) scale(-0.9, 0.9)"><use href="#whiteWing" /></g>
+          <g transform="translate(70, 0) scale(0.9)"><use href="#whiteWing" /></g>
+          <circle cx="0" cy="0" r="85" fill="url(#gold3D)" filter="url(#heavyShadow)" />
+          <circle cx="0" cy="0" r="65" fill="url(#blueDark)" />
+          <polygon points="0,-55 45,-15 25,50 -25,50 -45,-15" fill="url(#blueGem)" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- TIMER -->
+  <g transform="translate(500, -450) scale(0.65)">
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="0s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="0s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">8</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">8</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="1s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="1s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">7</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">7</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="2s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="2s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">6</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">6</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="3s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="3s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">5</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">5</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="4s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="4s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">4</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">4</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="5s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="5s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">3</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">3</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="6s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="6s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">2</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">2</text></g>
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.1; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="7s" dur="1s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="7s" dur="1s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="55" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">1</text><text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="160" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">1</text></g>
+    
+    <g opacity="0" transform="scale(0)"><animateTransform attributeName="transform" type="scale" values="0.5; 1.2; 1; 0.5" keyTimes="0; 0.2; 0.8; 1" begin="8s" dur="1.2s" fill="freeze" /><animate attributeName="opacity" values="0; 1; 1; 0" keyTimes="0; 0.2; 0.8; 1" begin="8s" dur="1.2s" fill="freeze" /><use href="#goldenRingGroup" /><text x="0" y="50" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="120" text-anchor="middle" dominant-baseline="central" fill="#001133" stroke="#000011" stroke-width="15">GO</text><text x="0" y="35" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="120" text-anchor="middle" dominant-baseline="central" fill="#99CCFF" stroke="#FFFFFF" stroke-width="4" filter="url(#glow)">GO</text></g>
+  </g>
+</svg>

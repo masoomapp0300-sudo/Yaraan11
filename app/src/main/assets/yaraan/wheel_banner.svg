@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="100%" height="100%">
+  <defs>
+    <!-- Glistening Deep Red Base Gradient -->
+    <linearGradient id="red-base-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3a0006" />
+      <stop offset="30%" stop-color="#80000c" />
+      <stop offset="50%" stop-color="#b80010" />
+      <stop offset="70%" stop-color="#80000c" />
+      <stop offset="100%" stop-color="#3a0006" />
+    </linearGradient>
+
+    <!-- Gilded Metallic Gold Gradient -->
+    <linearGradient id="gold-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffee55" />
+      <stop offset="30%" stop-color="#ffb300" />
+      <stop offset="50%" stop-color="#fff59d" />
+      <stop offset="80%" stop-color="#c57f00" />
+      <stop offset="100%" stop-color="#ffee55" />
+    </linearGradient>
+
+    <!-- Glistening Gemstone Purple Gradient -->
+    <linearGradient id="gem-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea80fc" />
+      <stop offset="50%" stop-color="#9c27b0" />
+      <stop offset="100%" stop-color="#4a148c" />
+    </linearGradient>
+
+    <!-- Moving Sheen/Chamak Gradient -->
+    <linearGradient id="sheen-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Soft Golden Glow filter -->
+    <filter id="gold-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="1.8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Realistic Shadow -->
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Clipping path for restricting the moving sheen inside the elongated red plate -->
+    <clipPath id="plate-clip">
+      <rect x="25" y="25" width="270" height="40" rx="6" />
+    </clipPath>
+  </defs>
+
+  <!-- Main Art Group -->
+  <g filter="url(#soft-shadow)">
+    
+    <!-- ================= 1. LEFT SIDE PREMIUM 3D DIAMOND CAP (Symmetric Touch at Left Edge) ================= -->
+    <g transform="translate(22, 45)" filter="url(#gold-glow)">
+      <!-- Gold Outer Border Frame -->
+      <path d="M 0 -18 L 13 0 L 0 18 L -13 0 Z" fill="url(#gold-metal)" stroke="url(#gold-stroke)" stroke-width="1.5" />
+      <!-- Diamond Facets for 3D Look -->
+      <path d="M 0 -15 L -11 0 L 0 0 Z" fill="#ea80fc" />
+      <path d="M 0 -15 L 11 0 L 0 0 Z" fill="#9c27b0" />
+      <path d="M -11 0 L 0 15 L 0 0 Z" fill="#7b1fa2" opacity="0.9" />
+      <path d="M 0 15 L 11 0 L 0 0 Z" fill="#4a148c" opacity="0.9" />
+      <!-- Sheen/Highlight with blinking animation -->
+      <path d="M -8 -3 L -2 -11 L 0 -7 Z" fill="#ffffff" opacity="0.6">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="1.6s" repeatCount="indefinite" />
+      </path>
+      <!-- Elegant gold curls wrapping the diamond and joining the plate -->
+      <path d="M -13 0 C -20 -15, -15 -25, 0 -22" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+      <path d="M -13 0 C -20 15, -15 25, 0 22" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+    </g>
+
+    <!-- ================= 2. RIGHT SIDE PREMIUM 3D DIAMOND CAP (Symmetric Touch at Right Edge) ================= -->
+    <g transform="translate(298, 45)" filter="url(#gold-glow)">
+      <!-- Gold Outer Border Frame -->
+      <path d="M 0 -18 L 13 0 L 0 18 L -13 0 Z" fill="url(#gold-metal)" stroke="url(#gold-stroke)" stroke-width="1.5" />
+      <!-- Diamond Facets for 3D Look -->
+      <path d="M 0 -15 L -11 0 L 0 0 Z" fill="#ea80fc" />
+      <path d="M 0 -15 L 11 0 L 0 0 Z" fill="#9c27b0" />
+      <path d="M -11 0 L 0 15 L 0 0 Z" fill="#7b1fa2" opacity="0.9" />
+      <path d="M 0 15 L 11 0 L 0 0 Z" fill="#4a148c" opacity="0.9" />
+      <!-- Sheen/Highlight with blinking animation -->
+      <path d="M -8 -3 L -2 -11 L 0 -7 Z" fill="#ffffff" opacity="0.6">
+        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.6s" repeatCount="indefinite" />
+      </path>
+      <!-- Elegant gold curls wrapping the diamond and joining the plate -->
+      <path d="M 13 0 C 20 -15, 15 -25, 0 -22" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+      <path d="M 13 0 C 20 15, 15 25, 0 22" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+    </g>
+
+    <!-- ================= 3. TOP & BOTTOM GOLD FILIGREE SCROLLS ================= -->
+    <!-- Top Scrolls (Stretching all the way from Left Diamond to Right Diamond) -->
+    <path d="M 30 25 C 100 10, 220 10, 290 25" fill="none" stroke="url(#gold-metal)" stroke-width="2.5" />
+    <path d="M 50 28 Q 70 15 90 20" fill="none" stroke="url(#gold-metal)" stroke-width="1.5" />
+    <path d="M 270 28 Q 250 15 230 20" fill="none" stroke="url(#gold-metal)" stroke-width="1.5" />
+
+    <!-- Bottom Scrolls (Wrapping the bottom seamlessly) -->
+    <path d="M 30 65 C 100 80, 220 70, 290 65" fill="none" stroke="url(#gold-metal)" stroke-width="2.5" />
+
+    <!-- ================= 4. ELONGATED RED BASE PLATE (X=25 to X=295) ================= -->
+    <rect x="25" y="25" width="270" height="40" rx="6" fill="url(#red-base-grad)" stroke="url(#gold-metal)" stroke-width="2" />
+    
+    <!-- Animated moving sheen (Chamak) sweeping smoothly from left to right -->
+    <g clip-path="url(#plate-clip)">
+      <rect x="0" y="20" width="50" height="50" fill="url(#sheen-grad)" transform="skewX(-30)">
+        <animate 
+          attributeName="x" 
+          from="0" 
+          to="320" 
+          dur="2.4s" 
+          repeatCount="indefinite" />
+      </rect>
+    </g>
+
+    <!-- Glistening Diagonal Static Reflection Sheens -->
+    <path d="M 75 26 L 100 26 L 80 64 L 55 64 Z" fill="#ffffff" opacity="0.12" />
+    <path d="M 215 26 L 230 26 L 215 64 L 200 64 Z" fill="#ffffff" opacity="0.08" />
+
+    <!-- ================= 5. TOP SHINY 3D DIAMOND CROWN (Centered at X=160 - Added as requested) ================= -->
+    <g transform="translate(160, 23)" filter="url(#gold-glow)">
+      <!-- Gold Outer Border Frame -->
+      <path d="M 0 -11 L 9 0 L 0 11 L -9 0 Z" fill="url(#gold-metal)" stroke="url(#gold-metal)" stroke-width="1" />
+      <!-- Diamond Facets for 3D Glistening Look -->
+      <path d="M 0 -9 L 7 0 L 0 0 Z" fill="#ea80fc" />
+      <path d="M -7 0 L 0 -9 L 0 0 Z" fill="#9c27b0" />
+      <path d="M -7 0 L 0 9 L 0 0 Z" fill="#7b1fa2" opacity="0.9" />
+      <path d="M 0 9 L 7 0 L 0 0 Z" fill="#4a148c" opacity="0.9" />
+      <!-- Sparkling Highlight Sheen -->
+      <path d="M -5 -2 L -1 -6 L 0 -3 Z" fill="#ffffff" opacity="0.5">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="1.4s" repeatCount="indefinite" />
+      </path>
+      <!-- Tiny gold scroll wings connecting the diamond beautifully to the plate -->
+      <path d="M -9 0 Q -16 6 -24 1" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+      <path d="M 9 0 Q 16 6 24 1" fill="none" stroke="url(#gold-metal)" stroke-width="1.2" />
+    </g>
+
+    <!-- ================= 6. BOTTOM WINGED GOLDEN EMBLEM (Centered at X=160) ================= -->
+    <g transform="translate(160, 65)">
+      <!-- Central Shield -->
+      <path d="M -10 -6 L 10 -6 L 8 6 L 0 15 L -8 6 Z" fill="url(#gold-metal)" stroke="url(#gold-metal)" stroke-width="1" />
+      <!-- Crest Wings Left and Right -->
+      <path d="M -10 -3 C -22 -10, -38 0, -50 10 C -32 10, -18 3, -10 1 Z" fill="url(#gold-metal)" />
+      <path d="M 10 -3 C 22 -10, 38 0, 50 10 C 32 10, 18 3, 10 1 Z" fill="url(#gold-metal)" />
+    </g>
+
+    <!-- ================= 7. LEFT SIDE DP SLOT GLOWING FRAME (Inside the Red Plate at X=52) ================= -->
+    <!-- اس کا مرکز بائیں جانب x=52 پر رکھا گیا ہے تاکہ یوزر کی ڈی پی اس سنہرے دائرے کے عین وسط میں چمکے -->
+    <circle cx="52" cy="45" r="21" fill="#140103" stroke="url(#gold-metal)" stroke-width="2.5" filter="url(#gold-glow)">
+      <animate attributeName="stroke-width" values="1.8;3.5;1.8" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="52" cy="45" r="22.5" fill="none" stroke="#ffffff" stroke-width="0.75" opacity="0.4" />
+
+    <!-- ================= 8. SYMMETRICAL RIGHT SIDE GLOWING FRAME (Inside the Red Plate at X=268) ================= -->
+    <!-- توازن برقرار رکھنے کے لیے بالکل دائیں جانب x=268 پر ایک اور چمکدار دائرہ بنایا گیا ہے -->
+    <circle cx="268" cy="45" r="21" fill="#140103" stroke="url(#gold-metal)" stroke-width="2.5" filter="url(#gold-glow)">
+      <animate attributeName="stroke-width" values="1.8;3.5;1.8" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="268" cy="45" r="22.5" fill="none" stroke="#ffffff" stroke-width="0.75" opacity="0.4" />
+    
+    <!-- 3D Glistening Purple Gem right in the center of the right ring (for symmetry and premium look) -->
+    <g transform="translate(268, 45)" filter="url(#gold-glow)">
+      <path d="M 0 -11 L 9 0 L 0 11 L -9 0 Z" fill="url(#gem-grad)" />
+      <path d="M 0 -11 L 9 0 L 0 0 Z" fill="#ea80fc" opacity="0.7" />
+      <path d="M -9 0 L 0 -11 L 0 0 Z" fill="#9c27b0" opacity="0.8" />
+      <path d="M -9 0 L 0 11 L 0 0 Z" fill="#4a148c" opacity="0.9" />
+      <path d="M -5 -3 L -1 -7 L 0 -4 Z" fill="#ffffff" opacity="0.5">
+        <animate attributeName="opacity" values="0.15;0.85;0.15" dur="1.5s" repeatCount="indefinite" />
+      </path>
+    </g>
+
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradInbox" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" /><stop offset="25%" style="stop-color:#FCF6BA" />
+      <stop offset="50%" style="stop-color:#B38728" /><stop offset="75%" style="stop-color:#FBF5B7" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+    <pattern id="texInbox" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="2" style="stroke:#8A6D3B; stroke-width:0.6" />
+    </pattern>
+  </defs>
+  <!-- Main Body -->
+  <path d="M 10,40 L 25,20 H 75 L 90,40 V 82 H 10 Z" fill="url(#goldGradInbox)" stroke="#8A6D3B" stroke-width="1"/>
+  <!-- Handle/Front Cut -->
+  <path d="M 10,45 H 35 Q 50,60 65,45 H 90" fill="none" stroke="#8A6D3B" stroke-width="4" stroke-linecap="round" />
+  <!-- Texture Overlay -->
+  <path d="M 10,40 L 25,20 H 75 L 90,40 V 82 H 10 Z" fill="url(#texInbox)" style="opacity: 0.5;" />
+</svg>

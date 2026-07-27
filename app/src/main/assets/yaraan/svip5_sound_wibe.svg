@@ -1,0 +1,107 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .glow-ring {
+      fill: none;
+      stroke: #ff0000;
+      stroke-width: 50;
+      filter: blur(25px);
+      opacity: 0.4;
+      transform-origin: center;
+      animation: pulseAura 1.8s infinite ease-in-out;
+    }
+
+    .ray-group {
+      transform-origin: center;
+      animation: slowRotate 30s linear infinite;
+    }
+
+    .ray {
+      stroke: #ff4d4d;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      opacity: 0.5;
+      animation: rayPulse 1.8s infinite ease-in-out;
+    }
+
+    .main-border {
+      fill: none;
+      stroke: #ff0000;
+      stroke-width: 8;
+      filter: drop-shadow(0 0 15px #ff0000);
+    }
+
+    .sparkle {
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.08); opacity: 0.6; }
+    }
+
+    @keyframes rayPulse {
+      0%, 100% { opacity: 0.2; stroke-width: 1; }
+      50% { opacity: 0.8; stroke-width: 2.5; }
+    }
+
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+
+  <defs>
+    <!-- ماسک: تصویر والی جگہ (سینٹر) کو صاف رکھنے کے لیے -->
+    <mask id="dp-mask">
+      <rect width="100%" height="100%" fill="white" />
+      <circle cx="200" cy="200" r="102" fill="black" />
+    </mask>
+  </defs>
+
+  <!-- اینیمیٹڈ گلو اور شعاعیں (ماسک کے ساتھ) -->
+  <g mask="url(#dp-mask)">
+    <circle class="glow-ring" cx="200" cy="200" r="125" />
+    
+    <g class="ray-group">
+      <!-- 24 روشن شعاعیں -->
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(0 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(15 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(30 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(45 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(60 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(75 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(90 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(105 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(120 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(135 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(150 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(165 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(180 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(195 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(210 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(225 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(240 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(255 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(270 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(285 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(300 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(315 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(330 200 200)" />
+      <line class="ray" x1="200" y1="30" x2="200" y2="90" transform="rotate(345 200 200)" />
+    </g>
+  </g>
+
+  <!-- اصلی سرخ بارڈر -->
+  <circle class="main-border" cx="200" cy="200" r="105" />
+
+  <!-- چمکتے ہوئے ذرات (Sparkles) -->
+  <circle class="sparkle" cx="280" cy="100" r="1.5" fill="white" />
+  <circle class="sparkle" cx="120" cy="280" r="2" fill="#ff4d4d" style="animation-delay: 0.5s;" />
+  <circle class="sparkle" cx="200" cy="50" r="1" fill="white" style="animation-delay: 1s;" />
+  <circle class="sparkle" cx="340" cy="220" r="1.2" fill="white" style="animation-delay: 1.5s;" />
+</svg>

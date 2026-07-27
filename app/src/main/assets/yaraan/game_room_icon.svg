@@ -1,0 +1,55 @@
+<svg width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- پریمیم گولڈ گریڈیئنٹ -->
+    <linearGradient id="goldButtonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" />
+      <stop offset="50%" style="stop-color:#FCF6BA" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+    
+    <!-- لگژری گرین گریڈیئنٹ (گہرا اور چمکدار گرین) -->
+    <linearGradient id="emeraldGreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#008080" />
+      <stop offset="100%" style="stop-color:#004D4D" />
+    </linearGradient>
+
+    <!-- باریک ٹیکسچر لائنز -->
+    <pattern id="proTexture" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="3" style="stroke:#003333; stroke-width:0.5; opacity:0.3" />
+    </pattern>
+  </defs>
+
+  <!-- مین گیم کنٹرولر باڈی (Green Base) -->
+  <g>
+    <!-- شیڈو کے لیے ہلکی سی لیئر -->
+    <path d="M 20,42 C 20,32 35,27 50,27 C 65,27 80,32 80,42 C 80,57 90,77 75,82 C 65,82 60,67 50,67 C 40,67 35,82 25,82 C 10,77 20,57 20,42 Z" fill="#002b2b" />
+    
+    <!-- مین گرین باڈی -->
+    <path d="M 20,40 C 20,30 35,25 50,25 C 65,25 80,30 80,40 C 80,55 90,75 75,80 C 65,80 60,65 50,65 C 40,65 35,80 25,80 C 10,75 20,55 20,40 Z" fill="url(#emeraldGreenGrad)" stroke="url(#goldButtonGrad)" stroke-width="1" />
+    
+    <!-- ٹیکسچر لیئر -->
+    <path d="M 20,40 C 20,30 35,25 50,25 C 65,25 80,30 80,40 C 80,55 90,75 75,80 C 65,80 60,65 50,65 C 40,65 35,80 25,80 C 10,75 20,55 20,40 Z" fill="url(#proTexture)" />
+
+    <!-- گولڈن ایکشن بٹنز (Action Buttons) -->
+    <g fill="url(#goldButtonGrad)">
+      <circle cx="68" cy="42" r="4" />
+      <circle cx="68" cy="52" r="4" />
+      <circle cx="63" cy="47" r="4" />
+      <circle cx="73" cy="47" r="4" />
+    </g>
+    
+    <!-- گولڈن ڈی پیڈ (D-Pad - Left Side) -->
+    <g fill="url(#goldButtonGrad)">
+      <rect x="27" y="45" width="12" height="4" rx="1.5" />
+      <rect x="31" y="41" width="4" height="12" rx="1.5" />
+    </g>
+
+    <!-- درمیانی بٹنز (Select/Start) -->
+    <rect x="44" y="38" width="5" height="2" rx="1" fill="url(#goldButtonGrad)" transform="rotate(-10 44 38)" />
+    <rect x="52" y="38" width="5" height="2" rx="1" fill="url(#goldButtonGrad)" transform="rotate(-10 52 38)" />
+    
+    <!-- اینالاگ اسٹک کے لیے دو گولڈن پوائنٹس -->
+    <circle cx="40" cy="58" r="5" fill="#003333" stroke="url(#goldButtonGrad)" stroke-width="0.5" />
+    <circle cx="60" cy="58" r="5" fill="#003333" stroke="url(#goldButtonGrad)" stroke-width="0.5" />
+  </g>
+</svg>

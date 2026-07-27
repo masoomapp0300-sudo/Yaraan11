@@ -1,0 +1,21 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradChat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" /><stop offset="25%" style="stop-color:#FCF6BA" />
+      <stop offset="50%" style="stop-color:#B38728" /><stop offset="75%" style="stop-color:#FBF5B7" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+    <pattern id="texChat" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="2" style="stroke:#8A6D3B; stroke-width:0.6" />
+    </pattern>
+  </defs>
+  <!-- Main Bubble -->
+  <path d="M 10,20 Q 10,10 20,10 H 80 Q 90,10 90,20 V 60 Q 90,70 80,70 H 45 L 25,90 V 70 H 20 Q 10,70 10,60 Z" fill="url(#goldGradChat)" stroke="#8A6D3B" stroke-width="1"/>
+  <!-- Lines Inside Chat -->
+  <g fill="#333" opacity="0.3">
+    <rect x="25" y="28" width="45" height="5" rx="2" />
+    <rect x="25" y="43" width="30" height="5" rx="2" />
+  </g>
+  <!-- Texture Overlay -->
+  <path d="M 10,20 Q 10,10 20,10 H 80 Q 90,10 90,20 V 60 Q 90,70 80,70 H 45 L 25,90 V 70 H 20 Q 10,70 10,60 Z" fill="url(#texChat)" style="opacity: 0.5;" />
+</svg>

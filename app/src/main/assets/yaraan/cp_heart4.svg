@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+    <defs>
+        <!-- Intense but CLEAN Glow for Hearts and Stars -->
+        <filter id="ultimate-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur3" />
+            <feMerge>
+                <feMergeNode in="blur3" />
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- VERY SHARP AND CLEAR Neon Filter for the Line -->
+        <filter id="sharp-neon" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <filter id="epic-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="15" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+        </filter>
+
+        <!-- Level 3: Supreme Gradients -->
+        <linearGradient id="diamond-gem" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="30%" stop-color="#ffea80"/>
+            <stop offset="70%" stop-color="#ffb300"/>
+            <stop offset="100%" stop-color="#996600"/>
+        </linearGradient>
+
+        <linearGradient id="cosmic-gem" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ccffff"/>
+            <stop offset="30%" stop-color="#bf00ff"/>
+            <stop offset="70%" stop-color="#330099"/>
+            <stop offset="100%" stop-color="#000033"/>
+        </linearGradient>
+
+        <linearGradient id="imperial-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="20%" stop-color="#ffe699"/>
+            <stop offset="50%" stop-color="#ffaa00"/>
+            <stop offset="80%" stop-color="#b35900"/>
+            <stop offset="100%" stop-color="#4d2600"/>
+        </linearGradient>
+
+        <linearGradient id="celestial-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="60%" stop-color="#e6f7ff"/>
+            <stop offset="100%" stop-color="#80ccff"/>
+        </linearGradient>
+        
+        <linearGradient id="celestial-wing-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="60%" stop-color="#fff5cc"/>
+            <stop offset="100%" stop-color="#ffcc66"/>
+        </linearGradient>
+
+        <!-- LEVEL 3: Double Seraphim Wings -->
+        <g id="seraphim-wings">
+            <g class="wing-flap-main">
+                <path d="M -15,15 C -65,35 -130,70 -115,100 C -90,125 -30,90 -5,55 Z" fill="url(#celestial-wing-gold)" filter="url(#epic-shadow)"/>
+                <path d="M -10,0 C -85,-10 -155,25 -135,60 C -110,95 -35,50 0,30 Z" fill="url(#celestial-wing-gold)"/>
+                <path d="M 0,-25 C -110,-50 -180,-5 -155,35 C -130,70 -30,15 5,-5 Z" fill="url(#celestial-wing-gold)"/>
+                <path d="M 0,-25 L -155,35" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+            </g>
+            <g class="wing-flap-sub">
+                <path d="M -5,40 C -45,60 -90,95 -80,115 C -65,135 -20,105 5,80 Z" fill="url(#celestial-wing)"/>
+                <path d="M 0,25 C -60,20 -110,50 -95,75 C -80,100 -25,70 10,50 Z" fill="url(#celestial-wing)"/>
+            </g>
+        </g>
+
+        <!-- LEVEL 3: Grand Imperial Crown -->
+        <g id="imperial-crown">
+            <path d="M -30,-35 L -20,-75 L 0,-50 L 20,-75 L 30,-35 Z" fill="url(#imperial-gold)" filter="url(#epic-shadow)"/>
+            <path d="M -30,-35 L 30,-35 L 25,-20 L -25,-20 Z" fill="#b35900"/>
+            <circle cx="-20" cy="-78" r="5" fill="#ffffff" filter="url(#ultimate-glow)" />
+            <circle cx="20" cy="-78" r="5" fill="#ffffff" filter="url(#ultimate-glow)" />
+            <circle cx="0" cy="-53" r="4" fill="#ffffff" filter="url(#ultimate-glow)" />
+            <circle cx="0" cy="-28" r="3" fill="#ff4d4d" />
+            <circle cx="-15" cy="-28" r="2.5" fill="#4da6ff" />
+            <circle cx="15" cy="-28" r="2.5" fill="#4da6ff" />
+        </g>
+
+        <!-- Royal Base -->
+        <g id="royal-base">
+            <path d="M 0,-30 C -65,-75 -125,-5 -80,65 L 0,155 L 80,65 C 125,-5 65,-75 0,-30 Z" fill="url(#imperial-gold)" filter="url(#epic-shadow)"/>
+            <circle cx="-55" cy="5" r="3.5" fill="#ffffff" opacity="0.8"/>
+            <circle cx="55" cy="5" r="3.5" fill="#ffffff" opacity="0.8"/>
+        </g>
+
+        <!-- Sparkle Star -->
+        <g id="magic-star">
+            <path d="M 0,-15 L 3,-4 L 15,0 L 3,4 L 0,15 L -3,4 L -15,0 L -3,-4 Z" />
+        </g>
+    </defs>
+
+    <style>
+        /* Level 3 Heartbeat */
+        .lev3-heartbeat {
+            transform-origin: 400px 240px;
+            animation: level3Pulse 2.2s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        @keyframes level3Pulse {
+            0% { transform: scale(1) translateY(0px); }
+            10% { transform: scale(0.94) translateY(-3px); } 
+            20% { transform: scale(1.05) translateY(-8px); } 
+            35% { transform: scale(0.88) translateY(-12px); } 
+            50% { transform: scale(1.12) translateY(-15px); }
+            65% { transform: scale(1) translateY(-8px); }
+            100% { transform: scale(1) translateY(0px); }
+        }
+
+        /* Double Wing Flapping */
+        .wing-flap-main { transform-origin: 0px 40px; animation: flapMain 2.2s infinite ease-in-out; }
+        .wing-flap-sub { transform-origin: 0px 60px; animation: flapSub 2.2s infinite ease-in-out; }
+        
+        .flip-wing .wing-flap-main { transform-origin: 0px 40px; animation: flapMainFlip 2.2s infinite ease-in-out; }
+        .flip-wing .wing-flap-sub { transform-origin: 0px 60px; animation: flapSubFlip 2.2s infinite ease-in-out; }
+
+        @keyframes flapMain { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(22deg) scaleY(0.85); } }
+        @keyframes flapMainFlip { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-22deg) scaleY(0.85); } }
+        @keyframes flapSub { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(30deg) scaleY(0.7); } }
+        @keyframes flapSubFlip { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(-30deg) scaleY(0.7); } }
+
+        /* ULTRA CLEAR Sharp Energy Line Animation */
+        .clean-energy-line {
+            stroke-dasharray: 2800;
+            stroke-dashoffset: 2800;
+            animation: flowClearEnergy 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes flowClearEnergy {
+            0% { stroke-dashoffset: 2800; opacity: 1; }
+            60% { stroke-dashoffset: 0; opacity: 1; }
+            80% { stroke-dashoffset: 0; opacity: 1; }
+            95% { stroke-dashoffset: 0; opacity: 0; }
+            100% { stroke-dashoffset: 2800; opacity: 0; }
+        }
+
+        /* Twinkling Imperial Stars */
+        .star-grand { animation: twinkleGrand 3s ease-in-out infinite; }
+        .star-fast { animation: twinkleGrand 1.8s ease-in-out infinite; }
+
+        @keyframes twinkleGrand {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-30px) scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: translateY(-70px) scale(0) rotate(360deg); opacity: 0; }
+        }
+    </style>
+
+    <!-- MAIN LEVEL 3 HEARTS -->
+    <g class="lev3-heartbeat">
+        
+        <!-- === LEFT HEART (DIAMOND / GOLD) === -->
+        <g transform="translate(310, 240) rotate(-18)">
+            <use href="#seraphim-wings" transform="translate(-10, 5)" />
+            <use href="#royal-base" />
+            
+            <path d="M 0,-20 C -50,-50 -90,0 -62,50 L 0,130 L 62,50 C 90,0 50,-50 0,-20 Z" fill="url(#diamond-gem)" />
+            <path d="M 0,-20 L -45,20 L 45,20 Z" fill="rgba(255,255,255,0.8)" /> 
+            <path d="M -45,20 L -62,50 L 0,130 L 0,40 Z" fill="rgba(255,255,255,0.4)" /> 
+            <path d="M 45,20 L 62,50 L 0,130 L 0,40 Z" fill="rgba(204,153,0,0.5)" /> 
+            <path d="M -45,20 L 45,20 L 0,40 Z" fill="rgba(255,230,128,0.6)" />
+            <path d="M 0,0 L -25,25 L 0,55 L 25,25 Z" fill="#ffffff" opacity="0.6" filter="url(#ultimate-glow)"/> 
+            
+            <path d="M -50,30 Q -20,-15 0,-12 Q 20,-15 50,30" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+            
+            <use href="#imperial-crown" transform="translate(-15, -25) rotate(-10)" />
+        </g>
+
+        <!-- === RIGHT HEART (COSMIC GALAXY) === -->
+        <g transform="translate(490, 240) rotate(18)">
+            <g class="flip-wing">
+                <g transform="scale(-1, 1)"><use href="#seraphim-wings" transform="translate(-10, 5)" /></g>
+            </g>
+            <use href="#royal-base" />
+            
+            <path d="M 0,-20 C -50,-50 -90,0 -62,50 L 0,130 L 62,50 C 90,0 50,-50 0,-20 Z" fill="url(#cosmic-gem)" />
+            <path d="M 0,-20 L -45,20 L 45,20 Z" fill="rgba(204,255,255,0.7)" /> 
+            <path d="M -45,20 L -62,50 L 0,130 L 0,40 Z" fill="rgba(255,255,255,0.3)" /> 
+            <path d="M 45,20 L 62,50 L 0,130 L 0,40 Z" fill="rgba(0,0,51,0.6)" /> 
+            <path d="M -45,20 L 45,20 L 0,40 Z" fill="rgba(191,0,255,0.5)" />
+            <path d="M 0,0 L -25,25 L 0,55 L 25,25 Z" fill="#ffffff" opacity="0.6" filter="url(#ultimate-glow)"/> 
+
+            <path d="M -50,30 Q -20,-15 0,-12 Q 20,-15 50,30" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+            
+            <use href="#imperial-crown" transform="translate(15, -25) rotate(10)" />
+        </g>
+        
+        <!-- Stars Exploding from the Hearts -->
+        <g transform="translate(400, 110)"><use href="#magic-star" fill="#ffffff" class="star-grand" filter="url(#ultimate-glow)"/></g>
+        <g transform="translate(300, 150)"><use href="#magic-star" fill="#ffcc00" class="star-fast" filter="url(#ultimate-glow)"/></g>
+        <g transform="translate(500, 140)"><use href="#magic-star" fill="#cc66ff" class="star-grand" filter="url(#ultimate-glow)"/></g>
+        <g transform="translate(240, 250)"><use href="#magic-star" fill="#ffffff" class="star-fast" filter="url(#ultimate-glow)"/></g>
+        <g transform="translate(560, 260)"><use href="#magic-star" fill="#99ccff" class="star-fast" filter="url(#ultimate-glow)"/></g>
+    </g>
+
+    <!-- ================= LEVEL 3: ULTRA CLEAR ENERGY RIBBON ================= -->
+    <g transform="translate(0, 30)">
+        
+        <!-- Layer 1: Deep Purple Outer Glow (Sharp & Clean) -->
+        <path class="clean-energy-line"
+              d="M 100 480 
+                 C 200 480, 250 400, 300 480
+                 C 330 530, 380 540, 400 480
+                 C 420 400, 350 400, 350 460
+                 C 350 510, 400 550, 400 550
+                 C 400 550, 450 510, 450 460
+                 C 450 400, 380 400, 400 480
+                 C 420 540, 470 530, 500 480
+                 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="#7a00e6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" 
+              filter="url(#sharp-neon)" />
+
+        <!-- Layer 2: Bright Magenta Inner Glow -->
+        <path class="clean-energy-line"
+              d="M 100 480 
+                 C 200 480, 250 400, 300 480
+                 C 330 530, 380 540, 400 480
+                 C 420 400, 350 400, 350 460
+                 C 350 510, 400 550, 400 550
+                 C 400 550, 450 510, 450 460
+                 C 450 400, 380 400, 400 480
+                 C 420 540, 470 530, 500 480
+                 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="#ff33cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" 
+              filter="url(#sharp-neon)" />
+              
+        <!-- Layer 3: Solid Brilliant White Core -->
+        <path class="clean-energy-line"
+              d="M 100 480 
+                 C 200 480, 250 400, 300 480
+                 C 330 530, 380 540, 400 480
+                 C 420 400, 350 400, 350 460
+                 C 350 510, 400 550, 400 550
+                 C 400 550, 450 510, 450 460
+                 C 450 400, 380 400, 400 480
+                 C 420 540, 470 530, 500 480
+                 C 550 400, 600 480, 700 480" 
+              fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+</svg>

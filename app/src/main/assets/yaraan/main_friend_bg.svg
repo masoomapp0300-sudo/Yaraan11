@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="100%" height="100%">
+    <defs>
+        <!-- کارڈ کے کناروں کو گول کرنے کے لیے -->
+        <clipPath id="card-corners">
+            <rect width="400" height="600" rx="30" ry="30" />
+        </clipPath>
+
+        <!-- مین بیک گراؤنڈ کا کلر -->
+        <linearGradient id="main-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF8DA1" />
+            <stop offset="100%" stop-color="#FF8096" />
+        </linearGradient>
+
+        <!-- چھوٹے دل کا ڈیزائن -->
+        <g id="mini-heart">
+            <path d="M0,15 A 15,15 0 0,1 30,15 A 15,15 0 0,1 60,15 Q 60,35 30,55 Q 0,35 0,15 Z" />
+        </g>
+    </defs>
+
+    <g clip-path="url(#card-corners)">
+        <!-- بنیادی گلابی رنگ کا کارڈ -->
+        <rect width="400" height="600" fill="url(#main-bg)" />
+
+        <!-- ================= نیچے کے بادلوں والے ڈیزائن (Clouds) ================= -->
+        <!-- پیچھے والا گہرا بادل -->
+        <path d="M -50,450 C 50,420 150,500 250,460 C 350,420 450,480 450,580 L 450,650 L -50,650 Z" fill="#F4748A" opacity="0.4" />
+        
+        <!-- دائیں طرف کا بادل -->
+        <path d="M 220,650 C 240,480 400,430 450,530 L 450,650 Z" fill="#FFA1B3" opacity="0.6" />
+        
+        <!-- بائیں طرف کا بادل -->
+        <path d="M -50,650 C -50,420 180,450 200,650 Z" fill="#FFA1B3" opacity="0.5" />
+        
+        <!-- درمیان کا ہلکا بادل -->
+        <path d="M 50,650 C 100,530 300,530 380,650 Z" fill="#FF7D93" opacity="0.3" />
+
+
+        <!-- ================= اوپر والا "Friend" ہیڈر سیکشن ================= -->
+        <!-- ہیڈر کا پچھلا حصہ -->
+        <path d="M -10,80 Q 200,120 410,80 L 410,-10 L -10,-10 Z" fill="#FFA2B3" />
+        
+        <!-- سفید رنگ کی گولائی والی لائن -->
+        <path d="M -10,80 Q 200,120 410,80" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6" />
+
+        <!-- Friend ٹیکسٹ -->
+        <text x="200" y="65" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="36" font-weight="bold" fill="#D63A58" text-anchor="middle">
+            Friend
+        </text>
+
+        <!-- دو چھوٹے سفید دل -->
+        <use href="#mini-heart" x="70" y="25" fill="#ffffff" opacity="0.6" transform="scale(0.5)" />
+        <use href="#mini-heart" x="530" y="25" fill="#ffffff" opacity="0.6" transform="scale(0.5)" />
+        <!-- (نوٹ: scale(0.5) کی وجہ سے x کو ڈبل کیا گیا ہے تاکہ پوزیشن صحیح رہے) -->
+
+    </g>
+</svg>

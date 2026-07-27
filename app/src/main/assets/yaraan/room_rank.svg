@@ -1,0 +1,13 @@
+<svg width="150" height="100" viewBox="0 0 150 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6FB5" />
+      <stop offset="100%" style="stop-color:#FF4081" />
+    </linearGradient>
+    <filter id="b3"><feGaussianBlur stdDeviation="4" /></filter>
+  </defs>
+  <rect width="150" height="100" rx="15" fill="url(#g3)" />
+  <circle cx="130" cy="20" r="18" fill="white" opacity="0.2" filter="url(#b3)" />
+  <circle cx="25" cy="70" r="15" fill="white" opacity="0.15" filter="url(#b3)" />
+  <text x="50%" y="92" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" opacity="0.9">Room Ranking</text>
+</svg>

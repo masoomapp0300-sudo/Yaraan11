@@ -1,0 +1,62 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+  <style>
+    /* مین گرین بارڈر */
+    .base-ring-sv2 {
+      fill: none;
+      stroke: #00ff00;
+      stroke-width: 8;
+      filter: drop-shadow(0 0 8px #00ff00);
+    }
+
+    /* پلسنگ گرین گلو */
+    .pulse-sv2 {
+      fill: none;
+      stroke: #00ff00;
+      stroke-width: 35;
+      filter: blur(18px);
+      transform-origin: center;
+      animation: greenPulse 2.5s infinite ease-in-out;
+    }
+
+    /* گھومتا ہوا ہالہ */
+    .orbit-sv2 {
+      fill: none;
+      stroke: #008000;
+      stroke-width: 15;
+      stroke-dasharray: 80 350;
+      opacity: 0.6;
+      transform-origin: center;
+      animation: rotateCircle 4s linear infinite;
+    }
+
+    @keyframes rotateCircle {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes greenPulse {
+      0%, 100% { opacity: 0.2; transform: scale(0.85); }
+      50% { opacity: 0.5; transform: scale(1.05); }
+    }
+
+    .dot { animation: flicker 2.5s infinite; }
+    @keyframes flicker { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  </style>
+
+  <defs>
+    <mask id="circle-mask-sv2">
+      <rect x="-100" y="-100" width="600" height="600" fill="white" />
+      <circle cx="200" cy="200" r="102" fill="black" />
+    </mask>
+  </defs>
+
+  <g mask="url(#circle-mask-sv2)">
+    <circle class="pulse-sv2" cx="200" cy="200" r="110" />
+    <circle class="orbit-sv2" cx="200" cy="200" r="110" />
+  </g>
+
+  <circle class="base-ring-sv2" cx="200" cy="200" r="105" />
+
+  <circle class="dot" cx="300" cy="120" r="2" fill="#00ff00" />
+  <circle class="dot" cx="100" cy="280" r="1.5" fill="white" style="animation-delay: 1.5s;" />
+</svg>

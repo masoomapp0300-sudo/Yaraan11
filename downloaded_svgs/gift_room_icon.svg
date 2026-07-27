@@ -1,0 +1,60 @@
+<svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;">
+  <defs>
+    <!-- گولڈن گریڈیئنٹ (Premium Gold) -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" />
+      <stop offset="50%" style="stop-color:#FCF6BA" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+
+    <!-- پنک گریڈیئنٹ (Luxury Pink) -->
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF69B4" />
+      <stop offset="100%" style="stop-color:#C71585" />
+    </linearGradient>
+
+    <!-- سلو اور ڈائنامک اینیمیشن (Jump -> Jiggle -> Pause) -->
+    <style>
+      @keyframes smoothGiftMove {
+        0% { transform: translateY(0) rotate(0deg) scale(1); }
+        5% { transform: translateY(-10px) rotate(0deg) scale(1.05); } /* اوپر جمپ */
+        10% { transform: translateY(-10px) rotate(-3deg); } /* ہوا میں ہلکا سا ہلنا */
+        15% { transform: translateY(-10px) rotate(3deg); }
+        20% { transform: translateY(-10px) rotate(0deg); }
+        25% { transform: translateY(0) rotate(0deg) scale(1); } /* واپس زمین پر */
+        100% { transform: translateY(0) rotate(0deg) scale(1); } /* طویل وقفہ (Pause) */
+      }
+
+      .animated-gift {
+        /* کل ٹائم 5 سیکنڈ ہے، جس میں سے 1.2 سیکنڈ حرکت ہے اور باقی سکون */
+        animation: smoothGiftMove 5s infinite ease-in-out;
+        transform-origin: bottom center;
+      }
+    </style>
+  </defs>
+
+  <!-- مین گفٹ گروپ (بغیر ستاروں کے) -->
+  <g class="animated-gift">
+    <!-- باکس کی باڈی (Pink) -->
+    <rect x="22" y="44" width="56" height="42" rx="3" fill="url(#pinkGrad)" />
+    
+    <!-- ڈھکن (Lid - Pink) -->
+    <rect x="18" y="32" width="64" height="12" rx="2" fill="url(#pinkGrad)" />
+    
+    <!-- گولڈن ربن (Vertical Ribbon) -->
+    <rect x="46" y="32" width="8" height="54" fill="url(#goldGrad)" />
+    
+    <!-- ربن پر ہلکی سی چمک (Highlight) -->
+    <rect x="18" y="37" width="64" height="2" fill="white" opacity="0.15" />
+
+    <!-- گولڈن باؤ (Bow) -->
+    <path d="M 50,32 C 30,10 15,30 50,32 Z" fill="url(#goldGrad)" stroke="#8A6D3B" stroke-width="0.4" />
+    <path d="M 50,32 C 70,10 85,30 50,32 Z" fill="url(#goldGrad)" stroke="#8A6D3B" stroke-width="0.4" />
+    
+    <!-- درمیانی گولڈن گرہ (Knot) -->
+    <circle cx="50" cy="32" r="5" fill="url(#goldGrad)" stroke="#8A6D3B" stroke-width="0.4" />
+    
+    <!-- سائیڈ ریفلیکشن (3D Look) -->
+    <rect x="25" y="47" width="2" height="36" fill="white" opacity="0.2" rx="1" />
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F87171" /><stop offset="100%" stop-color="#991B1B" /></linearGradient>
+        <linearGradient id="spinGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#EF4444" /><stop offset="50%" stop-color="#FCA5A5" /><stop offset="100%" stop-color="#7F1D1D" /></linearGradient>
+        <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0" /><stop offset="50%" stop-color="#ffffff" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffffff" stop-opacity="0" /></linearGradient>
+        <clipPath id="inboxClip"><rect x="48" y="73" width="160" height="110" rx="12" /></clipPath>
+    </defs>
+    
+    <!-- گھومتا ہوا دائرہ -->
+    <circle cx="128" cy="128" r="115" fill="none" stroke="url(#spinGrad)" stroke-width="8" stroke-dasharray="200 60 100 40" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 128 128" to="360 128 128" dur="4s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- ان باکس آئیکن (بالکل سینٹر) -->
+    <rect x="48" y="73" width="160" height="110" rx="12" fill="url(#redGrad)" />
+    <path d="M 48 88 L 128 140 L 208 88" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- اندر چلتی ہوئی چمک -->
+    <g clip-path="url(#inboxClip)">
+        <rect y="0" width="40" height="300" fill="url(#shine)" transform="skewX(-30)">
+            <animate attributeName="x" values="-150; 300; 300" keyTimes="0; 0.7; 1" dur="2.5s" repeatCount="indefinite" />
+        </rect>
+    </g>
+</svg>

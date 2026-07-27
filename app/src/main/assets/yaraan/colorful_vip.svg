@@ -1,0 +1,347 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+    <defs>
+        <!-- CSS FOR LEVEL 4 (ULTIMATE ANIMATIONS) -->
+        <style>
+            /* 1. Leaves Wind Sway Animation */
+            @keyframes swayLeft {
+                0%, 100% { transform: rotate(0deg); }
+                50% { transform: rotate(6deg); }
+            }
+            @keyframes swayRight {
+                0%, 100% { transform: rotate(0deg); }
+                50% { transform: rotate(-6deg); }
+            }
+            .animate-leaves-left {
+                transform-origin: 400px 650px;
+                animation: swayLeft 4s ease-in-out infinite;
+            }
+            .animate-leaves-right {
+                transform-origin: 400px 650px;
+                animation: swayRight 3.5s ease-in-out infinite;
+            }
+
+            /* 2. VIP Text Moving Shine */
+            @keyframes movingShine {
+                0% { transform: translateX(-250px) skewX(-25deg); }
+                100% { transform: translateX(350px) skewX(-25deg); }
+            }
+            .animate-shine {
+                animation: movingShine 2.5s infinite ease-in-out;
+            }
+            
+            /* 3. Intense Pulsing Sparkles */
+            @keyframes pulseSparkle {
+                0%, 100% { opacity: 0.3; transform: scale(0.6) rotate(0deg); }
+                50% { opacity: 1; transform: scale(1.5) rotate(45deg); } 
+            }
+            .animate-sparkle {
+                transform-origin: center;
+                animation: pulseSparkle 1.5s infinite;
+            }
+
+            /* 4. LEVEL 4 EXCLUSIVE: Rotating Multi-Layer Galaxy */
+            @keyframes spinRight {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            @keyframes spinLeft {
+                0% { transform: rotate(360deg); }
+                100% { transform: rotate(0deg); }
+            }
+            .animate-spin-fast {
+                transform-origin: 400px 380px; 
+                animation: spinRight 12s linear infinite;
+            }
+            .animate-spin-slow-reverse {
+                transform-origin: 400px 380px; 
+                animation: spinLeft 20s linear infinite; 
+            }
+
+            /* 5. LEVEL 4 EXCLUSIVE: Color Shifting (Rainbow Hue) */
+            @keyframes rainbowShift {
+                0% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+            .animate-rainbow {
+                animation: rainbowShift 6s linear infinite;
+            }
+        </style>
+
+        <!-- Drop Shadow Filters -->
+        <filter id="dropShadow" x="-20%" y="-20%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.55" />
+        </filter>
+        <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="3" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.8" />
+        </filter>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="shineGlow">
+            <feGaussianBlur stdDeviation="10" />
+        </filter>
+        <filter id="diamondGlow">
+            <feGaussianBlur stdDeviation="12" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+
+        <!-- Pure Gold Gradients (Frame & Text) -->
+        <linearGradient id="goldBase" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFF2B2" />
+            <stop offset="20%" stop-color="#D4AF37" />
+            <stop offset="50%" stop-color="#FFF8DC" />
+            <stop offset="80%" stop-color="#AA6C39" />
+            <stop offset="100%" stop-color="#F3E5AB" />
+        </linearGradient>
+
+        <linearGradient id="goldDark" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#8B6508" />
+            <stop offset="50%" stop-color="#D4AF37" />
+            <stop offset="100%" stop-color="#FFDF00" />
+        </linearGradient>
+
+        <radialGradient id="goldRadial" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="20%" stop-color="#FFD700" />
+            <stop offset="80%" stop-color="#B8860B" />
+            <stop offset="100%" stop-color="#4A3500" />
+        </radialGradient>
+
+        <!-- 🌟 LEVEL 4: Colorful/Holographic Gradients 🌟 -->
+        <radialGradient id="colorGalaxyCenter" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#00FFFF" />   <!-- Cyan Core -->
+            <stop offset="30%" stop-color="#8A2BE2" />  <!-- Blue Violet -->
+            <stop offset="65%" stop-color="#FF1493" />  <!-- Deep Pink -->
+            <stop offset="100%" stop-color="#1A0033" /> <!-- Very Dark Space Purple -->
+        </radialGradient>
+
+        <linearGradient id="rainbowRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2B0057" />
+            <stop offset="20%" stop-color="#9400D3" /> <!-- Purple -->
+            <stop offset="40%" stop-color="#FF00FF" /> <!-- Magenta -->
+            <stop offset="60%" stop-color="#FF8C00" /> <!-- Orange -->
+            <stop offset="80%" stop-color="#00CED1" /> <!-- Cyan -->
+            <stop offset="100%" stop-color="#2B0057" />
+        </linearGradient>
+
+        <linearGradient id="rainbowRibbonDark" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1A0033" />
+            <stop offset="100%" stop-color="#4B0082" />
+        </linearGradient>
+
+        <!-- Jewel Gradients for Crown -->
+        <radialGradient id="jewelCyan" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#E0FFFF" />
+            <stop offset="40%" stop-color="#00FFFF" />
+            <stop offset="100%" stop-color="#008080" />
+        </radialGradient>
+        <radialGradient id="jewelMagenta" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#FFB6C1" />
+            <stop offset="40%" stop-color="#FF00FF" />
+            <stop offset="100%" stop-color="#8B008B" />
+        </radialGradient>
+        <radialGradient id="jewelYellow" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#FFFFE0" />
+            <stop offset="40%" stop-color="#FFD700" />
+            <stop offset="100%" stop-color="#B8860B" />
+        </radialGradient>
+
+        <!-- Reusable Elements -->
+        <g id="leaf">
+            <path d="M0,0 C-20,-15 -35,-5 -40,15 C-20,20 -5,10 0,0" fill="url(#goldBase)" stroke="#8B6508" stroke-width="1.5" />
+            <path d="M0,0 C20,-15 35,-5 40,15 C20,20 5,10 0,0" fill="url(#goldDark)" stroke="#8B6508" stroke-width="1.5" />
+        </g>
+        
+        <g id="sparkle" filter="url(#glow)">
+            <path d="M0,-24 L4,-5 L24,0 L4,5 L0,24 L-4,5 L-24,0 L-4,-5 Z" fill="#FFFFFF" />
+            <circle cx="0" cy="0" r="5" fill="#00FFFF" /> 
+        </g>
+
+        <!-- Text Masks & Paths -->
+        <clipPath id="vipMask">
+            <text x="400" y="440" font-family="'Georgia', 'Times New Roman', serif" font-size="190" font-weight="900" letter-spacing="15" text-anchor="middle">VIP</text>
+        </clipPath>
+        <path id="ribbonTextPath" d="M 210 655 Q 400 575 590 655" />
+    </defs>
+    
+    <!-- Ultra Soft Drop Shadow -->
+    <circle cx="400" cy="420" r="320" fill="#000000" opacity="0.3" filter="blur(30px)" />
+
+    <!-- ========================================== -->
+    <!-- WREATH (ANIMATED WIND EFFECT)              -->
+    <!-- ========================================== -->
+    <g filter="url(#dropShadow)">
+        <g class="animate-leaves-left">
+            <g transform="translate(400, 420)">
+                <use href="#leaf" x="-180" y="100" transform="rotate(-60 -180 100)" />
+                <use href="#leaf" x="-220" y="50" transform="rotate(-40 -220 50)" />
+                <use href="#leaf" x="-240" y="-10" transform="rotate(-20 -240 -10)" />
+                <use href="#leaf" x="-240" y="-80" transform="rotate(0 -240 -80)" />
+                <use href="#leaf" x="-220" y="-150" transform="rotate(20 -220 -150)" />
+                <use href="#leaf" x="-180" y="-210" transform="rotate(40 -180 -210)" />
+                <use href="#leaf" x="-120" y="-250" transform="rotate(60 -120 -250)" />
+                <use href="#leaf" x="-200" y="120" transform="rotate(-70 -200 120) scale(0.8)" />
+                <use href="#leaf" x="-250" y="60" transform="rotate(-50 -250 60) scale(0.9)" />
+                <use href="#leaf" x="-270" y="-20" transform="rotate(-25 -270 -20) scale(0.9)" />
+                <use href="#leaf" x="-270" y="-100" transform="rotate(5 -270 -100) scale(0.9)" />
+                <use href="#leaf" x="-240" y="-180" transform="rotate(30 -240 -180) scale(0.9)" />
+                <use href="#leaf" x="-190" y="-240" transform="rotate(50 -190 -240) scale(0.8)" />
+            </g>
+        </g>
+        <g class="animate-leaves-right">
+            <g transform="translate(400, 420)">
+                <use href="#leaf" x="180" y="100" transform="rotate(60 180 100)" />
+                <use href="#leaf" x="220" y="50" transform="rotate(40 220 50)" />
+                <use href="#leaf" x="240" y="-10" transform="rotate(20 240 -10)" />
+                <use href="#leaf" x="240" y="-80" transform="rotate(0 240 -80)" />
+                <use href="#leaf" x="220" y="-150" transform="rotate(-20 220 -150)" />
+                <use href="#leaf" x="180" y="-210" transform="rotate(-40 180 -210)" />
+                <use href="#leaf" x="120" y="-250" transform="rotate(-60 120 -250)" />
+                <use href="#leaf" x="200" y="120" transform="rotate(70 200 120) scale(0.8)" />
+                <use href="#leaf" x="250" y="60" transform="rotate(50 250 60) scale(0.9)" />
+                <use href="#leaf" x="270" y="-20" transform="rotate(25 270 -20) scale(0.9)" />
+                <use href="#leaf" x="270" y="-100" transform="rotate(-5 270 -100) scale(0.9)" />
+                <use href="#leaf" x="240" y="-180" transform="rotate(-30 240 -180) scale(0.9)" />
+                <use href="#leaf" x="190" y="-240" transform="rotate(-50 190 -240) scale(0.8)" />
+            </g>
+        </g>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- CENTRAL BADGE (LEVEL 4 COLORFUL GALAXY)    -->
+    <!-- ========================================== -->
+    <g filter="url(#dropShadow)">
+        <!-- Massive Gold Frame -->
+        <circle cx="400" cy="380" r="225" fill="url(#goldBase)" /> 
+        <circle cx="400" cy="380" r="205" fill="url(#goldDark)" />
+        <circle cx="400" cy="380" r="185" fill="url(#goldRadial)" />
+        
+        <!-- 🌟 THE MAGIC: Hue-Shifting Galaxy Center 🌟 -->
+        <g class="animate-rainbow">
+            <circle cx="400" cy="380" r="175" fill="url(#colorGalaxyCenter)" stroke="#FF00FF" stroke-width="4" />
+            
+            <!-- Layer 1: Fast rotating dashed ring -->
+            <g class="animate-spin-fast">
+                <circle cx="400" cy="380" r="150" fill="none" stroke="#00FFFF" stroke-width="40" stroke-dasharray="15 40" opacity="0.4" />
+            </g>
+            
+            <!-- Layer 2: Slow reverse rotating inner stars -->
+            <g class="animate-spin-slow-reverse">
+                <circle cx="400" cy="380" r="110" fill="none" stroke="#FF00FF" stroke-width="70" stroke-dasharray="5 30" opacity="0.5" />
+            </g>
+            
+            <!-- Layer 3: Pulsing Core Energy -->
+            <circle cx="400" cy="380" r="80" fill="#FFFFFF" opacity="0.1" filter="url(#glow)" />
+        </g>
+
+        <!-- 3D Ultra-Realistic Glass Dome Effect -->
+        <path d="M 235 380 A 165 165 0 0 1 565 380 Q 400 220 235 380 Z" fill="#FFFFFF" opacity="0.4" />
+        <path d="M 270 525 A 165 165 0 0 0 530 525 Q 400 560 270 525 Z" fill="#FFFFFF" opacity="0.2" filter="url(#glow)"/>
+        <path d="M 245 380 A 155 155 0 0 0 260 480 Q 280 380 245 380 Z" fill="#FFFFFF" opacity="0.25" filter="blur(2px)"/>
+        
+        <!-- Inner Gold Dotted Ring -->
+        <circle cx="400" cy="380" r="165" fill="none" stroke="url(#goldBase)" stroke-width="3" opacity="0.8" />
+        <circle cx="400" cy="380" r="145" fill="none" stroke="url(#goldBase)" stroke-width="12" stroke-dasharray="0 45" stroke-linecap="round" />
+    </g>
+
+    <!-- ========================================== -->
+    <!-- CROWN (LEVEL 4 - MULTICOLOR DIAMONDS)      -->
+    <!-- ========================================== -->
+    <g filter="url(#dropShadow)" transform="translate(400, 95) scale(1.15)"> <!-- Biggest Crown -->
+        <path d="M-90,50 Q0,70 90,50 L80,30 Q0,45 -80,30 Z" fill="url(#goldBase)" stroke="#8B6508" stroke-width="2"/>
+        
+        <!-- Far Left: Yellow Jewel -->
+        <path d="M-80,30 L-100,-10 C-70,0 -50,10 -30,35 Z" fill="url(#goldDark)" />
+        <circle cx="-95" cy="-15" r="12" fill="url(#jewelYellow)" stroke="url(#goldBase)" stroke-width="2" /> 
+        
+        <!-- Mid Left: Magenta Jewel -->
+        <path d="M-40,35 L-50,-30 C-20,-10 -10,0 0,40 Z" fill="url(#goldBase)" />
+        <circle cx="-45" cy="-40" r="16" fill="url(#jewelMagenta)" stroke="url(#goldBase)" stroke-width="2" filter="url(#glow)"/> 
+        
+        <path d="M-15,40 L0,-50 L15,40 Z" fill="url(#goldRadial)" />
+        
+        <!-- 🌟 Center: MASSIVE CYAN DIAMOND 🌟 -->
+        <g class="animate-sparkle" style="transform-origin: 0px -65px;">
+            <circle cx="0" cy="-65" r="28" fill="url(#jewelCyan)" stroke="url(#goldBase)" stroke-width="4" filter="url(#diamondGlow)" />
+            <circle cx="0" cy="-65" r="28" fill="url(#jewelCyan)" stroke="url(#goldBase)" stroke-width="4" />
+            <circle cx="-8" cy="-73" r="7" fill="#FFFFFF" opacity="0.9" /> <!-- Brilliant shine -->
+        </g>
+        
+        <!-- Mid Right: Magenta Jewel -->
+        <path d="M40,35 L50,-30 C20,-10 10,0 0,40 Z" fill="url(#goldBase)" />
+        <circle cx="45" cy="-40" r="16" fill="url(#jewelMagenta)" stroke="url(#goldBase)" stroke-width="2" filter="url(#glow)"/> 
+        
+        <!-- Far Right: Yellow Jewel -->
+        <path d="M80,30 L100,-10 C70,0 50,10 30,35 Z" fill="url(#goldDark)" />
+        <circle cx="95" cy="-15" r="12" fill="url(#jewelYellow)" stroke="url(#goldBase)" stroke-width="2" /> 
+    </g>
+
+    <!-- ========================================== -->
+    <!-- "VIP" TEXT (LARGER WITH HOLOGRAPHIC SHINE) -->
+    <!-- ========================================== -->
+    <!-- Deep Drop Shadow -->
+    <text x="400" y="445" font-family="'Georgia', 'Times New Roman', serif" font-size="190" font-weight="900" letter-spacing="15" fill="#1A0033" text-anchor="middle" filter="url(#dropShadow)">VIP</text>
+    
+    <!-- White Outline -->
+    <text x="400" y="440" font-family="'Georgia', 'Times New Roman', serif" font-size="190" font-weight="900" letter-spacing="15" fill="none" stroke="#FFFFFF" stroke-width="8" text-anchor="middle" opacity="0.6">VIP</text>
+    
+    <!-- Gold Fill -->
+    <text x="400" y="440" font-family="'Georgia', 'Times New Roman', serif" font-size="190" font-weight="900" letter-spacing="15" fill="url(#goldBase)" text-anchor="middle" stroke="#8B6508" stroke-width="2">VIP</text>
+
+    <!-- The Magic Shine Mask -->
+    <g clip-path="url(#vipMask)">
+        <!-- Colorful Holographic Shine sweeping across text -->
+        <rect class="animate-shine" x="250" y="200" width="60" height="300" fill="#00FFFF" opacity="0.6" filter="url(#shineGlow)" />
+        <rect class="animate-shine" x="220" y="200" width="30" height="300" fill="#FF00FF" opacity="0.7" filter="url(#shineGlow)" />
+        <rect class="animate-shine" x="200" y="200" width="10" height="300" fill="#FFFFFF" opacity="1" filter="url(#shineGlow)" />
+    </g>
+
+    <!-- ========================================== -->
+    <!-- RIBBON (RAINBOW / MULTICOLOR)              -->
+    <!-- ========================================== -->
+    <path d="M 160 580 L 60 710 L 220 680 L 260 590 Z" fill="url(#rainbowRibbonDark)" filter="url(#dropShadow)" />
+    <path d="M 640 580 L 740 710 L 580 680 L 540 590 Z" fill="url(#rainbowRibbonDark)" filter="url(#dropShadow)" />
+    
+    <path d="M 230 630 L 260 590 L 250 650 Z" fill="#000000" opacity="0.7" />
+    <path d="M 570 630 L 540 590 L 550 650 Z" fill="#000000" opacity="0.7" />
+
+    <!-- Main Rainbow Ribbon -->
+    <g filter="url(#dropShadow)">
+        <path d="M 170 600 Q 400 510 630 600 L 590 690 Q 400 610 210 690 Z" fill="url(#rainbowRibbon)" stroke="url(#goldBase)" stroke-width="8" stroke-linejoin="round" />
+        <path d="M 185 615 Q 400 530 615 615 L 605 630 Q 400 545 195 630 Z" fill="#FFFFFF" opacity="0.4" />
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 🌟 STYLISH "COLORFUL VIP" TEXT 🌟          -->
+    <!-- ========================================== -->
+    <text font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="38" fill="#FFFFFF" letter-spacing="3" stroke="#2B0057" stroke-width="3" filter="url(#textShadow)">
+        <textPath href="#ribbonTextPath" startOffset="50%" text-anchor="middle">
+            ★ COLORFUL VIP ★
+        </textPath>
+    </text>
+
+    <!-- ========================================== -->
+    <!-- INTENSE, MASSIVE PULSING SPARKLES          -->
+    <!-- ========================================== -->
+    <!-- Core Sparkles (Fixed duplicate style attributes) -->
+    <g style="transform-origin: 290px 280px; animation-delay: 0s;" class="animate-sparkle"><use href="#sparkle" x="290" y="280" transform="scale(1.1)" /></g>
+    <g style="transform-origin: 520px 310px; animation-delay: 0.5s;" class="animate-sparkle"><use href="#sparkle" x="520" y="310" transform="scale(1.4)" /></g>
+    <g style="transform-origin: 400px 220px; animation-delay: 1s;" class="animate-sparkle"><use href="#sparkle" x="400" y="220" transform="scale(0.9)" /></g>
+    <g style="transform-origin: 400px 520px; animation-delay: 1.5s;" class="animate-sparkle"><use href="#sparkle" x="400" y="520" transform="scale(1)" /></g>
+    
+    <!-- Outer Sparkles -->
+    <use href="#sparkle" x="210" y="440" transform="scale(1)" />
+    <use href="#sparkle" x="590" y="440" transform="scale(1)" />
+    <use href="#sparkle" x="400" y="580" transform="scale(0.8)" />
+
+</svg>

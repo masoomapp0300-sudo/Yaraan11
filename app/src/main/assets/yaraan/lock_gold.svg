@@ -1,0 +1,34 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- وہی پریمیم گولڈن گریڈیئنٹ -->
+    <linearGradient id="goldLockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#BF953F" />
+      <stop offset="25%" style="stop-color:#FCF6BA" />
+      <stop offset="50%" style="stop-color:#B38728" />
+      <stop offset="75%" style="stop-color:#FBF5B7" />
+      <stop offset="100%" style="stop-color:#AA771C" />
+    </linearGradient>
+    
+    <!-- اندرونی باریک لائنوں کا ٹیکسچر -->
+    <pattern id="lockTexture" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="2" style="stroke:#8A6D3B; stroke-width:0.5" />
+    </pattern>
+  </defs>
+
+  <!-- لاک کا ڈیزائن -->
+  <g fill="none" stroke="url(#goldLockGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- لاک کا نچلا حصہ (Body) -->
+    <rect x="25" y="45" width="50" height="38" rx="8" />
+    <!-- لاک کا اوپر والا کنڈا (Shackle) -->
+    <path d="M 35,45 L 35,32 A 15,15 0 0 1 65,32 L 65,45" />
+    <!-- درمیان میں چھوٹا دائرہ (Keyhole look) -->
+    <circle cx="50" cy="64" r="5" />
+  </g>
+
+  <!-- ٹیکسچر لیئر (اوپر باریک لائنیں) -->
+  <g fill="none" stroke="url(#lockTexture)" stroke-width="5" stroke-linecap="round" style="opacity: 0.5;">
+    <rect x="25" y="45" width="50" height="38" rx="8" />
+    <path d="M 35,45 L 35,32 A 15,15 0 0 1 65,32 L 65,45" />
+    <circle cx="50" cy="64" r="5" />
+  </g>
+</svg>
