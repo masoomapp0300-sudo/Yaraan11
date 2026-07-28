@@ -1,0 +1,42 @@
+name: Build Yaraan Release APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 1. APK بلڈ کریں
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      # 2. فائل کا نیا نام سیٹ کریں (Yaraan-Release.apk)
+      - name: Rename APK File
+        run: |
+          mkdir -p output_apk
+          cp app/build/outputs/apk/release/*.apk output_apk/Yaraan-Release.apk
+
+      # 3. بلڈ شدہ APK کو GitHub artifacts میں ڈاؤن لوڈ کے لیے فراہم کریں
+      - name: Upload Release APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Yaraan-App-Release
+          path: output_apk/Yaraan-Release.apk
+
