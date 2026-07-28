@@ -24,11 +24,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Decode Keystore from Secrets
+      - name: Decode Keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
         run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > release.jks
           echo "$KEYSTORE_BASE64" | base64 -d > app/release.jks
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Build Signed Release APK
         env:
@@ -42,4 +46,3 @@ jobs:
         with:
           name: Yaraan-Release-APK
           path: app/build/outputs/apk/release/*.apk
-
