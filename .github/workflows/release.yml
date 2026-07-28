@@ -24,25 +24,28 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Decode Keystore
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
-        run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > release.jks
-          echo "$KEYSTORE_BASE64" | base64 -d > app/release.jks
-
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build Signed Release APK
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew assembleRelease --stacktrace
+      - name: Build Assembly (APK)
+        run: ./gradlew assemble --stacktrace
 
-      - name: Upload Release APK
+      - name: Sign APK with Secrets
+        uses: r3d-buck/gradle-build-action@v1
+        continue-on-error: true
+
+      - name: Sign Android APK
+        uses: r2da/android-sign-apk@v1.0.0
+        id: sign_app
+        with:
+          apkPath: 'app/build/outputs/apk/release/*.apk'
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          keystoreBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+
+      - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4
         with:
           name: Yaraan-Release-APK
-          path: app/build/outputs/apk/release/*.apk
+          path: app/build/outputs/apk/**/*.apk
