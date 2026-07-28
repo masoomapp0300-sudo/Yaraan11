@@ -69,7 +69,7 @@ fun SvipBadge(svip: String, modifier: Modifier = Modifier) {
         contentDescription = svip,
         modifier = modifier.height(18.dp),
         autoPlay = true,
-        loops = Int.MAX_VALUE
+        loops = INFINITE
     )
 }
 

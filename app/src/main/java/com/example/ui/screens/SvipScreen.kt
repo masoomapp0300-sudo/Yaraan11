@@ -75,6 +75,7 @@ import com.example.data.UserProfile
 import com.example.ui.components.AvatarFrame
 import com.example.ui.components.SvipBadge
 import com.example.ui.components.YaraanAssetImage
+import com.example.ui.components.INFINITE
 
 data class SvipTierConfig(
     val level: Int,
@@ -523,7 +524,7 @@ private fun SvipLargeEmblem(
             contentDescription = "SVIP Medal $level",
             modifier = Modifier.size(210.dp),
             autoPlay = true,
-            loops = Int.MAX_VALUE
+            loops = INFINITE
         )
     }
 }
@@ -612,7 +613,7 @@ private fun SvipMedalGraphic(level: Int) {
         contentDescription = "SVIP Medal $level",
         modifier = Modifier.size(54.dp),
         autoPlay = true,
-        loops = Int.MAX_VALUE
+        loops = INFINITE
     )
 }
 
@@ -625,7 +626,7 @@ private fun SvipBadgeGraphic(level: Int) {
             contentDescription = "SVIP Badge $level",
             modifier = Modifier.size(52.dp),
             autoPlay = true,
-            loops = Int.MAX_VALUE
+            loops = INFINITE
         )
     }
 }
@@ -639,7 +640,7 @@ private fun SvipBubbleGraphic(level: Int) {
             contentDescription = "Chat Bubble $level",
             modifier = Modifier.size(50.dp),
             autoPlay = true,
-            loops = Int.MAX_VALUE
+            loops = INFINITE
         )
     }
 }
@@ -652,7 +653,7 @@ private fun SvipFrameGraphic(level: Int) {
         contentDescription = "SVIP Frame $level",
         modifier = Modifier.size(52.dp),
         autoPlay = true,
-        loops = Int.MAX_VALUE
+        loops = INFINITE
     )
 }
 
@@ -665,7 +666,7 @@ private fun SvipVoiceEffectGraphic(level: Int) {
             contentDescription = "Voice Effect $level",
             modifier = Modifier.size(46.dp),
             autoPlay = true,
-            loops = Int.MAX_VALUE
+            loops = INFINITE
         )
     }
 }
