@@ -43,12 +43,14 @@ fun AvatarFrame(
         )
 
         if (showDesignerFrame && frameAsset != null) {
-            // SVG Frame overlay from Netlify site
+            // Animated SVGA / SVG Frame overlay
             YaraanAssetImage(
                 assetName = frameAsset,
                 contentDescription = "Avatar Frame",
                 modifier = Modifier.size(size),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
+                autoPlay = true,
+                loops = Int.MAX_VALUE
             )
         } else if (showDesignerFrame) {
             // Outer golden-winged glow circle fallback

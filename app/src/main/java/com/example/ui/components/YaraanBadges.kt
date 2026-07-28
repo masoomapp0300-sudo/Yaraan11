@@ -67,7 +67,9 @@ fun SvipBadge(svip: String, modifier: Modifier = Modifier) {
     YaraanAssetImage(
         assetName = svipAsset,
         contentDescription = svip,
-        modifier = modifier.height(18.dp)
+        modifier = modifier.height(18.dp),
+        autoPlay = true,
+        loops = Int.MAX_VALUE
     )
 }
 

@@ -521,7 +521,9 @@ private fun SvipLargeEmblem(
         YaraanAssetImage(
             assetName = medalAsset,
             contentDescription = "SVIP Medal $level",
-            modifier = Modifier.size(210.dp)
+            modifier = Modifier.size(210.dp),
+            autoPlay = true,
+            loops = Int.MAX_VALUE
         )
     }
 }
@@ -608,7 +610,9 @@ private fun SvipMedalGraphic(level: Int) {
     YaraanAssetImage(
         assetName = medalAsset,
         contentDescription = "SVIP Medal $level",
-        modifier = Modifier.size(54.dp)
+        modifier = Modifier.size(54.dp),
+        autoPlay = true,
+        loops = Int.MAX_VALUE
     )
 }
 
@@ -619,7 +623,9 @@ private fun SvipBadgeGraphic(level: Int) {
         YaraanAssetImage(
             assetName = badgeAsset,
             contentDescription = "SVIP Badge $level",
-            modifier = Modifier.size(52.dp)
+            modifier = Modifier.size(52.dp),
+            autoPlay = true,
+            loops = Int.MAX_VALUE
         )
     }
 }
@@ -631,7 +637,9 @@ private fun SvipBubbleGraphic(level: Int) {
         YaraanAssetImage(
             assetName = bubbleAsset,
             contentDescription = "Chat Bubble $level",
-            modifier = Modifier.size(50.dp)
+            modifier = Modifier.size(50.dp),
+            autoPlay = true,
+            loops = Int.MAX_VALUE
         )
     }
 }
@@ -642,7 +650,9 @@ private fun SvipFrameGraphic(level: Int) {
     YaraanAssetImage(
         assetName = frameAsset,
         contentDescription = "SVIP Frame $level",
-        modifier = Modifier.size(52.dp)
+        modifier = Modifier.size(52.dp),
+        autoPlay = true,
+        loops = Int.MAX_VALUE
     )
 }
 
@@ -653,7 +663,9 @@ private fun SvipVoiceEffectGraphic(level: Int) {
         YaraanAssetImage(
             assetName = soundWibeAsset,
             contentDescription = "Voice Effect $level",
-            modifier = Modifier.size(46.dp)
+            modifier = Modifier.size(46.dp),
+            autoPlay = true,
+            loops = Int.MAX_VALUE
         )
     }
 }
