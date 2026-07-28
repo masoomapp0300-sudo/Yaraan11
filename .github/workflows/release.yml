@@ -25,13 +25,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Check Android project
-        run: |
-          if [ ! -f "gradlew" ]; then
-            echo "The Gradle wrapper was not found in the repository root."
-            exit 1
-          fi
-          chmod +x gradlew
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Handle Dummy google-services.json (If Missing)
         run: |
@@ -46,13 +41,13 @@ jobs:
           echo "$KEYSTORE_BASE64" | base64 -d > app/release.jks
           echo "$KEYSTORE_BASE64" | base64 -d > release.jks
 
-      - name: Build signed release APK
+      - name: Build Signed Release APK
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           GRADLE_OPTS: "-Djava.awt.headless=true"
-        run: ./gradlew assembleRelease --stacktrace --no-daemon -Djava.awt.headless=true
+        run: ./gradlew assembleRelease --stacktrace --no-daemon
 
       - name: Find and verify APK
         id: find_apk
@@ -69,7 +64,7 @@ jobs:
           ls -lh "$APK_PATH"
           echo "apk_path=$APK_PATH" >> "$GITHUB_OUTPUT"
 
-      - name: Upload signed APK package
+      - name: Upload Signed APK Package
         uses: actions/upload-artifact@v4
         with:
           name: Yaraan-Signed-Release-APK
