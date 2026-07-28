@@ -26,15 +26,16 @@ android {
 
   signingConfigs {
     create("release") {
-      val keystoreBase64 = System.getenv("KEYSTORE_FILE_BASE64")
-      if (!keystoreBase64.isNullOrEmpty()) {
-        val keystoreFile = file("release.jks")
-        keystoreFile.writeBytes(Base64.getDecoder().decode(keystoreBase64))
-        storeFile = keystoreFile
+      var keystoreFile = file("release.jks")
+      if (!keystoreFile.exists()) {
+        keystoreFile = file("${rootDir}/release.jks")
       }
-      storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-      keyAlias = System.getenv("KEY_ALIAS") ?: ""
-      keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+      if (keystoreFile.exists()) {
+        storeFile = keystoreFile
+        storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+        keyAlias = System.getenv("KEY_ALIAS") ?: ""
+        keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+      }
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")
@@ -49,7 +50,10 @@ android {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("release")
+      val releaseConfig = signingConfigs.getByName("release")
+      if (releaseConfig.storeFile != null) {
+        signingConfig = releaseConfig
+      }
     }
     debug { signingConfig = signingConfigs.getByName("debugConfig") }
   }
@@ -71,7 +75,7 @@ secrets {
   defaultPropertiesFileName = ".env.example"
 }
 
-googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
+googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.IGNORE }
 
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.
