@@ -1,4 +1,4 @@
-name: Build & Release Signed APK
+name: Build Yaraan Release APK
 
 on:
   push:
@@ -27,25 +27,11 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build Assembly (APK)
-        run: ./gradlew assemble --stacktrace
+      - name: Build APK with Gradle
+        run: ./gradlew assembleDebug
 
-      - name: Sign APK with Secrets
-        uses: r3d-buck/gradle-build-action@v1
-        continue-on-error: true
-
-      - name: Sign Android APK
-        uses: r2da/android-sign-apk@v1.0.0
-        id: sign_app
-        with:
-          apkPath: 'app/build/outputs/apk/release/*.apk'
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-          keystoreBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
-
-      - name: Upload Signed Release APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Yaraan-Release-APK
-          path: app/build/outputs/apk/**/*.apk
+          name: Yaraan-App-APK
+          path: app/build/outputs/apk/debug/*.apk
