@@ -21,6 +21,8 @@ import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 
+const val INFINITE = Int.MAX_VALUE
+
 private val assetCache = mutableMapOf<String, String>()
 
 fun resolveAssetName(context: Context, requestedName: String): String {
@@ -68,7 +70,7 @@ fun YaraanAssetImage(
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Fit,
     autoPlay: Boolean = true,
-    loops: Int = Int.MAX_VALUE,
+    loops: Int = INFINITE,
     useAnimatedWebView: Boolean = false
 ) {
     val context = LocalContext.current
@@ -86,7 +88,7 @@ fun YaraanAssetImage(
             if (composition != null) {
                 val progress by animateLottieCompositionAsState(
                     composition = composition,
-                    iterations = if (loops == Int.MAX_VALUE) LottieConstants.IterateForever else loops,
+                    iterations = if (loops == INFINITE) LottieConstants.IterateForever else loops,
                     isPlaying = autoPlay
                 )
                 LottieAnimation(
@@ -152,8 +154,3 @@ private fun CoilAssetImage(
         modifier = modifier
     )
 }
-
-
-
-
-
