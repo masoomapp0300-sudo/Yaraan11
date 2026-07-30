@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8eaf6" />
+      <stop offset="50%" stop-color="#c5cae9" />
+      <stop offset="100%" stop-color="#9fa8da" />
+    </linearGradient>
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5c6bc0" />
+      <stop offset="100%" stop-color="#283593" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="340" rx="20" ry="20" fill="url(#bgGrad)" />
+  <path d="M 0 150 Q 40 130 70 180 Q 120 150 160 220 Q 200 210 250 280 L 0 280 Z" fill="#ffffff" opacity="0.3" />
+  <path d="M 800 150 Q 760 130 730 180 Q 680 150 640 220 Q 600 210 550 280 L 800 280 Z" fill="#ffffff" opacity="0.3" />
+  <g transform="translate(320, 0)">
+    <polygon points="5,0 15,0 15,10" fill="#1a237e" />
+    <polygon points="155,0 145,0 145,10" fill="#1a237e" />
+    <path d="M 15 0 L 145 0 C 150 0 152 2 152 5 L 145 40 C 140 48 125 50 115 50 L 45 50 C 35 50 20 48 15 40 L 8 5 C 8 2 10 0 15 0 Z" fill="#3f51b5" opacity="0.9" />
+    <text x="80" y="34" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="1">CP Lv.5</text>
+  </g>
+  <g stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 140 215 L 220 215 L 235 195 L 250 235 L 265 210 L 280 215 L 320 215" stroke="#ffffff" opacity="0.6" />
+    <path d="M 480 215 L 520 215 L 535 210 L 550 235 L 565 195 L 580 215 L 660 215" stroke="#ffffff" opacity="0.6" />
+  </g>
+  <g transform="translate(400, 160)">
+    <path d="M 0 -15 C -30 -50 -75 -35 -75 5 C -75 45 0 95 0 95 C 0 95 75 45 75 5 C 75 -35 30 -50 0 -15 Z" fill="#c5cae9" opacity="0.5" />
+    <path d="M 0 -12 C -22 -40 -60 -28 -60 5 C -60 38 0 78 0 78 C 0 78 60 38 60 5 C 60 -28 22 -40 0 -12 Z" fill="url(#heartGrad)" />
+  </g>
+</svg>

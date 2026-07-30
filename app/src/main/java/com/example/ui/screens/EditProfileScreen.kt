@@ -61,12 +61,16 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 
+import coil.compose.AsyncImage
+import com.example.ui.components.UploadPhotoDialog
+
 @Composable
 fun EditProfileScreen(
     userProfile: UserProfile,
     onSaveProfile: (String, String, String, String) -> Unit,
     onAddPhoto: (String) -> Unit = {},
     onRemovePhoto: (Int) -> Unit = {},
+    onUpdateAvatarUrl: (String) -> Unit = {},
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -128,7 +132,11 @@ fun EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(contentAlignment = Alignment.Center) {
-                AvatarFrame(size = 96.dp, showDesignerFrame = false)
+                AvatarFrame(
+                    size = 96.dp,
+                    showDesignerFrame = false,
+                    avatarUrl = userProfile.avatarUrl.ifBlank { null }
+                )
 
                 Box(
                     modifier = Modifier
@@ -209,12 +217,21 @@ fun EditProfileScreen(
                             .size(80.dp)
                             .clip(RoundedCornerShape(16.dp))
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.img_user_avatar),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        if (photoUri.startsWith("http://") || photoUri.startsWith("https://")) {
+                            AsyncImage(
+                                model = photoUri,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.img_user_avatar),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
 
                         // Delete overlay button
                         Box(
@@ -424,117 +441,14 @@ fun EditProfileScreen(
     if (showAddPhotoDialog) {
         UploadPhotoDialog(
             onDismiss = { showAddPhotoDialog = false },
-            onSelectPhoto = { photoUri ->
-                onAddPhoto(photoUri)
+            onSetAsDp = { url ->
+                onUpdateAvatarUrl(url)
+                showAddPhotoDialog = false
+            },
+            onAddToGallery = { url ->
+                onAddPhoto(url)
                 showAddPhotoDialog = false
             }
         )
     }
-}
-
-@Composable
-fun UploadPhotoDialog(
-    onDismiss: () -> Unit,
-    onSelectPhoto: (String) -> Unit
-) {
-    val sampleGalleryAvatars = listOf(
-        "photo_avatar_1", "photo_avatar_2", "photo_avatar_3",
-        "photo_avatar_4", "photo_avatar_5", "photo_avatar_6"
-    )
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        containerColor = Color.White,
-        title = {
-            Text(
-                text = "Upload Profile Gallery Photo",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1F1D2B)
-            )
-        },
-        text = {
-            Column {
-                Text(
-                    text = "Select an image to add to your profile gallery:",
-                    fontSize = 13.sp,
-                    color = Color(0xFF616161)
-                )
-
-                Spacer(modifier = Modifier.height(14.dp))
-
-                // Gallery Grid Selection
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    sampleGalleryAvatars.take(3).forEachIndexed { idx, item ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(72.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .border(1.5.dp, YaraanPinkPrimary, RoundedCornerShape(12.dp))
-                                .clickable { onSelectPhoto(item) }
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.img_user_avatar),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    sampleGalleryAvatars.drop(3).forEachIndexed { idx, item ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(72.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .border(1.5.dp, Color(0xFF7C4DFF), RoundedCornerShape(12.dp))
-                                .clickable { onSelectPhoto(item) }
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.img_user_avatar),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick = { onSelectPhoto("uploaded_gallery_${System.currentTimeMillis()}") },
-                    colors = ButtonDefaults.buttonColors(containerColor = YaraanPinkPrimary),
-                    shape = RoundedCornerShape(20.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.CameraAlt,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("📷 Choose from Camera / Gallery", fontWeight = FontWeight.Bold, fontSize = 13.sp)
-                }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel", color = Color.Gray, fontWeight = FontWeight.Bold)
-            }
-        }
-    )
 }

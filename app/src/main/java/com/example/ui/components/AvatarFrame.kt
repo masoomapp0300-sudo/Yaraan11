@@ -17,11 +17,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.R
 
 @Composable
 fun AvatarFrame(
-    avatarRes: Int = R.drawable.img_user_avatar,
+    avatarRes: Int = R.drawable.ic_yaraan_mascot,
+    avatarAsset: String? = "yaraan_dp.png",
+    avatarUrl: String? = null,
     size: Dp = 80.dp,
     showDesignerFrame: Boolean = true,
     frameAsset: String? = "svip1_frame.svg",
@@ -32,15 +35,38 @@ fun AvatarFrame(
         contentAlignment = Alignment.Center
     ) {
         // Inner Avatar image
-        Image(
-            painter = painterResource(id = avatarRes),
-            contentDescription = "User Avatar",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(size * 0.72f)
-                .clip(CircleShape)
-                .border(1.5.dp, Color.White, CircleShape)
-        )
+        val safeRes = if (avatarRes != 0) avatarRes else R.drawable.img_user_avatar
+        if (!avatarUrl.isNullOrBlank()) {
+            AsyncImage(
+                model = avatarUrl,
+                contentDescription = "User Avatar",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(size * 0.72f)
+                    .clip(CircleShape)
+                    .border(1.5.dp, Color.White, CircleShape)
+            )
+        } else if (avatarAsset != null) {
+            YaraanAssetImage(
+                assetName = avatarAsset,
+                contentDescription = "User Avatar",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(size * 0.72f)
+                    .clip(CircleShape)
+                    .border(1.5.dp, Color.White, CircleShape)
+            )
+        } else {
+            Image(
+                painter = painterResource(id = safeRes),
+                contentDescription = "User Avatar",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(size * 0.72f)
+                    .clip(CircleShape)
+                    .border(1.5.dp, Color.White, CircleShape)
+            )
+        }
 
         if (showDesignerFrame && frameAsset != null) {
             // Animated SVGA / SVG Frame overlay
@@ -50,7 +76,7 @@ fun AvatarFrame(
                 modifier = Modifier.size(size),
                 contentScale = ContentScale.Fit,
                 autoPlay = true,
-                loops = INFINITE
+                loops = Int.MAX_VALUE
             )
         } else if (showDesignerFrame) {
             // Outer golden-winged glow circle fallback

@@ -394,7 +394,11 @@ fun LeaderboardScreen(
                         modifier = Modifier.width(42.dp)
                     )
 
-                    AvatarFrame(size = 40.dp, showDesignerFrame = true)
+                    AvatarFrame(
+                        size = 40.dp,
+                        showDesignerFrame = true,
+                        avatarUrl = userProfile.avatarUrl.ifBlank { null }
+                    )
 
                     Spacer(modifier = Modifier.width(10.dp))
 
@@ -516,8 +520,8 @@ private fun PodiumUserCard(
             contentAlignment = Alignment.Center
         ) {
             // User Avatar image centered inside frame
-            Image(
-                painter = painterResource(id = R.drawable.img_user_avatar),
+            YaraanAssetImage(
+                assetName = "yaraan_dp.png",
                 contentDescription = user.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

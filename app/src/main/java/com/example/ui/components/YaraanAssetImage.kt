@@ -14,6 +14,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.R
 import coil.compose.AsyncImage
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -21,12 +22,14 @@ import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 
-const val INFINITE = Int.MAX_VALUE
+import android.webkit.WebView
+import androidx.compose.ui.viewinterop.AndroidView
 
 private val assetCache = mutableMapOf<String, String>()
 
 fun resolveAssetName(context: Context, requestedName: String): String {
     if (requestedName.isBlank()) return requestedName
+    val cleanName = requestedName.lowercase().replace(",", "_").replace(" ", "_")
     assetCache[requestedName]?.let { return it }
 
     val assetsList = try {
@@ -35,12 +38,16 @@ fun resolveAssetName(context: Context, requestedName: String): String {
         emptyArray()
     }
 
+    if (assetsList.contains(cleanName)) {
+        assetCache[requestedName] = cleanName
+        return cleanName
+    }
     if (assetsList.contains(requestedName)) {
         assetCache[requestedName] = requestedName
         return requestedName
     }
 
-    val baseName = requestedName.substringBeforeLast(".")
+    val baseName = cleanName.substringBeforeLast(".")
     val candidateExtensions = listOf(".svg", ".svga", ".json", ".webp", ".png", ".gif", ".lottie")
 
     for (ext in candidateExtensions) {
@@ -52,15 +59,15 @@ fun resolveAssetName(context: Context, requestedName: String): String {
     }
 
     for (ext in candidateExtensions) {
-        val candidate = "$requestedName$ext"
+        val candidate = "$cleanName$ext"
         if (assetsList.contains(candidate)) {
             assetCache[requestedName] = candidate
             return candidate
         }
     }
 
-    assetCache[requestedName] = requestedName
-    return requestedName
+    assetCache[requestedName] = cleanName
+    return cleanName
 }
 
 @Composable
@@ -70,25 +77,32 @@ fun YaraanAssetImage(
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Fit,
     autoPlay: Boolean = true,
-    loops: Int = INFINITE,
+    loops: Int = Int.MAX_VALUE,
     useAnimatedWebView: Boolean = false
 ) {
     val context = LocalContext.current
     val resolvedName = remember(assetName) { resolveAssetName(context, assetName) }
 
+    val isSvgCandidate = resolvedName.endsWith(".svg", ignoreCase = true)
     val isLottieCandidate = resolvedName.endsWith(".json", ignoreCase = true) ||
             resolvedName.endsWith(".lottie", ignoreCase = true) ||
             resolvedName.endsWith(".svga", ignoreCase = true)
 
-    key(resolvedName, autoPlay, loops) {
-        if (isLottieCandidate) {
+    key(resolvedName, autoPlay, loops, useAnimatedWebView) {
+        if (useAnimatedWebView && isSvgCandidate) {
+            AnimatedSvgWebView(
+                resolvedName = resolvedName,
+                modifier = modifier,
+                contentScale = contentScale
+            )
+        } else if (isLottieCandidate) {
             val compositionResult = rememberLottieComposition(LottieCompositionSpec.Asset("yaraan/$resolvedName"))
             val composition = compositionResult.value
 
             if (composition != null) {
                 val progress by animateLottieCompositionAsState(
                     composition = composition,
-                    iterations = if (loops == INFINITE) LottieConstants.IterateForever else loops,
+                    iterations = if (loops == Int.MAX_VALUE) LottieConstants.IterateForever else loops,
                     isPlaying = autoPlay
                 )
                 LottieAnimation(
@@ -117,6 +131,65 @@ fun YaraanAssetImage(
 }
 
 @Composable
+fun AnimatedSvgWebView(
+    resolvedName: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Fit
+) {
+    val context = LocalContext.current
+    val fitStyle = when (contentScale) {
+        ContentScale.Crop -> "cover"
+        ContentScale.FillBounds -> "100% 100%"
+        else -> "contain"
+    }
+
+    val htmlContent = remember(resolvedName, fitStyle) {
+        """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <style>
+            html, body {
+                margin: 0; padding: 0; width: 100%; height: 100%;
+                background: transparent !important; overflow: hidden;
+                display: flex; justify-content: center; align-items: center;
+            }
+            img, svg, object, embed {
+                width: 100%; height: 100%; object-fit: $fitStyle; max-width: 100%; max-height: 100%;
+            }
+        </style>
+        </head>
+        <body>
+            <img src="file:///android_asset/yaraan/$resolvedName" />
+        </body>
+        </html>
+        """.trimIndent()
+    }
+
+    AndroidView(
+        factory = { ctx ->
+            WebView(ctx).apply {
+                setBackgroundColor(0)
+                setLayerType(android.view.View.LAYER_TYPE_HARDWARE, null)
+                settings.allowFileAccess = true
+                settings.allowContentAccess = true
+                settings.javaScriptEnabled = true
+                settings.loadWithOverviewMode = true
+                settings.useWideViewPort = true
+                isVerticalScrollBarEnabled = false
+                isHorizontalScrollBarEnabled = false
+                loadDataWithBaseURL("file:///android_asset/yaraan/", htmlContent, "text/html", "UTF-8", null)
+            }
+        },
+        update = { webView ->
+            webView.loadDataWithBaseURL("file:///android_asset/yaraan/", htmlContent, "text/html", "UTF-8", null)
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
 private fun CoilAssetImage(
     resolvedName: String,
     contentDescription: String?,
@@ -125,26 +198,29 @@ private fun CoilAssetImage(
 ) {
     val context = LocalContext.current
     val isSvg = resolvedName.endsWith(".svg", ignoreCase = true)
+    val isGif = resolvedName.endsWith(".gif", ignoreCase = true)
 
     val model = remember(resolvedName) {
-        ImageRequest.Builder(context)
+        val builder = ImageRequest.Builder(context)
             .data("file:///android_asset/yaraan/$resolvedName")
             .memoryCacheKey(resolvedName)
             .diskCacheKey(resolvedName)
             .memoryCachePolicy(CachePolicy.ENABLED)
             .diskCachePolicy(CachePolicy.ENABLED)
-            .apply {
-                if (isSvg) {
-                    decoderFactory(SvgDecoder.Factory())
-                } else if (Build.VERSION.SDK_INT >= 28) {
-                    decoderFactory(ImageDecoderDecoder.Factory())
-                } else {
-                    decoderFactory(GifDecoder.Factory())
-                }
-            }
             .crossfade(true)
-            .allowHardware(true)
-            .build()
+            .allowHardware(false)
+
+        if (isSvg) {
+            builder.decoderFactory(SvgDecoder.Factory())
+        } else if (isGif) {
+            if (Build.VERSION.SDK_INT >= 28) {
+                builder.decoderFactory(ImageDecoderDecoder.Factory())
+            } else {
+                builder.decoderFactory(GifDecoder.Factory())
+            }
+        }
+
+        builder.build()
     }
 
     AsyncImage(
@@ -154,3 +230,8 @@ private fun CoilAssetImage(
         modifier = modifier
     )
 }
+
+
+
+
+

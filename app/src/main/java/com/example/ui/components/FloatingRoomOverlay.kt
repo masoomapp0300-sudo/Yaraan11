@@ -104,8 +104,9 @@ fun FloatingRoomOverlay(
                 )
 
                 // Room DP thumbnail
+                val roomAvatarRes = if (room.hostAvatarRes != 0) room.hostAvatarRes else R.drawable.img_user_avatar
                 Image(
-                    painter = painterResource(id = room.hostAvatarRes ?: R.drawable.img_user_avatar),
+                    painter = painterResource(id = roomAvatarRes),
                     contentDescription = "Room DP",
                     modifier = Modifier
                         .size(36.dp)

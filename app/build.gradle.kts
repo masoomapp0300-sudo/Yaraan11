@@ -1,5 +1,4 @@
 import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
-import java.util.Base64
 
 plugins {
   alias(libs.plugins.android.application)
@@ -15,7 +14,7 @@ android {
   compileSdk { version = release(36) { minorApiLevel = 1 } }
 
   defaultConfig {
-    applicationId = "com.aistudio.yaraan.social"
+    applicationId = "com.umar.yaraan"
     minSdk = 24
     targetSdk = 36
     versionCode = 1
@@ -26,22 +25,23 @@ android {
 
   signingConfigs {
     create("release") {
-      var keystoreFile = file("release.jks")
-      if (!keystoreFile.exists()) {
-        keystoreFile = file("${rootDir}/release.jks")
-      }
-      if (keystoreFile.exists()) {
-        storeFile = keystoreFile
-        storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-        keyAlias = System.getenv("KEY_ALIAS") ?: ""
-        keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
+      val kFile = file(keystorePath)
+      if (kFile.exists()) {
+        storeFile = kFile
+        storePassword = System.getenv("STORE_PASSWORD")
+        keyAlias = "upload"
+        keyPassword = System.getenv("KEY_PASSWORD")
       }
     }
     create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
-      storePassword = "android"
-      keyAlias = "androiddebugkey"
-      keyPassword = "android"
+      val dFile = file("${rootDir}/debug.keystore")
+      if (dFile.exists()) {
+        storeFile = dFile
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+      }
     }
   }
 
@@ -50,21 +50,21 @@ android {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      val releaseConfig = signingConfigs.getByName("release")
-      if (releaseConfig.storeFile != null) {
-        signingConfig = releaseConfig
+      val relSigning = signingConfigs.findByName("release")
+      if (relSigning?.storeFile?.exists() == true) {
+        signingConfig = relSigning
       }
     }
     debug {
-      val debugKeystoreFile = file("${rootDir}/debug.keystore")
-      if (debugKeystoreFile.exists()) {
-        signingConfig = signingConfigs.getByName("debugConfig")
+      val customDebug = signingConfigs.findByName("debugConfig")
+      if (customDebug?.storeFile?.exists() == true) {
+        signingConfig = customDebug
       }
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
   buildFeatures {
     compose = true
@@ -80,7 +80,7 @@ secrets {
   defaultPropertiesFileName = ".env.example"
 }
 
-googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.IGNORE }
+googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
 
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.
@@ -119,10 +119,10 @@ dependencies {
   // Firebase Auth with Google Sign-In requires all of the following to be uncommented together.
   // If you are using Firebase Auth with other providers (e.g. Email/Password), you may only need
   // firebase-auth.
-  // implementation(libs.firebase.auth)
-  // implementation(libs.androidx.credentials)
-  // implementation(libs.androidx.credentials.play.services)
-  // implementation(libs.googleid)
+  implementation(libs.firebase.auth)
+  implementation(libs.androidx.credentials)
+  implementation(libs.androidx.credentials.play.services)
+  implementation(libs.googleid)
   implementation(libs.firebase.appcheck.recaptcha)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)

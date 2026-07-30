@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,11 +29,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.HeartBroken
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.Language
@@ -84,6 +91,8 @@ import com.example.data.IntimacyCouple
 import com.example.data.IntimacyFriend
 import com.example.data.UserProfile
 import com.example.ui.components.AvatarFrame
+import coil.compose.AsyncImage
+import com.example.ui.components.UploadPhotoDialog
 import com.example.ui.components.BrandBadge
 import com.example.ui.components.IdBadge
 import com.example.ui.components.LevelBadge
@@ -106,11 +115,17 @@ fun ProfileScreen(
     onOpenWallet: () -> Unit,
     onOpenStore: () -> Unit,
     onOpenSvip: () -> Unit = {},
+    onOpenVip: () -> Unit = {},
+    onOpenLevel: () -> Unit = {},
     onAddPhoto: (String) -> Unit = {},
     onRemovePhoto: (Int) -> Unit = {},
+    onUpdateAvatarUrl: (String) -> Unit = {},
     onLogout: () -> Unit,
     intimacyCouple: IntimacyCouple,
     intimacyFriends: List<IntimacyFriend>,
+    onAcceptCp: (String) -> Unit = {},
+    onUnlinkCp: () -> Unit = {},
+    onAddBestFriend: (String, String) -> Unit = { _, _ -> },
     modifier: Modifier = Modifier
 ) {
     // State to switch between Settings List mode (Image 3) and Detailed Profile View (Image 4 & 5)
@@ -138,11 +153,16 @@ fun ProfileScreen(
                 onSubTabSelected = onSubTabSelected,
                 onOpenEdit = onOpenEditProfile,
                 onOpenSvip = onOpenSvip,
+                onOpenLevel = onOpenLevel,
                 onAddPhoto = onAddPhoto,
                 onRemovePhoto = onRemovePhoto,
+                onUpdateAvatarUrl = onUpdateAvatarUrl,
                 onBack = { isDetailedProfileView = false },
                 intimacyCouple = intimacyCouple,
                 intimacyFriends = intimacyFriends,
+                onAcceptCp = onAcceptCp,
+                onUnlinkCp = onUnlinkCp,
+                onAddBestFriend = onAddBestFriend,
                 modifier = Modifier.padding(innerPadding)
             )
         } else {
@@ -153,6 +173,8 @@ fun ProfileScreen(
                 onOpenWallet = onOpenWallet,
                 onOpenStore = onOpenStore,
                 onOpenSvip = onOpenSvip,
+                onOpenVip = onOpenVip,
+                onOpenLevel = onOpenLevel,
                 onLogout = onLogout,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -171,6 +193,8 @@ private fun SettingsListContent(
     onOpenWallet: () -> Unit,
     onOpenStore: () -> Unit,
     onOpenSvip: () -> Unit,
+    onOpenVip: () -> Unit = {},
+    onOpenLevel: () -> Unit = {},
     onLogout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -381,14 +405,23 @@ private fun SettingsListContent(
 
                 SettingsRow(icon = Icons.Filled.Star, title = "Medal")
                 SettingsRow(icon = Icons.Filled.Inventory2, title = "Prop Warehouse")
-                SettingsRow(icon = Icons.Filled.MilitaryTech, title = "Level", badge = { LevelBadge(70) })
+                SettingsRow(
+                    icon = Icons.Filled.MilitaryTech,
+                    title = "Level",
+                    badge = { LevelBadge(70) },
+                    onClick = onOpenLevel
+                )
                 SettingsRow(
                     icon = Icons.Filled.WorkspacePremium,
                     title = "SVIP",
                     badge = { SvipBadge("SVIP2") },
                     onClick = onOpenSvip
                 )
-                SettingsRow(icon = Icons.Filled.EmojiEvents, title = "Aristocracy")
+                SettingsRow(
+                    icon = Icons.Filled.EmojiEvents,
+                    title = "Aristocracy",
+                    onClick = onOpenVip
+                )
                 SettingsRow(icon = Icons.Filled.Language, title = "Language")
                 SettingsRow(icon = Icons.Filled.HelpOutline, title = "Feedback")
                 SettingsRow(icon = Icons.Filled.Settings, title = "Settings")
@@ -486,15 +519,40 @@ private fun DetailedProfileContent(
     onSubTabSelected: (String) -> Unit,
     onOpenEdit: () -> Unit,
     onOpenSvip: () -> Unit,
+    onOpenLevel: () -> Unit = {},
     onAddPhoto: (String) -> Unit = {},
     onRemovePhoto: (Int) -> Unit = {},
+    onUpdateAvatarUrl: (String) -> Unit = {},
     onBack: () -> Unit,
     intimacyCouple: IntimacyCouple,
     intimacyFriends: List<IntimacyFriend>,
+    onAcceptCp: (String) -> Unit = {},
+    onUnlinkCp: () -> Unit = {},
+    onAddBestFriend: (String, String) -> Unit = { _, _ -> },
     modifier: Modifier = Modifier
 ) {
     var showUploadPhotoDialog by remember { mutableStateOf(false) }
     var selectedPhotoIndexForViewer by remember { mutableStateOf<Int?>(null) }
+
+    // Dialog state variables for CP & Best Friends
+    var showGlobalSearchModal by remember { mutableStateOf(false) }
+    var searchQueryInput by remember { mutableStateOf("") }
+    var proposalTargetName by remember { mutableStateOf("") }
+    var proposalTargetId by remember { mutableStateOf("") }
+    var proposalType by remember { mutableStateOf("CP") } // "CP" or "FRIEND"
+    var showProposalBottomSheet by remember { mutableStateOf(false) }
+    var showBreakupBottomSheet by remember { mutableStateOf(false) }
+
+    var showCpInviteModal by remember { mutableStateOf(false) }
+    var showInviteSentPopup by remember { mutableStateOf(false) }
+    var inviteTargetName by remember { mutableStateOf("") }
+    var showCpSuccessCeremony by remember { mutableStateOf(false) }
+    var showCpShowcaseModal by remember { mutableStateOf(false) }
+    var showUnlinkConfirmDialog by remember { mutableStateOf(false) }
+    var showAddFriendModal by remember { mutableStateOf(false) }
+    var newFriendInputName by remember { mutableStateOf("") }
+    var newFriendSelectedLevel by remember { mutableStateOf("Lv.1") }
+    var giftToastMessage by remember { mutableStateOf<String?>(null) }
 
     val coroutineScope = rememberCoroutineScope()
     val subTabs = listOf("Profile", "Intimacy")
@@ -564,7 +622,13 @@ private fun DetailedProfileContent(
                     .padding(16.dp)
             ) {
                 Row(verticalAlignment = Alignment.Bottom) {
-                    AvatarFrame(size = 72.dp, showDesignerFrame = true)
+                    Box(modifier = Modifier.clickable { showUploadPhotoDialog = true }) {
+                        AvatarFrame(
+                            size = 72.dp,
+                            showDesignerFrame = true,
+                            avatarUrl = userProfile.avatarUrl.ifBlank { null }
+                        )
+                    }
 
                     Column(modifier = Modifier.padding(start = 12.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -608,7 +672,9 @@ private fun DetailedProfileContent(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    LevelBadge(70)
+                    Box(modifier = Modifier.clickable { onOpenLevel() }) {
+                        LevelBadge(70)
+                    }
                     Box(modifier = Modifier.clickable { onOpenSvip() }) {
                         SvipBadge("SVIP2")
                     }
@@ -775,12 +841,22 @@ private fun DetailedProfileContent(
                                                         .background(Color(0xFFEEEEEE))
                                                         .clickable { selectedPhotoIndexForViewer = photoIdx }
                                                 ) {
-                                                    Image(
-                                                        painter = painterResource(id = R.drawable.img_user_avatar),
-                                                        contentDescription = "Gallery Photo ${photoIdx + 1}",
-                                                        contentScale = ContentScale.Crop,
-                                                        modifier = Modifier.fillMaxSize()
-                                                    )
+                                                    val currentPhoto = photoList[photoIdx]
+                                                    if (currentPhoto.startsWith("http://") || currentPhoto.startsWith("https://")) {
+                                                        AsyncImage(
+                                                            model = currentPhoto,
+                                                            contentDescription = "Gallery Photo ${photoIdx + 1}",
+                                                            contentScale = ContentScale.Crop,
+                                                            modifier = Modifier.fillMaxSize()
+                                                        )
+                                                    } else {
+                                                        Image(
+                                                            painter = painterResource(id = R.drawable.img_user_avatar),
+                                                            contentDescription = "Gallery Photo ${photoIdx + 1}",
+                                                            contentScale = ContentScale.Crop,
+                                                            modifier = Modifier.fillMaxSize()
+                                                        )
+                                                    }
 
                                                     Box(
                                                         modifier = Modifier
@@ -808,7 +884,7 @@ private fun DetailedProfileContent(
                         }
                     }
                 } else {
-                    // TAB 2: Intimacy View (Matching Image 5)
+                    // TAB 2: Intimacy View (Matching yaraan.online CP Design)
                     Column {
                         // Love Store Banner Card
                         Card(
@@ -850,64 +926,91 @@ private fun DetailedProfileContent(
                         Spacer(modifier = Modifier.height(18.dp))
 
                         // Couple Section Header
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            YaraanAssetImage(
-                                assetName = "cp_main.svg",
-                                contentDescription = "CP Main",
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text("Couple CP", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1F1D2B))
-                            Icon(
-                                imageVector = Icons.Filled.HelpOutline,
-                                contentDescription = null,
-                                tint = Color(0xFFBDBDBD),
-                                modifier = Modifier
-                                    .size(16.dp)
-                                    .padding(start = 4.dp)
-                            )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("Couple CP", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1F1D2B))
+                                Icon(
+                                    imageVector = Icons.Filled.HelpOutline,
+                                    contentDescription = null,
+                                    tint = Color(0xFFBDBDBD),
+                                    modifier = Modifier
+                                        .size(16.dp)
+                                        .padding(start = 6.dp)
+                                )
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        // Couple Card (CP Design with SVG assets)
+                        // Select level background asset SVG (cp_lv1.svg - cp_lv6.svg or default cp_main.svg)
+                        val cpBgSvgName = when (intimacyCouple.level.trim()) {
+                            "Lv.1" -> "cp_lv1.svg"
+                            "Lv.2" -> "cp_lv2.svg"
+                            "Lv.3" -> "cp_lv3.svg"
+                            "Lv.4" -> "cp_lv4.svg"
+                            "Lv.5" -> "cp_lv5.svg"
+                            "Lv.6" -> "cp_lv6.svg"
+                            else -> if (!intimacyCouple.isLinked) "cp_main.svg" else "cp_lv3.svg"
+                        }
+
+                        // Couple Card (CP Design matching yaraan.online with SVG background)
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .height(210.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background(
-                                    Brush.horizontalGradient(
-                                        listOf(Color(0xFF8E24AA), Color(0xFF7C4DFF), Color(0xFF512DA8))
-                                    )
-                                )
-                                .padding(16.dp)
+                                .background(Color(0xFF2C1338))
                         ) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                // Level Badge Pill with CP Heart Icon
+                            // Level SVG Background - coil native SVG loader
+                            YaraanAssetImage(
+                                assetName = cpBgSvgName,
+                                contentDescription = "CP Level Background",
+                                modifier = Modifier.matchParentSize(),
+                                contentScale = ContentScale.Crop,
+                                useAnimatedWebView = false
+                            )
+
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                            ) {
+                                // Single Level Badge Pill
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
                                         .clip(RoundedCornerShape(10.dp))
-                                        .background(Color.White.copy(alpha = 0.25f))
+                                        .background(Color.Black.copy(alpha = 0.35f))
                                         .padding(horizontal = 12.dp, vertical = 4.dp)
                                 ) {
                                     YaraanAssetImage(
-                                        assetName = "cp_heart2.svg",
-                                        contentDescription = "CP Heart",
+                                        assetName = if (intimacyCouple.isLinked) "cp_heart2.svg" else "cp_main.svg",
+                                        contentDescription = "CP Badge",
                                         modifier = Modifier.size(14.dp)
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
-                                    Text(intimacyCouple.level, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                    Text(
+                                        text = if (intimacyCouple.isLinked) intimacyCouple.level else "Couple CP",
+                                        color = Color.White,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
 
-                                Spacer(modifier = Modifier.height(12.dp))
+                                Spacer(modifier = Modifier.height(14.dp))
 
-                                // Dual Avatars with Winged Heart Linkage
+                                // Dual Avatars
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceEvenly,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
+                                    // Left User
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                         AvatarFrame(size = 56.dp, showDesignerFrame = true, frameAsset = "svip1_frame.svg")
                                         Text(
@@ -919,90 +1022,232 @@ private fun DetailedProfileContent(
                                         )
                                     }
 
+                                    // Center Heart / Breakup Linkage
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        YaraanAssetImage(
-                                            assetName = "cp_heart_final.png",
-                                            contentDescription = "CP Heart Link",
-                                            modifier = Modifier.size(38.dp)
-                                        )
-                                        Text(
-                                            text = intimacyCouple.daysText,
-                                            color = Color.White.copy(alpha = 0.9f),
-                                            fontSize = 10.sp,
-                                            modifier = Modifier.padding(top = 2.dp)
-                                        )
+                                        if (intimacyCouple.isLinked) {
+                                            YaraanAssetImage(
+                                                assetName = "cp_heart_final.png",
+                                                contentDescription = "CP Link",
+                                                modifier = Modifier.size(38.dp)
+                                            )
+                                            Text(
+                                                text = intimacyCouple.daysText,
+                                                color = Color.White.copy(alpha = 0.9f),
+                                                fontSize = 10.sp,
+                                                modifier = Modifier.padding(top = 2.dp)
+                                            )
+                                        } else {
+                                            YaraanAssetImage(
+                                                assetName = "cp_breakup.svg",
+                                                contentDescription = "CP Breakup",
+                                                modifier = Modifier.size(42.dp),
+                                                useAnimatedWebView = false
+                                            )
+                                            Text(
+                                                text = "CP Broken Up",
+                                                color = Color(0xFFFF8A80),
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier.padding(top = 2.dp)
+                                            )
+                                        }
                                     }
 
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        AvatarFrame(size = 56.dp, showDesignerFrame = true, frameAsset = "svip1_frame.svg")
-                                        Text(
-                                            text = intimacyCouple.partnerName,
-                                            color = Color.White,
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        )
+                                    // Right Partner Slot
+                                    if (intimacyCouple.isLinked) {
+                                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                            AvatarFrame(size = 56.dp, showDesignerFrame = true, frameAsset = "svip1_frame.svg")
+                                            Text(
+                                                text = intimacyCouple.partnerName,
+                                                color = Color.White,
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier.padding(top = 4.dp)
+                                            )
+                                        }
+                                    } else {
+                                        // Plus Add Partner Seat Button -> triggers Global Search
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier.clickable { showGlobalSearchModal = true }
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(56.dp)
+                                                    .clip(CircleShape)
+                                                    .background(Color.White.copy(alpha = 0.25f))
+                                                    .border(2.dp, Color.White.copy(alpha = 0.6f), CircleShape),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Add,
+                                                    contentDescription = "Add Partner",
+                                                    tint = Color.White,
+                                                    modifier = Modifier.size(30.dp)
+                                                )
+                                            }
+                                            Text(
+                                                text = "+ Add Partner",
+                                                color = Color.White.copy(alpha = 0.9f),
+                                                fontSize = 11.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier.padding(top = 4.dp)
+                                            )
+                                        }
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(14.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
 
+                                // Bottom Action Button
                                 Box(
                                     modifier = Modifier
-                                        .clip(RoundedCornerShape(16.dp))
-                                        .background(Color.White.copy(alpha = 0.3f))
-                                        .padding(horizontal = 20.dp, vertical = 6.dp)
+                                        .clip(RoundedCornerShape(18.dp))
+                                        .background(Color.Black.copy(alpha = 0.35f))
+                                        .clickable {
+                                            if (intimacyCouple.isLinked) {
+                                                showCpShowcaseModal = true
+                                            } else {
+                                                showGlobalSearchModal = true
+                                            }
+                                        }
+                                        .padding(horizontal = 22.dp, vertical = 8.dp)
                                 ) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         YaraanAssetImage(
-                                            assetName = "cp_become.svg",
-                                            contentDescription = "CP Become",
+                                            assetName = if (intimacyCouple.isLinked) "cp_become.svg" else "cp_main.svg",
+                                            contentDescription = "CP Action",
                                             modifier = Modifier.size(16.dp)
                                         )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text("CP Showcase", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                        Spacer(modifier = Modifier.width(6.dp))
+                                        Text(
+                                            text = if (intimacyCouple.isLinked) "CP Showcase" else "+ Send CP Invitation",
+                                            color = Color.White,
+                                            fontSize = 13.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
                                     }
                                 }
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(22.dp))
 
-                        // Friend Section
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            YaraanAssetImage(
-                                assetName = "main_friend_bg.svg",
-                                contentDescription = "Friends",
-                                modifier = Modifier.size(22.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
+                        // Best Friends Section Header
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
                             Text("Best Friends", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1F1D2B))
                         }
+
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        // Horizontal Row for Best Friends + Add Friend Seat Slot
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            intimacyFriends.forEach { friend ->
+                            items(intimacyFriends) { friend ->
                                 Box(
                                     modifier = Modifier
-                                        .weight(1f)
-                                        .height(120.dp)
+                                        .width(110.dp)
+                                        .height(135.dp)
                                         .clip(RoundedCornerShape(16.dp))
-                                        .background(
-                                            Brush.verticalGradient(
-                                                listOf(Color(0xFFFF80AB), Color(0xFFEA80FC))
-                                            )
-                                        )
-                                        .padding(8.dp),
-                                    contentAlignment = Alignment.Center
+                                        .background(Color(0xFF2B1238))
                                 ) {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        Text(friend.level, color = Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                                    // Original SVG Background for Friend Card
+                                    YaraanAssetImage(
+                                        assetName = "main_friend_bg.svg",
+                                        contentDescription = null,
+                                        modifier = Modifier.matchParentSize(),
+                                        contentScale = ContentScale.Crop,
+                                        useAnimatedWebView = false
+                                    )
+
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(8.dp)
+                                    ) {
+                                        // Level Tag
+                                        Box(
+                                            modifier = Modifier
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(Color.Black.copy(alpha = 0.35f))
+                                                .padding(horizontal = 8.dp, vertical = 2.dp)
+                                        ) {
+                                            Text(friend.level, color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                                        }
                                         Spacer(modifier = Modifier.height(6.dp))
-                                        AvatarFrame(size = 42.dp, showDesignerFrame = false)
-                                        Text("${friend.points}", color = Color.White, fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
+                                        AvatarFrame(size = 44.dp, showDesignerFrame = false)
+                                        Text(
+                                            text = friend.name,
+                                            color = Color.White,
+                                            fontSize = 11.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            maxLines = 1,
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                        Text(
+                                            text = "%,d".format(friend.points),
+                                            color = Color.White.copy(alpha = 0.9f),
+                                            fontSize = 10.sp
+                                        )
+                                    }
+                                }
+                            }
+
+                            // Add Friend Seat Card with Chair SVG -> Clicking opens Global Search Sheet
+                            item {
+                                Box(
+                                    modifier = Modifier
+                                        .width(110.dp)
+                                        .height(135.dp)
+                                        .clip(RoundedCornerShape(16.dp))
+                                        .background(Color(0xFF2B1238))
+                                        .clickable { showGlobalSearchModal = true }
+                                ) {
+                                    // Chair seat SVG background
+                                    YaraanAssetImage(
+                                        assetName = "friend_chair.svg",
+                                        contentDescription = "Friend Chair",
+                                        modifier = Modifier.matchParentSize(),
+                                        contentScale = ContentScale.Fit,
+                                        useAnimatedWebView = false
+                                    )
+
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(8.dp)
+                                    ) {
+                                        // Plus Icon centered on the seat
+                                        Box(
+                                            modifier = Modifier
+                                                .size(36.dp)
+                                                .clip(CircleShape)
+                                                .background(YaraanPinkPrimary),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Add,
+                                                contentDescription = "Add Friend",
+                                                tint = Color.White,
+                                                modifier = Modifier.size(22.dp)
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.height(6.dp))
+                                        Text(
+                                            text = "Add Friend",
+                                            color = Color.White,
+                                            fontSize = 11.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
                                     }
                                 }
                             }
@@ -1011,13 +1256,477 @@ private fun DetailedProfileContent(
                 }
             }
         }
+
+        // ==========================================
+        // CP & FRIEND DIALOGS & POPUPS
+        // ==========================================
+
+        // ==========================================
+        // GLOBAL SEARCH MODAL & PROPOSAL / BREAKUP POPUPS
+        // ==========================================
+
+        // 1. Global Search Modal (Search User ID / Name to send CP or Friend Invite)
+        if (showGlobalSearchModal) {
+            data class SearchUser(val name: String, val id: String, val followers: String, val level: String)
+            val allUsers = listOf(
+                SearchUser("Sahil ❤", "6111119", "2,048 followers", "Lv.70"),
+                SearchUser("Ayesha", "2048991", "1,520 followers", "Lv.45"),
+                SearchUser("Rohan", "1054589", "890 followers", "Lv.32"),
+                SearchUser("Zain", "7268511", "3,110 followers", "Lv.58"),
+                SearchUser("Anya", "1167882", "640 followers", "Lv.21"),
+                SearchUser("Karan", "9845120", "1,100 followers", "Lv.39")
+            )
+            val filteredUsers = if (searchQueryInput.isBlank()) allUsers else allUsers.filter {
+                it.name.contains(searchQueryInput, ignoreCase = true) || it.id.contains(searchQueryInput)
+            }
+
+            AlertDialog(
+                onDismissRequest = { showGlobalSearchModal = false },
+                title = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Global User Search 🔍", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color(0xFF1F1D2B))
+                        IconButton(onClick = { showGlobalSearchModal = false }) {
+                            Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.Gray)
+                        }
+                    }
+                },
+                text = {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        OutlinedTextField(
+                            value = searchQueryInput,
+                            onValueChange = { searchQueryInput = it },
+                            placeholder = { Text("Search User ID or Name...", fontSize = 13.sp) },
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = YaraanPinkPrimary) },
+                            singleLine = true,
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Spacer(modifier = Modifier.height(14.dp))
+
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.heightIn(max = 280.dp)
+                        ) {
+                            items(filteredUsers) { user ->
+                                Card(
+                                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FC)),
+                                    shape = RoundedCornerShape(14.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Row(
+                                        modifier = Modifier.padding(10.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        AvatarFrame(size = 40.dp, showDesignerFrame = false)
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                        Column(modifier = Modifier.weight(1f)) {
+                                            Text(user.name, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color(0xFF1F1D2B))
+                                            Text("ID: ${user.id} • ${user.level}", fontSize = 11.sp, color = Color.Gray)
+                                        }
+
+                                        // RED Button for CP Invite
+                                        Button(
+                                            onClick = {
+                                                proposalTargetName = user.name
+                                                proposalTargetId = user.id
+                                                proposalType = "CP"
+                                                showGlobalSearchModal = false
+                                                showProposalBottomSheet = true
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935)),
+                                            shape = RoundedCornerShape(10.dp),
+                                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                                            modifier = Modifier.height(32.dp)
+                                        ) {
+                                            Text("CP Invite", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                        }
+
+                                        Spacer(modifier = Modifier.width(6.dp))
+
+                                        // BLUE Button for Friend Invite
+                                        Button(
+                                            onClick = {
+                                                proposalTargetName = user.name
+                                                proposalTargetId = user.id
+                                                proposalType = "FRIEND"
+                                                showGlobalSearchModal = false
+                                                showProposalBottomSheet = true
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1E88E5)),
+                                            shape = RoundedCornerShape(10.dp),
+                                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                                            modifier = Modifier.height(32.dp)
+                                        ) {
+                                            Text("Friend Invite", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                confirmButton = {}
+            )
+        }
+
+        // 2. Proposal Half-Screen Bottom Sheet (When invitation is received / sent)
+        if (showProposalBottomSheet) {
+            val isCpProposal = proposalType == "CP"
+            val themeColor = if (isCpProposal) Color(0xFFE53935) else Color(0xFF1E88E5)
+            val bgAsset = if (isCpProposal) "cp_become.svg" else "winged_heart.svg"
+
+            AlertDialog(
+                onDismissRequest = { showProposalBottomSheet = false },
+                title = {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        YaraanAssetImage(
+                            assetName = bgAsset,
+                            contentDescription = "Proposal Asset",
+                            modifier = Modifier.size(68.dp),
+                            useAnimatedWebView = false
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = if (isCpProposal) "CP Relationship Proposal 💕" else "Best Friend Invitation 🌟",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = themeColor,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                },
+                text = {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        AvatarFrame(size = 56.dp, showDesignerFrame = true, frameAsset = "svip1_frame.svg")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = proposalTargetName,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = Color(0xFF1F1D2B)
+                        )
+                        Text(
+                            text = "ID: $proposalTargetId",
+                            fontSize = 12.sp,
+                            color = Color.Gray
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = if (isCpProposal)
+                                "You have received a Couple CP Relationship proposal from $proposalTargetName! Accept to link your CP profiles."
+                            else
+                                "$proposalTargetName has sent you a Best Friend Request! Accept to add them to your Best Friends card.",
+                            textAlign = TextAlign.Center,
+                            fontSize = 13.sp,
+                            color = Color(0xFF444444)
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showProposalBottomSheet = false
+                            if (isCpProposal) {
+                                onAcceptCp(proposalTargetName)
+                            } else {
+                                onAddBestFriend(proposalTargetName, "Lv.1")
+                            }
+                            showCpSuccessCeremony = true
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF43A047)),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Accept Proposal ✅", fontWeight = FontWeight.Bold, color = Color.White)
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = { showProposalBottomSheet = false },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0E0E0)),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Reject Request", color = Color(0xFF666666), fontWeight = FontWeight.Bold)
+                    }
+                }
+            )
+        }
+
+        // 3. Breakup Half-Screen Sheet (When CP Breakup occurs)
+        if (showUnlinkConfirmDialog) {
+            AlertDialog(
+                onDismissRequest = { showUnlinkConfirmDialog = false },
+                title = {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        YaraanAssetImage(
+                            assetName = "cp_breakup.svg",
+                            contentDescription = "CP Breakup Asset",
+                            modifier = Modifier.size(72.dp),
+                            useAnimatedWebView = false
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "CP Relationship Broken Up",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = Color(0xFFD32F2F),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                },
+                text = {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        AvatarFrame(size = 52.dp, showDesignerFrame = false)
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = intimacyCouple.partnerName.ifBlank { "CP Partner" },
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                            color = Color(0xFF1F1D2B)
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = "Are you sure you want to breakup the CP relationship? All intimacy level streaks will be reset.",
+                            textAlign = TextAlign.Center,
+                            fontSize = 13.sp,
+                            color = Color(0xFF555555)
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showUnlinkConfirmDialog = false
+                            onUnlinkCp()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F)),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Confirm Breakup 💔", fontWeight = FontWeight.Bold, color = Color.White)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showUnlinkConfirmDialog = false }) {
+                        Text("Cancel", color = Color.Gray)
+                    }
+                }
+            )
+        }
+
+        // 4. CP Success Celebration Ceremony
+        if (showCpSuccessCeremony) {
+            AlertDialog(
+                onDismissRequest = { showCpSuccessCeremony = false },
+                title = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                        YaraanAssetImage("cp_become.svg", contentDescription = null, modifier = Modifier.size(64.dp), useAnimatedWebView = false)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("Congratulations! 🎉", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = YaraanPinkPrimary)
+                    }
+                },
+                text = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            "You and $proposalTargetName are now linked as Intimacy Partners! 💕",
+                            textAlign = TextAlign.Center,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color(0xFF333333)
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = { showCpSuccessCeremony = false },
+                        colors = ButtonDefaults.buttonColors(containerColor = YaraanPinkPrimary),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Awesome! ✨", fontWeight = FontWeight.Bold)
+                    }
+                }
+            )
+        }
+
+        // 5. CP Showcase & Management Dialog
+        if (showCpShowcaseModal) {
+            AlertDialog(
+                onDismissRequest = { showCpShowcaseModal = false },
+                title = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        YaraanAssetImage("cp_heart2.svg", contentDescription = null, modifier = Modifier.size(24.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("CP Showcase & Options", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    }
+                },
+                text = {
+                    Column {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(Color(0xFFFFF0F5))
+                                .padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("CP Partner: ${intimacyCouple.partnerName}", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                Text("Level: ${intimacyCouple.level} • ${intimacyCouple.daysText}", fontSize = 12.sp, color = Color.Gray)
+                            }
+                            YaraanAssetImage("cp_heart_final.png", contentDescription = null, modifier = Modifier.size(32.dp))
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        if (giftToastMessage != null) {
+                            Text(
+                                text = giftToastMessage!!,
+                                color = Color(0xFF4CAF50),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+
+                        Button(
+                            onClick = {
+                                giftToastMessage = "Sent CP Heart Gift! +1,000 Intimacy Points! 💖"
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF4081)),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.Favorite, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Send CP Heart Gift (+1,000 Pts)", fontWeight = FontWeight.Bold)
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                showCpShowcaseModal = false
+                                showUnlinkConfirmDialog = true
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEEEEEE)),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.HeartBroken, contentDescription = null, tint = Color.Red, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Unlink / Breakup CP", color = Color.Red, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showCpShowcaseModal = false }) {
+                        Text("Close", color = Color.Gray)
+                    }
+                }
+            )
+        }
+
+        // 6. Add Best Friend Dialog
+        if (showAddFriendModal) {
+            AlertDialog(
+                onDismissRequest = { showAddFriendModal = false },
+                title = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        YaraanAssetImage("main_friend_bg.svg", contentDescription = null, modifier = Modifier.size(24.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Add Best Friend", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    }
+                },
+                text = {
+                    Column {
+                        OutlinedTextField(
+                            value = newFriendInputName,
+                            onValueChange = { newFriendInputName = it },
+                            label = { Text("Friend's Name") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text("Select Intimacy Level:", fontSize = 12.sp, color = Color.Gray)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 4.dp)) {
+                            listOf("Lv.1", "Lv.2", "Lv.3").forEach { levelOption ->
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(
+                                            if (newFriendSelectedLevel == levelOption) YaraanPinkPrimary else Color(0xFFEEEEEE)
+                                        )
+                                        .clickable { newFriendSelectedLevel = levelOption }
+                                        .padding(horizontal = 14.dp, vertical = 6.dp)
+                                ) {
+                                    Text(
+                                        text = levelOption,
+                                        color = if (newFriendSelectedLevel == levelOption) Color.White else Color.Black,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 12.sp
+                                    )
+                                }
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            if (newFriendInputName.isNotBlank()) {
+                                onAddBestFriend(newFriendInputName, newFriendSelectedLevel)
+                                newFriendInputName = ""
+                                showAddFriendModal = false
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = YaraanPinkPrimary),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Add Friend 🌟", fontWeight = FontWeight.Bold)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showAddFriendModal = false }) {
+                        Text("Cancel", color = Color.Gray)
+                    }
+                }
+            )
+        }
     }
 
         if (showUploadPhotoDialog) {
             UploadPhotoDialog(
                 onDismiss = { showUploadPhotoDialog = false },
-                onSelectPhoto = { photoUri ->
-                    onAddPhoto(photoUri)
+                onSetAsDp = { url ->
+                    onUpdateAvatarUrl(url)
+                    showUploadPhotoDialog = false
+                },
+                onAddToGallery = { url ->
+                    onAddPhoto(url)
                     showUploadPhotoDialog = false
                 }
             )
@@ -1077,16 +1786,25 @@ fun GalleryViewerDialog(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.dp)
+                        .height(280.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.Black)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.img_user_avatar),
-                        contentDescription = "Full photo",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                    if (photoUri.startsWith("http://") || photoUri.startsWith("https://")) {
+                        AsyncImage(
+                            model = photoUri,
+                            contentDescription = "Full photo",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.img_user_avatar),
+                            contentDescription = "Full photo",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

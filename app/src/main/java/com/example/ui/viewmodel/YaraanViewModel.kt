@@ -45,10 +45,15 @@ data class YaraanUiState(
     val searchQuery: String = "",
     val isSearchActive: Boolean = false,
     val userCoins: Int = 58200,
+    val userExp: Long = 81992682L, // Default Level 70 EXP
+    val claimedLevelRewards: Set<Int> = (2..69).toSet(), // Levels 2 to 69 claimed
     val svipLevel: Int = 2,
     val svipTotalRecharge: Int = 58200,
     val svipPeriodRecharge: Int = 18500,
     val svipDaysLeft: Int = 48,
+    val activeVipTier: String = "VIP Green",
+    val activeVipKey: String = "name-vip-green",
+    val purchasedVipTiers: Set<String> = setOf("name-vip-green"),
     val leaderboardInitialTab: Int = 0 // 0: Contribution, 1: Charm, 2: Room
 )
 
@@ -85,9 +90,82 @@ class YaraanViewModel : ViewModel() {
         _uiState.update { it.copy(activeProfileSubTab = tab) }
     }
 
+    private var userIdCounter = 10001
+
+    private fun getNextSequentialUserId(): String {
+        return (userIdCounter++).toString()
+    }
+
     fun login(provider: String) {
-        _uiState.update {
-            it.copy(isLoggedIn = true, currentRoute = NavRoute.HOME, activeBottomTab = 0)
+        _uiState.update { state ->
+            val cleanId = getNextSequentialUserId()
+            state.copy(
+                isLoggedIn = true,
+                userProfile = state.userProfile.copy(userId = cleanId),
+                currentRoute = NavRoute.HOME,
+                activeBottomTab = 0
+            )
+        }
+    }
+
+    fun loginWithGoogle(
+        displayName: String?,
+        email: String?,
+        photoUrl: String?,
+        uid: String?
+    ) {
+        _uiState.update { state ->
+            val cleanName = displayName?.takeIf { name -> name.isNotBlank() } ?: email?.substringBefore("@") ?: "❤ Mašoom"
+            val cleanId = getNextSequentialUserId()
+            val updatedProfile = state.userProfile.copy(
+                nickname = cleanName,
+                email = email ?: "",
+                avatarUrl = photoUrl?.ifBlank { "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" } ?: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+                userId = cleanId
+            )
+            val updatedCouple = state.intimacyCouple.copy(
+                userName = cleanName
+            )
+            state.copy(
+                isLoggedIn = true,
+                userProfile = updatedProfile,
+                intimacyCouple = updatedCouple,
+                currentRoute = NavRoute.HOME,
+                activeBottomTab = 0
+            )
+        }
+    }
+
+    fun loginWithEmail(
+        emailInput: String,
+        nameInput: String = ""
+    ) {
+        _uiState.update { state ->
+            val cleanName = nameInput.ifBlank { emailInput.substringBefore("@") }
+            val cleanId = getNextSequentialUserId()
+            val updatedProfile = state.userProfile.copy(
+                nickname = cleanName,
+                email = emailInput,
+                userId = cleanId,
+                avatarUrl = state.userProfile.avatarUrl.ifBlank { "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" }
+            )
+            val updatedCouple = state.intimacyCouple.copy(
+                userName = cleanName
+            )
+            state.copy(
+                isLoggedIn = true,
+                userProfile = updatedProfile,
+                intimacyCouple = updatedCouple,
+                currentRoute = NavRoute.HOME,
+                activeBottomTab = 0
+            )
+        }
+    }
+
+    fun updateAvatarUrl(url: String) {
+        _uiState.update { state ->
+            val updatedProfile = state.userProfile.copy(avatarUrl = url)
+            state.copy(userProfile = updatedProfile)
         }
     }
 
@@ -169,11 +247,93 @@ class YaraanViewModel : ViewModel() {
         _uiState.update { it.copy(userCoins = it.userCoins + amount) }
     }
 
+    fun claimLevelReward(lvl: Int, coinReward: Int) {
+        _uiState.update {
+            it.copy(
+                userCoins = it.userCoins + coinReward,
+                claimedLevelRewards = it.claimedLevelRewards + lvl
+            )
+        }
+    }
+
+    fun claimAllLevelRewards(claimedLevels: List<Int>, totalCoinsAdded: Int) {
+        _uiState.update {
+            it.copy(
+                userCoins = it.userCoins + totalCoinsAdded,
+                claimedLevelRewards = it.claimedLevelRewards + claimedLevels
+            )
+        }
+    }
+
+    fun addExp(amount: Long) {
+        _uiState.update { it.copy(userExp = it.userExp + amount) }
+    }
+
+    fun activateVip(vipKey: String, vipName: String) {
+        _uiState.update {
+            it.copy(
+                activeVipKey = vipKey,
+                activeVipTier = vipName
+            )
+        }
+    }
+
+    fun buyVip(vipKey: String, vipName: String, coinPrice: Int): Boolean {
+        val currentCoins = _uiState.value.userCoins
+        if (currentCoins >= coinPrice) {
+            _uiState.update {
+                it.copy(
+                    userCoins = it.userCoins - coinPrice,
+                    purchasedVipTiers = it.purchasedVipTiers + vipKey,
+                    activeVipKey = vipKey,
+                    activeVipTier = vipName
+                )
+            }
+            return true
+        }
+        return false
+    }
+
     fun setSearchQuery(query: String) {
         _uiState.update { it.copy(searchQuery = query) }
     }
 
     fun toggleSearch(active: Boolean) {
         _uiState.update { it.copy(isSearchActive = active) }
+    }
+
+    fun acceptCpPartner(partnerName: String) {
+        _uiState.update {
+            it.copy(
+                intimacyCouple = IntimacyCouple(
+                    isLinked = true,
+                    level = "Lv.3",
+                    daysText = "2026-07-30 now 1 day",
+                    userName = it.userProfile.nickname.ifBlank { "❤ Mašoom" },
+                    partnerName = "$partnerName ❤"
+                )
+            )
+        }
+    }
+
+    fun unlinkCpPartner() {
+        _uiState.update {
+            it.copy(
+                intimacyCouple = IntimacyCouple(
+                    isLinked = false,
+                    level = "Broken Up",
+                    daysText = "CP Broken Up",
+                    userName = it.userProfile.nickname.ifBlank { "❤ Mašoom" },
+                    partnerName = ""
+                )
+            )
+        }
+    }
+
+    fun addBestFriend(name: String, level: String = "Lv.1") {
+        _uiState.update {
+            val updatedList = it.intimacyFriends + IntimacyFriend(level, name, 1200)
+            it.copy(intimacyFriends = updatedList)
+        }
     }
 }

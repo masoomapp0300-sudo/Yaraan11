@@ -720,53 +720,58 @@ private fun RankingBannerCard(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            // Overlapping Circular Avatars with SVGs + Right Asset Icon
+            // Centered 3 Top User DPs (Rank 2 Silver, Rank 1 Gold Center, Rank 3 Bronze)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 3 Overlapping Avatars (DP1, DP2, DP3)
-                Box {
+                // Centered 3 DPs Podium Group
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Rank 2 (Left Silver)
                     Box(
                         modifier = Modifier
-                            .size(24.dp)
+                            .size(22.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
-                            .border(1.dp, Color.White, CircleShape)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.img_user_avatar),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                            .size(24.dp)
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .border(1.dp, Color.White, CircleShape)
+                            .border(1.dp, Color(0xFFE0E0E0), CircleShape)
                     ) {
                         YaraanAssetImage(
                             assetName = "yaraan_dp.png",
-                            contentDescription = null,
+                            contentDescription = "Rank 2 DP",
                             modifier = Modifier.fillMaxSize()
                         )
                     }
+
+                    // Rank 1 (Center Gold - Slightly bigger)
                     Box(
                         modifier = Modifier
-                            .padding(start = 24.dp)
-                            .size(24.dp)
+                            .padding(horizontal = 2.dp)
+                            .size(28.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
-                            .border(1.dp, Color.White, CircleShape)
+                            .border(1.5.dp, Color(0xFFFFD54F), CircleShape)
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_yaraan_mascot),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
+                        YaraanAssetImage(
+                            assetName = "yaraan_dp.png",
+                            contentDescription = "Rank 1 DP",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    // Rank 3 (Right Bronze)
+                    Box(
+                        modifier = Modifier
+                            .size(22.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color(0xFFFF8A65), CircleShape)
+                    ) {
+                        YaraanAssetImage(
+                            assetName = "yaraan_dp.png",
+                            contentDescription = "Rank 3 DP",
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
@@ -1863,7 +1868,7 @@ private fun VoiceRoomGridCard(
                     )
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.img_user_avatar),
+                    painter = painterResource(id = R.drawable.img_cover_bg),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -1919,7 +1924,7 @@ private fun VoiceRoomGridCard(
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 6.dp)
                 ) {
-                    AvatarFrame(size = 48.dp, showDesignerFrame = true)
+                    AvatarFrame(avatarAsset = "yaraan_dp.png", size = 52.dp, showDesignerFrame = true)
                 }
             }
 
@@ -2009,7 +2014,15 @@ fun BannerCarousel(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.horizontalGradient(
+                            listOf(Color(0xFFFF4081), Color(0xFF7C4DFF), Color(0xFF00E5FF))
+                        )
+                    )
+            ) {
                 YaraanAssetImage(
                     assetName = banners[page],
                     contentDescription = "Yaraan Banner ${page + 1}",

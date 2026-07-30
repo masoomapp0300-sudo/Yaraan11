@@ -24,11 +24,13 @@ import com.example.ui.screens.EditProfileScreen
 import com.example.ui.screens.GamesScreen
 import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.LeaderboardScreen
+import com.example.ui.screens.LevelScreen
 import com.example.ui.screens.LoginScreen
 import com.example.ui.screens.MessagesScreen
 import com.example.ui.screens.ProfileScreen
 import com.example.ui.screens.StoreScreen
 import com.example.ui.screens.SvipScreen
+import com.example.ui.screens.VipScreen
 import com.example.ui.screens.VoiceRoomScreen
 import com.example.ui.screens.WalletScreen
 import com.example.ui.theme.YaraanTheme
@@ -62,6 +64,12 @@ fun YaraanApp(
         when (route) {
             NavRoute.LOGIN -> {
                 LoginScreen(
+                    onLoginWithGoogle = { name, email, photo, uid ->
+                        viewModel.loginWithGoogle(name, email, photo, uid)
+                    },
+                    onLoginWithEmail = { email, name ->
+                        viewModel.loginWithEmail(email, name)
+                    },
                     onLoginSuccess = { provider ->
                         viewModel.login(provider)
                     },
@@ -116,22 +124,60 @@ fun YaraanApp(
                     onOpenWallet = { viewModel.navigateTo(NavRoute.WALLET) },
                     onOpenStore = { viewModel.navigateTo(NavRoute.STORE) },
                     onOpenSvip = { viewModel.navigateTo(NavRoute.SVIP) },
+                    onOpenVip = { viewModel.navigateTo(NavRoute.VIP) },
+                    onOpenLevel = { viewModel.navigateTo(NavRoute.LEVEL) },
                     onAddPhoto = { viewModel.addPhoto(it) },
                     onRemovePhoto = { viewModel.removePhoto(it) },
+                    onUpdateAvatarUrl = { viewModel.updateAvatarUrl(it) },
                     onLogout = { viewModel.logout() },
                     intimacyCouple = uiState.intimacyCouple,
-                    intimacyFriends = uiState.intimacyFriends
+                    intimacyFriends = uiState.intimacyFriends,
+                    onAcceptCp = { viewModel.acceptCpPartner(it) },
+                    onUnlinkCp = { viewModel.unlinkCpPartner() },
+                    onAddBestFriend = { name, lvl -> viewModel.addBestFriend(name, lvl) }
                 )
             }
 
             NavRoute.SVIP -> {
                 SvipScreen(
                     userProfile = uiState.userProfile,
+                    userCoins = uiState.userCoins,
                     userActualLevel = uiState.svipLevel,
                     totalRecharge = uiState.svipTotalRecharge,
                     periodRecharge = uiState.svipPeriodRecharge,
                     daysLeft = uiState.svipDaysLeft,
-                    onBack = { viewModel.navigateTo(NavRoute.PROFILE) }
+                    onBack = { viewModel.navigateTo(NavRoute.PROFILE) },
+                    onOpenWallet = { viewModel.navigateTo(NavRoute.WALLET) }
+                )
+            }
+
+            NavRoute.VIP -> {
+                VipScreen(
+                    userProfile = uiState.userProfile,
+                    userCoins = uiState.userCoins,
+                    activeVipKey = uiState.activeVipKey,
+                    purchasedVipTiers = uiState.purchasedVipTiers,
+                    onActivateVip = { key, name -> viewModel.activateVip(key, name) },
+                    onBuyVip = { key, name, price -> viewModel.buyVip(key, name, price) },
+                    onBack = { viewModel.navigateTo(NavRoute.PROFILE) },
+                    onOpenWallet = { viewModel.navigateTo(NavRoute.WALLET) }
+                )
+            }
+
+            NavRoute.LEVEL -> {
+                LevelScreen(
+                    userProfile = uiState.userProfile,
+                    userExp = uiState.userExp,
+                    userCoins = uiState.userCoins,
+                    claimedLevelRewards = uiState.claimedLevelRewards,
+                    onClaimReward = { lvl, coinReward ->
+                        viewModel.claimLevelReward(lvl, coinReward)
+                    },
+                    onClaimAllRewards = { claimedLevels, totalCoins ->
+                        viewModel.claimAllLevelRewards(claimedLevels, totalCoins)
+                    },
+                    onBack = { viewModel.navigateTo(NavRoute.PROFILE) },
+                    onOpenWallet = { viewModel.navigateTo(NavRoute.WALLET) }
                 )
             }
 
@@ -144,6 +190,7 @@ fun YaraanApp(
                     },
                     onAddPhoto = { viewModel.addPhoto(it) },
                     onRemovePhoto = { viewModel.removePhoto(it) },
+                    onUpdateAvatarUrl = { viewModel.updateAvatarUrl(it) },
                     onBack = { viewModel.navigateTo(NavRoute.PROFILE) }
                 )
             }

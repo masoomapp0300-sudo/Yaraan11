@@ -1,8 +1,12 @@
 package com.example.data
 
+import com.example.R
+
 data class UserProfile(
     val nickname: String = "❤ Mašoom",
-    val userId: String = "6111119",
+    val userId: String = "10001",
+    val email: String = "yaraan0300@gmail.com",
+    val avatarUrl: String = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
     val followersCount: Int = 2048,
     val followCount: Int = 12,
     val fansCount: Int = 2048,
@@ -26,7 +30,7 @@ data class VoiceRoom(
     val id: String,
     val title: String,
     val hostName: String,
-    val hostAvatarRes: Int = 0,
+    val hostAvatarRes: Int = R.drawable.img_user_avatar,
     val hostGender: String = "male", // "male" or "female"
     val hostAge: Int = 22,
     val listenersCount: Int = 1000,
@@ -36,7 +40,7 @@ data class VoiceRoom(
     val coupleName1: String = "Noo...",
     val coupleName2: String = "Ama...",
     val roomRanking: Int = 1,
-    val roomCoverRes: Int = 0
+    val roomCoverRes: Int = R.drawable.img_cover_bg
 )
 
 data class RankingCardData(
@@ -47,12 +51,14 @@ data class RankingCardData(
 )
 
 data class IntimacyCouple(
+    val isLinked: Boolean = true,
     val level: String = "Lv.3",
-    val daysText: String = "2026-02-12-now  165 days",
+    val daysText: String = "2026-07-12 now 165 days",
     val userName: String = "❤ Mašoom",
     val userScore: Int = 185892,
     val partnerName: String = "Sahil ❤",
-    val partnerScore: Int = 185892
+    val partnerScore: Int = 185892,
+    val partnerAvatar: String = "yaraan_dp.png"
 )
 
 data class IntimacyFriend(
@@ -72,5 +78,7 @@ enum class NavRoute {
     MESSAGES,
     GAMES,
     SVIP,
-    LEADERBOARD
+    VIP,
+    LEADERBOARD,
+    LEVEL
 }
