@@ -1,0 +1,91 @@
+name: Build Android Debug APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate project structure and files
+        run: |
+          echo "Validating Android project layout..."
+          # 1. Android project root verification
+          if [ ! -f "settings.gradle.kts" ]; then
+            echo "::error::Android project root or settings.gradle.kts not found!"
+            exit 1
+          fi
+
+          # 2. Gradle wrapper verification
+          if [ ! -f "gradlew" ]; then
+            echo "::error::Gradle wrapper (gradlew) not found!"
+            exit 1
+          fi
+
+          # 3. Application module verification
+          if [ ! -d "app" ] || [ ! -f "app/build.gradle.kts" ]; then
+            echo "::error::Application module 'app' or app/build.gradle.kts not found!"
+            exit 1
+          fi
+          echo "Project layout validated successfully."
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Set Gradle wrapper execution permission
+        run: chmod +x gradlew
+
+      - name: Clean stale caches and build outputs
+        run: |
+          echo "Removing safe-to-recreate Gradle and application build caches..."
+          # Remove .gradle directory if it exists
+          if [ -d ".gradle" ]; then
+            rm -rf .gradle
+            echo "Removed .gradle cache directory."
+          fi
+          # Remove app module's build directory if it exists
+          if [ -d "app/build" ]; then
+            rm -rf app/build
+            echo "Removed app/build directory."
+          fi
+
+      - name: Build Debug APK with Gradle wrapper
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
+
+      - name: Verify generated APK
+        id: verify-apk
+        run: |
+          echo "Locating generated APK files..."
+          # Look for any debug APKs under the app module build outputs
+          APK_PATHS=$(find app/build/outputs/apk/ -name "*.apk" -type f)
+
+          if [ -z "$APK_PATHS" ]; then
+            echo "::error::No generated APK files found! Build might have failed or outputs were placed in an unexpected location."
+            exit 1
+          fi
+
+          echo "Found the following APK(s):"
+          echo "$APK_PATHS"
+
+          # Set the APK path as an environment/output variable for the upload step
+          # We'll use the find pattern directly or capture the path.
+          # To ensure we don't upload unnecessary files, we will use the find output paths
+          # or configure artifact upload with path: app/build/outputs/apk/debug/*.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
