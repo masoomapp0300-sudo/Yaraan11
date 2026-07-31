@@ -180,7 +180,7 @@ fun VipScreen(
                     contentDescription = "VIP Stage Background",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
-                    useAnimatedWebView = false
+                    useAnimatedWebView = true
                 )
 
                 // Golden Spotlight Rays
@@ -332,7 +332,7 @@ fun VipScreen(
                             assetName = selectedVipTier.badgeSvg,
                             contentDescription = selectedVipTier.name,
                             modifier = Modifier.size(150.dp),
-                            useAnimatedWebView = false
+                            useAnimatedWebView = true
                         )
                     }
                 }
@@ -510,7 +510,7 @@ fun VipScreen(
                             assetName = selectedVipTier.badgeSvg,
                             contentDescription = "VIP Medal",
                             modifier = Modifier.size(46.dp),
-                            useAnimatedWebView = false
+                            useAnimatedWebView = true
                         )
                     }
 
@@ -557,7 +557,7 @@ fun VipScreen(
                         assetName = selectedVipTier.badgeSvg,
                         contentDescription = selectedVipTier.name,
                         modifier = Modifier.size(72.dp),
-                        useAnimatedWebView = false
+                        useAnimatedWebView = true
                     )
                 },
                 title = {
@@ -708,7 +708,7 @@ fun VipScreen(
                         assetName = selectedVipTier.badgeSvg,
                         contentDescription = null,
                         modifier = Modifier.size(60.dp),
-                        useAnimatedWebView = false
+                        useAnimatedWebView = true
                     )
                 },
                 title = {

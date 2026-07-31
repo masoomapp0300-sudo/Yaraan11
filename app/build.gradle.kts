@@ -111,6 +111,7 @@ dependencies {
   implementation(libs.coil.svg)
   implementation(libs.coil.gif)
   implementation(libs.lottie.compose)
+  implementation("com.airbnb.android:lottie-compose:6.6.0")
   implementation(libs.converter.moshi)
   implementation(libs.firebase.ai)
   // Uncomment to use Firestore:
