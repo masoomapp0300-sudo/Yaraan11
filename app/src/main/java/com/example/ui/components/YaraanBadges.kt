@@ -69,7 +69,8 @@ fun SvipBadge(svip: String, modifier: Modifier = Modifier) {
         contentDescription = svip,
         modifier = modifier.height(18.dp),
         autoPlay = true,
-        loops = Int.MAX_VALUE
+        loops = Int.MAX_VALUE,
+        useAnimatedWebView = true
     )
 }
 
@@ -78,7 +79,8 @@ fun VerificationBadge(modifier: Modifier = Modifier) {
     YaraanAssetImage(
         assetName = "virfication_badge.svg",
         contentDescription = "Verified",
-        modifier = modifier.size(16.dp)
+        modifier = modifier.size(16.dp),
+        useAnimatedWebView = true
     )
 }
 
@@ -87,7 +89,8 @@ fun VBadge(modifier: Modifier = Modifier) {
     YaraanAssetImage(
         assetName = "v_badge.svg",
         contentDescription = "V Badge",
-        modifier = modifier.size(16.dp)
+        modifier = modifier.size(16.dp),
+        useAnimatedWebView = true
     )
 }
 

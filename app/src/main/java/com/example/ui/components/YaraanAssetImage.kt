@@ -84,12 +84,26 @@ fun YaraanAssetImage(
     val resolvedName = remember(assetName) { resolveAssetName(context, assetName) }
 
     val isSvgCandidate = resolvedName.endsWith(".svg", ignoreCase = true)
+    val isAnimatedSvg = isSvgCandidate && (
+        useAnimatedWebView ||
+        resolvedName.contains("frame", ignoreCase = true) ||
+        resolvedName.contains("badge", ignoreCase = true) ||
+        resolvedName.contains("medal", ignoreCase = true) ||
+        resolvedName.contains("svip", ignoreCase = true) ||
+        resolvedName.contains("vip", ignoreCase = true) ||
+        resolvedName.contains("bg", ignoreCase = true) ||
+        resolvedName.contains("wibe", ignoreCase = true) ||
+        resolvedName.contains("shine", ignoreCase = true) ||
+        resolvedName.contains("gift", ignoreCase = true) ||
+        resolvedName.contains("rocket", ignoreCase = true) ||
+        resolvedName.contains("cp_", ignoreCase = true)
+    )
     val isLottieCandidate = resolvedName.endsWith(".json", ignoreCase = true) ||
             resolvedName.endsWith(".lottie", ignoreCase = true) ||
             resolvedName.endsWith(".svga", ignoreCase = true)
 
-    key(resolvedName, autoPlay, loops, useAnimatedWebView) {
-        if (useAnimatedWebView && isSvgCandidate) {
+    key(resolvedName, autoPlay, loops, useAnimatedWebView, isAnimatedSvg) {
+        if (isAnimatedSvg) {
             AnimatedSvgWebView(
                 resolvedName = resolvedName,
                 modifier = modifier,
