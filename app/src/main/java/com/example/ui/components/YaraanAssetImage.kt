@@ -22,9 +22,6 @@ import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 
-import android.webkit.WebView
-import androidx.compose.ui.viewinterop.AndroidView
-
 private val assetCache = mutableMapOf<String, String>()
 
 fun resolveAssetName(context: Context, requestedName: String): String {
@@ -83,33 +80,12 @@ fun YaraanAssetImage(
     val context = LocalContext.current
     val resolvedName = remember(assetName) { resolveAssetName(context, assetName) }
 
-    val isSvgCandidate = resolvedName.endsWith(".svg", ignoreCase = true)
-    val isAnimatedSvg = isSvgCandidate && (
-        useAnimatedWebView ||
-        resolvedName.contains("frame", ignoreCase = true) ||
-        resolvedName.contains("badge", ignoreCase = true) ||
-        resolvedName.contains("medal", ignoreCase = true) ||
-        resolvedName.contains("svip", ignoreCase = true) ||
-        resolvedName.contains("vip", ignoreCase = true) ||
-        resolvedName.contains("bg", ignoreCase = true) ||
-        resolvedName.contains("wibe", ignoreCase = true) ||
-        resolvedName.contains("shine", ignoreCase = true) ||
-        resolvedName.contains("gift", ignoreCase = true) ||
-        resolvedName.contains("rocket", ignoreCase = true) ||
-        resolvedName.contains("cp_", ignoreCase = true)
-    )
     val isLottieCandidate = resolvedName.endsWith(".json", ignoreCase = true) ||
             resolvedName.endsWith(".lottie", ignoreCase = true) ||
             resolvedName.endsWith(".svga", ignoreCase = true)
 
-    key(resolvedName, autoPlay, loops, useAnimatedWebView, isAnimatedSvg) {
-        if (isAnimatedSvg) {
-            AnimatedSvgWebView(
-                resolvedName = resolvedName,
-                modifier = modifier,
-                contentScale = contentScale
-            )
-        } else if (isLottieCandidate) {
+    key(resolvedName, autoPlay, loops) {
+        if (isLottieCandidate) {
             val compositionResult = rememberLottieComposition(LottieCompositionSpec.Asset("yaraan/$resolvedName"))
             val composition = compositionResult.value
 
@@ -142,65 +118,6 @@ fun YaraanAssetImage(
             )
         }
     }
-}
-
-@Composable
-fun AnimatedSvgWebView(
-    resolvedName: String,
-    modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Fit
-) {
-    val context = LocalContext.current
-    val fitStyle = when (contentScale) {
-        ContentScale.Crop -> "cover"
-        ContentScale.FillBounds -> "100% 100%"
-        else -> "contain"
-    }
-
-    val htmlContent = remember(resolvedName, fitStyle) {
-        """
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <style>
-            html, body {
-                margin: 0; padding: 0; width: 100%; height: 100%;
-                background: transparent !important; overflow: hidden;
-                display: flex; justify-content: center; align-items: center;
-            }
-            img, svg, object, embed {
-                width: 100%; height: 100%; object-fit: $fitStyle; max-width: 100%; max-height: 100%;
-            }
-        </style>
-        </head>
-        <body>
-            <img src="file:///android_asset/yaraan/$resolvedName" />
-        </body>
-        </html>
-        """.trimIndent()
-    }
-
-    AndroidView(
-        factory = { ctx ->
-            WebView(ctx).apply {
-                setBackgroundColor(0)
-                setLayerType(android.view.View.LAYER_TYPE_HARDWARE, null)
-                settings.allowFileAccess = true
-                settings.allowContentAccess = true
-                settings.javaScriptEnabled = true
-                settings.loadWithOverviewMode = true
-                settings.useWideViewPort = true
-                isVerticalScrollBarEnabled = false
-                isHorizontalScrollBarEnabled = false
-                loadDataWithBaseURL("file:///android_asset/yaraan/", htmlContent, "text/html", "UTF-8", null)
-            }
-        },
-        update = { webView ->
-            webView.loadDataWithBaseURL("file:///android_asset/yaraan/", htmlContent, "text/html", "UTF-8", null)
-        },
-        modifier = modifier
-    )
 }
 
 @Composable
