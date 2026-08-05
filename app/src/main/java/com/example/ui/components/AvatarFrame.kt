@@ -76,8 +76,7 @@ fun AvatarFrame(
                 modifier = Modifier.size(size),
                 contentScale = ContentScale.Fit,
                 autoPlay = true,
-                loops = Int.MAX_VALUE,
-                useAnimatedWebView = true
+                loops = Int.MAX_VALUE
             )
         } else if (showDesignerFrame) {
             // Outer golden-winged glow circle fallback
